@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Teacher Home Page - GeorgiaTechConnect</title>
+
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<nav class="navbar navbar-default navbar-inverse" role="navigation">
+				<div class="navbar-header">
+
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+					</button> <a class="navbar-brand" href="index.html">GeorgiaTechConnect</a>
+				</div>
+
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="about.html">About</a>
+						</li>
+						<li>
+							<a href="contact.html">Contact</a>
+						</li>
+						<li>
+							<a href="student.html">Student View</a>
+						</li>
+						<!-- <li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#">Action</a>
+								</li>
+								<li>
+									<a href="#">Another action</a>
+								</li>
+								<li>
+									<a href="#">Something else here</a>
+								</li>
+								<li class="divider">
+								</li>
+								<li>
+									<a href="#">Separated link</a>
+								</li>
+								<li class="divider">
+								</li>
+								<li>
+									<a href="#">One more separated link</a>
+								</li>
+							</ul>
+						</li> -->
+					</ul>
+					<!-- <form class="navbar-form navbar-left" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control">
+						</div>
+						<button type="submit" class="btn btn-default">
+							Submit
+						</button>
+					</form> -->
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="?#"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
+        				<li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+					<!-- 	<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#">Action</a>
+								</li>
+								<li>
+									<a href="#">Another action</a>
+								</li>
+								<li>
+									<a href="#">Something else here</a>
+								</li>
+								<li class="divider">
+								</li>
+								<li>
+									<a href="#">Separated link</a>
+								</li>
+							</ul>
+						</li> -->
+					</ul>
+				</div>
+
+			</nav>
+			<ul class="breadcrumb">
+				<li>
+					<a href="#">Teacher</a> <span class="divider"></span>
+				</li>
+
+				<li class="active">
+					Sort Group
+				</li>
+			</ul>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="btn-group">
+
+						<button class="btn btn-default">
+							CS3311
+						</button>
+						<button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li class="active">
+								<a href="#">CS3311</a>
+							</li>
+							<li class="disable">
+								<a href="#">CS2340</a>
+<!-- 							</li>
+							<li class="divider">
+							</li> -->
+<!-- 							<li>
+								<a href="#">Something else here</a>
+							</li> -->
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<h3>
+						Current CS3311
+					</h3>
+				</div>
+				<div class="col-md-4">
+					<div class="btn-group btn-group-vertical">
+
+						<button class="btn btn-default" type="button">
+							<em class="glyphicon glyphicon-home"></em> Home
+						</button>
+						<button class="btn btn-default" type="button">
+							<em class="glyphicon glyphicon-align-justify"></em> Create Course
+						</button>
+						<button class="btn btn-default" type="button">
+							<em class="glyphicon glyphicon-th-large"></em> <a href="?#">Sort Group</a>
+						</button>
+						<button class="btn btn-default" type="button">
+							<em class="glyphicon glyphicon-pencil"></em> Create Class Survey
+						</button>
+					</div>
+				</div>
+			</div>
+	<!-- 		<div class="row">
+				<div class="col-md-12">
+
+				</div>
+			</div> -->
+				<hr>
+				<div class="container-fluid" ng-app="myApp">
+				    <div class="container" ng-controller="ctrlDualList">
+				      <div class="row">
+				            <div class="col-md-12 text-center"><h3>Drag &amp; Drop Pick List</h3></div>
+				            <div class="col-sm-4 col-sm-offset-1">
+				              <div class="list-group" id="list1" x-lvl-drop-target="true" x-on-drop="drop(dragEl, dropEl, bToA)">
+				                <a href="javascript:;" class="list-group-item active">Criteria
+				                  <input title="Toggle all" ng-click="toggleA()" ng-model="toggle" value="{{toggle}}" type="checkbox" class="pull-right"></a>
+				                <span ng-repeat="user in listA">
+				                  <a href="javascript:;" data-id="{{user.id}}" x-lvl-draggable="true" class="list-group-item">{{user.criteriaName}}
+				                    <!-- <small class="text-muted"><em>{{user.role}}</em></small> -->
+				                    <input id="{{user.id}}" ng-click="selectedA.push(user.id)" name="selectedA[]" value="{{user.id}}" ng-checked="selectedA.indexOf(user.id) > -1" type="checkbox" class="pull-right">
+				                  </a>
+				                </span>
+				              </div>
+				            </div><!--/col-4-->
+				            <div class="col-md-2 v-center text-center">
+				              <div class="btn-group">
+				                <button title="Send to list 1" class="btn btn-default" ng-click="bToA()" id="btnA"><i class="glyphicon glyphicon-chevron-left"></i></button>
+				                <button title="Send to list 2" class="btn btn-default" ng-click="aToB()" id="btnB"><i class="glyphicon glyphicon-chevron-right"></i></button>
+				              </div>
+				              <h6 class="text-center">move from list-to-list</h6>
+				            </div><!--/col-2-->
+				            <div class="col-sm-4">
+				              <div class="list-group" id="list2" x-lvl-drop-target="true" x-on-drop="drop(dragEl, dropEl, aToB)">
+				                <a href="javascript:;" class="list-group-item active">Select Criteria
+				                  <input title="Toggle all" ng-click="toggleB()" ng-model="toggle" value="{{toggle}}" type="checkbox" class="pull-right">
+				                </a>
+				                <span ng-repeat="user in listB">
+				                  <a href="javascript:;" data-id="{{user.id}}" class="list-group-item" x-lvl-draggable="true">{{user.criteriaName}}
+				                  <!--   <small class="text-muted"><em>{{user.role}}</em></small> -->
+				                    <input id="{{user.id}}" ng-click="selectedB.push(user.id)" name="selectedB[]" value="{{user.id}}" ng-checked="selectedB.indexOf(user.id) > -1" type="checkbox" class="pull-right">
+				                  </a>
+				                </span>
+				              </div>
+				            </div><!--/col-4-->
+				      </div><!--/row-->
+				    </div><!--/container-->
+
+				  <!-- <hr> -->
+				<!--   <a href="http://www.bootply.com/mW09b0bQcE">Edit on Bootply</a>
+ -->
+				  </div><!--/container-fluid-->
+
+
+
+			<div class="row">
+				<div class="col-md-8">
+					<div class="row">
+						<div class="col-md-6">
+							<h3>
+								Ungrouped Students
+							</h3>
+							<grammarly>
+								<div class="_e725ae-textarea_btn _e725ae-show _e725ae-anonymous _e725ae-field_hovered">
+									<div class="_e725ae-transform_wrap">
+										<div class="_e725ae-status">
+										</div>
+									</div>
+								</div>
+							</grammarly>
+							<grammarly>
+								<div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
+									<div class="_e725ae-transform_wrap">
+										<div class="_e725ae-status">
+										</div>
+									</div>
+								</div>
+							</grammarly>
+							<table class="table table-condensed table-hover table-bordered">
+								<thead>
+									<tr>
+
+										<th>
+											Name
+										</th>
+										<th>
+											Email
+										</th>
+
+									</tr>
+								</thead>
+								<tbody style= "visibility: visible;" id="ungroupedlist">
+									<tr class="active">
+
+										<td>
+											Chase Hamrick
+										</td>
+										<td>
+											ch232@gatech.edu
+										</td>
+
+									</tr>
+									<tr class="active">
+
+										<td>
+											John Schmidt
+										</td>
+										<td>
+											js124@gatech.edu
+										</td>
+
+									</tr>
+									<tr class="active">
+
+										<td>
+											Katherine Delgado
+										</td>
+										<td>
+											kd53@gatech.edu
+										</td>
+
+									</tr>
+									<tr class="active">
+
+										<td>
+											Quang Ty
+										</td>
+										<td>
+											TyQ21@gatech.edu
+										</td>
+
+									</tr>
+									<tr class="active">
+
+										<td>
+											Sheng Li
+										</td>
+										<td>
+											sli341@gatech.edu
+										</td>
+
+									</tr>
+									<tr class="active">
+
+										<td>
+											Best 6th person
+										</td>
+										<td>
+											b6@gatech.edu
+										</td>
+
+									</tr>
+								</tbody>
+							</table>
+							<grammarly class="table-bordered">
+								<div class="_e725ae-textarea_btn _e725ae-show _e725ae-minimized _e725ae-minimize_transition _e725ae-anonymous _e725ae-field_hovered">
+									<div class="_e725ae-transform_wrap">
+										<div class="_e725ae-status">
+										</div>
+									</div>
+								</div>
+							</grammarly>
+							<grammarly class="table-bordered">
+								<div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
+									<div class="_e725ae-transform_wrap">
+										<div class="_e725ae-status">
+										</div>
+									</div>
+								</div>
+							</grammarly>
+						</div>
+						<div class="col-md-6">
+							<h3>
+								Groups
+							</h3>
+							<grammarly>
+								<div class="_e725ae-textarea_btn _e725ae-show _e725ae-anonymous _e725ae-field_hovered">
+									<div class="_e725ae-transform_wrap">
+										<div class="_e725ae-status">
+										</div>
+									</div>
+								</div>
+							</grammarly>
+							<grammarly>
+								<div class="_e725ae-textarea_btn _e725ae-anonymous _e725ae-not_focused">
+									<div class="_e725ae-transform_wrap">
+										<div class="_e725ae-status">
+										</div>
+									</div>
+								</div>
+							</grammarly>
+						<!-- 	<div class="list-group">
+								<ol id="ollist" style= "display: none">
+								 <li><a href="#" class="list-group-item">Team7121</a></li>
+								 <li><a href="#" class="list-group-item">Team7122</a></li>
+								 <li><a href="#" class="list-group-item">Team7123</a></li>
+								</ol>
+							</div> -->
+							<div class="panel-group" id="panel-391734" style="visibility: hidden;">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-391734" href="#panel-element-465708">Team7121</a>
+									</div>
+									<div id="panel-element-465708" class="panel-collapse collapse">
+										<div class="panel-body">
+											Chase Hamrick
+
+										</div>
+										<div class="panel-body">
+											Sheng Li
+
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-391734" href="#panel-element-962048">Team7122</a>
+									</div>
+									<div id="panel-element-962048" class="panel-collapse collapse">
+										<div class="panel-body">
+											Katherine Delgado
+										</div>
+										<div class="panel-body">
+											Quang Ty
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-391734" href="#panel-element-322048">Team7123</a>
+									</div>
+									<div id="panel-element-322048" class="panel-collapse collapse">
+										<div class="panel-body">
+											John Schmidt
+										</div>
+										<div class="panel-body">
+											Best 6th person
+										</div>
+									</div>
+								</div>
+							</div>
+							<grammarly>
+								<div class="_e725ae-textarea_btn _e725ae-show _e725ae-minimized _e725ae-minimize_transition _e725ae-anonymous _e725ae-field_hovered">
+									<div class="_e725ae-transform_wrap">
+										<div class="_e725ae-status">
+										</div>
+									</div>
+								</div>
+							</grammarly>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+
+					<form role="form" class="form-inline">
+						<div class="form-group">
+
+							<label for="exampleInput">
+								Members per Group:
+							</label>
+							<input type="members" class="form-control" id="exampleInputMembers">
+						</div>
+						<div class="form-group">
+
+							<label for="exampleInputPassword1">
+								Group prefix:
+							</label>
+							<input type="groupName" class="form-control" id="exampleInputNames">
+						</div>
+						<!-- <div class="form-group">
+
+							<label for="exampleInputFile">
+								File input
+							</label>
+							<input type="file" id="exampleInputFile">
+							<p class="help-block">
+								Example block-level help text here.
+							</p>
+						</div> -->
+		<!-- 				<div class="checkbox">
+
+							<label>
+								<input type="checkbox"> Check me out
+							</label>
+						</div> -->
+						<button type="submit" class="btn btn-default" onclick="openList1()" >
+							Sort
+						</button>
+						<button type="submit" class="btn btn-default" onclick="closeList1()" >
+							Undo
+						</button>
+					</form>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<footer class="container-fluid text-center">
+  <p>GeorgiaTechConnect <br />Contact: teamcoldcache@gmail.com</p>
+</footer>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
