@@ -251,6 +251,9 @@ function openList1() {
     //     teamlist.style.display = "all";
     //     ungroupedlist.style.display="all";
     // }
+
+    var notification = document.getElementById("sortNotification");
+    notification.classList.toggle("show");
 }
 
 function closeList1() {
@@ -265,6 +268,8 @@ function closeList1() {
     //     // teamlist.style.display = "all";
     //     ungroupedlist.style.display="none";
     // }
+    var notification = document.getElementById("undoNotification");
+    notification.classList.toggle("show");
 }
 
 
