@@ -1,0 +1,36 @@
+[debug] [2017-09-07T21:20:51.521Z] ----------------------------------------------------------------------
+[debug] [2017-09-07T21:20:51.524Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2017-09-07T21:20:51.524Z] CLI Version:   3.9.2
+[debug] [2017-09-07T21:20:51.524Z] Platform:      darwin
+[debug] [2017-09-07T21:20:51.524Z] Node Version:  v6.11.2
+[debug] [2017-09-07T21:20:51.525Z] Time:          Thu Sep 07 2017 17:20:51 GMT-0400 (EDT)
+[debug] [2017-09-07T21:20:51.525Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-09-07T21:20:51.538Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-09-07T21:20:51.539Z] > authorizing via signed-in user
+[debug] [2017-09-07T21:20:51.541Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-09-07T21:20:51.541Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/cgriccWlJ4gMnBLKCWBaxr8LTNbflejIlk8nmd_yDck',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Thu Sep 07 2017 17:20:51 GMT-0400 (EDT)
+[debug] [2017-09-07T21:20:51.638Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-07T21:20:51.647Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/gatechconnect  
+ Thu Sep 07 2017 17:20:51 GMT-0400 (EDT)
+[debug] [2017-09-07T21:20:51.927Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-07T21:20:51.928Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/gatechconnect/tokens  
+ Thu Sep 07 2017 17:20:51 GMT-0400 (EDT)
+[debug] [2017-09-07T21:20:52.331Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/Sheng/gatechconnect'...
+[info] 
+[debug] [2017-09-07T21:20:52.334Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/gatechconnect  
+ Thu Sep 07 2017 17:20:52 GMT-0400 (EDT)
+[debug] [2017-09-07T21:20:52.499Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-07T21:20:52.500Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/671330762711/clients/_:getWebAppConfig  
+ Thu Sep 07 2017 17:20:52 GMT-0400 (EDT)
+[debug] [2017-09-07T21:20:52.751Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
