@@ -1,42 +1,44 @@
-student_list = '[
-    {
-        "name": "Tamara Hicks",
-        "email": "thicks6@gatech.edu"
-    },
-    {
-        "name": "Mary Edwards",
-        "email": "medwards23@gatech.edu"
-    },
-    {
-        "name": "Billy Simon",
-        "email": "bsimon645@gatech.edu"
-    },
-    {
-        "name": "Ruth Cobb",
-        "email": "rcobb549@gatech.edu"
-    },
-    {
-        "name": "Ophelia Brewer",
-        "email": "obrewer95@gatech.edu"
-    },
-    {
-        "name": "Rickie Reynolds",
-        "email": "rreynolds934@gatech.edu"
-    },
-    {
-        "name": "Sharon Greene",
-        "email": "sgreene453@gatech.edu"
-    },
-    {
-        "name": "James McArthur",
-        "email": "jmcarthur239@gatech.edu"
-    },
-    {
-        "name": "Mario Park",
-        "email": "mpark999@gatech.edu"
-    },
-    {
-        "name": "Rose Goetz",
-        "email": "rgoetz3@gatech.edu"
-    }
-]';
+{
+    "student_list": [
+        {
+            "name": "Tamara Hicks",
+            "email": "thicks6@gatech.edu"
+        },
+        {
+            "name": "Mary Edwards",
+            "email": "medwards23@gatech.edu"
+        },
+        {
+            "name": "Billy Simon",
+            "email": "bsimon645@gatech.edu"
+        },
+        {
+            "name": "Ruth Cobb",
+            "email": "rcobb549@gatech.edu"
+        },
+        {
+            "name": "Ophelia Brewer",
+            "email": "obrewer95@gatech.edu"
+        },
+        {
+            "name": "Rickie Reynolds",
+            "email": "rreynolds934@gatech.edu"
+        },
+        {
+            "name": "Sharon Greene",
+            "email": "sgreene453@gatech.edu"
+        },
+        {
+            "name": "James McArthur",
+            "email": "jmcarthur239@gatech.edu"
+        },
+        {
+            "name": "Mario Park",
+            "email": "mpark999@gatech.edu"
+        },
+        {
+            "name": "Rose Goetz",
+            "email": "rgoetz3@gatech.edu"
+        }
+    ]
+}
