@@ -11,7 +11,8 @@
     <meta name="author" content="LayoutIt!">
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+	<link href="css/teacher.css" rel="stylesheet">
 
   </head>
   <body>
@@ -229,79 +230,35 @@
 									</div>
 								</div>
 							</grammarly>
-							<table class="table table-condensed table-hover table-bordered" id="ungrouped-students">
-								<thead>
+							<table class="student-table">
+								<tbody class="connect-groups" id="ungrouped-students">
 									<tr>
-
-										<th>
-											Name
-										</th>
-										<th>
-											Email
-										</th>
-
+										<th>Name</th>
+										<th>Email</th>
 									</tr>
-								</thead>
-								<tbody style= "visibility: visible;" id="ungroupedlist">
-									<tr class="active">
-
-										<td>
-											Chase Hamrick
-										</td>
-										<td>
-											ch232@gatech.edu
-										</td>
-
+									<tr>
+										<td>Chase Hamrick</td>
+										<td>ch232@gatech.edu</td>
 									</tr>
-									<tr class="active">
-
-										<td>
-											John Schmidt
-										</td>
-										<td>
-											js124@gatech.edu
-										</td>
-
+									<tr>
+										<td>John Schmidt</td>
+										<td>js124@gatech.edu</td>
 									</tr>
-									<tr class="active">
-
-										<td>
-											Katherine Delgado
-										</td>
-										<td>
-											kd53@gatech.edu
-										</td>
-
+									<tr>
+										<td>Katherine Delgado</td>
+										<td>kd53@gatech.edu</td>
 									</tr>
-									<tr class="active">
-
-										<td>
-											Quang Ty
-										</td>
-										<td>
-											TyQ21@gatech.edu
-										</td>
-
+									<tr>
+										<td>Quang Ty</td>
+										<td>TyQ21@gatech.edu</td>
 									</tr>
-									<tr class="active">
-
-										<td>
-											Sheng Li
-										</td>
-										<td>
-											sli341@gatech.edu
-										</td>
-
+									<tr>
+										<td>Sheng Li</td>
+										<td>sli341@gatech.edu</td>
 									</tr>
-									<tr class="active">
-
-										<td>
-											Best 6th person
-										</td>
-										<td>
-											b6@gatech.edu
-										</td>
-
+									<tr>
+										<td>Best 6th person</td>
+										<td>b6@gatech.edu</td>
 									</tr>
 								</tbody>
 							</table>
@@ -326,6 +283,20 @@
 							<h3>
 								Groups
 							</h3>
+							<div id="groups">
+								<table class="student-table">
+										<tbody class="connect-groups" id="group1">
+											<tr>
+												<th>Name</th>
+												<th>Email</th>
+											</tr>
+											<tr>
+												<td>Random person</td>
+												<td>randomperson@gatech.edu</td>
+											</tr>
+										</tbody>
+								</table>
+							</div>
 							<grammarly>
 								<div class="_e725ae-textarea_btn _e725ae-show _e725ae-anonymous _e725ae-field_hovered">
 									<div class="_e725ae-transform_wrap">
@@ -449,19 +420,17 @@
 							Undo
 						</button>
 					</form>
-
-
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<footer class="container-fluid text-center">
-  <p>GeorgiaTechConnect <br />Contact: teamcoldcache@gmail.com</p>
-</footer>
-
+	</div>
+	<footer class="container-fluid text-center">
+	<p>GeorgiaTechConnect <br />Contact: teamcoldcache@gmail.com</p>
+	</footer>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-    <script src="js/jquery.min.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 	<script src="js/scripts.js"></script>
 	<script src="js/teacher.js"></script>
