@@ -1,0 +1,17 @@
+
+# Logs
+logs
+*.log*
+npm-debug.log*
+firebase-debug.log*
+
+# Firebase JSON
+database.rules.json*
+firebase.json*
+firebaserc*
+
+
+# Directories
+public/
+node_modules/
+functions/
