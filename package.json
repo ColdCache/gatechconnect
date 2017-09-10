@@ -1,0 +1,19 @@
+{
+  "name": "gatechconnect",
+  "version": "1.0.0",
+  "description": "A web application for group-formation and sorting.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ColdCache/gatechconnect.git"
+  },
+  "author": "ColdCache",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ColdCache/gatechconnect/issues"
+  },
+  "homepage": "https://github.com/ColdCache/gatechconnect#readme"
+}
