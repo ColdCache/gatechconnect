@@ -23,35 +23,35 @@
         
         <!-- Header -->
         <header class="mdl-layout__header mdl-layout__header--transparent ">
-            <div class="mdl-layout__header-row mdl-color-text--grey-700">
-                <span class="mdl-layout-title">
-                    <a href="/"><img src="../images/firebase-logo.png" alt="logo" height="48"></a>
-                </span>
-                <!-- Add spacer, to align navigation to the right -->
-                <div class="mdl-layout-spacer"></div>
-                <!-- Navigation -->
+                <div class="mdl-layout__header-row mdl-color-text--grey-700">
+                    <span class="mdl-layout-title">
+                <a href="/">Georgia Tech Connect</a>
+              </span>
+                    <!-- Add spacer, to align navigation to the right -->
+                    <div class="mdl-layout-spacer"></div>
+                    <!-- Navigation -->
+                    <nav class="mdl-navigation">
+                        <a class="mdl-navigation__link" href="javascript:void(0)" id="sign-in-button">
+                            <i class="material-icons">account_circle</i> <span id="account">Sign In</span>
+                        </a>
+                        <a class="mdl-navigation__link" href="javascript:void(0)" id="account-menu-button">
+                        </a>
+                        <a class="mdl-navigation__link" href="javascript:void(0)" id="help-button">
+                            <i class="material-icons">help</i> <span id="help">Help</span>
+                        </a>
+                    </nav>
+                </div>
+            </header>
+                
+            <!-- Side Drawer -->
+            <div class="mdl-layout__drawer">
+                <span class="mdl-layout-title">Connect</span>
+                <div class="drawer-separator"></div>
                 <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="javascript:void(0)" id="sign-in-button">
-                        <i class="material-icons">account_circle</i> <span id="account">Sign In</span>
-                    </a>
-                    <a class="mdl-navigation__link" href="javascript:void(0)" id="account-menu-button">
-                    </a>
-                    <a class="mdl-navigation__link" href="javascript:void(0)" id="help-button">
-                        <i class="material-icons">help</i> <span id="help">Help</span>
-                    </a>
+                    <a class="mdl-navigation__link" href="/public"><i class="material-icons">lock_open</i> Public</a>
+                    <a class="mdl-navigation__link" href="/help"><i class="material-icons">help_outline</i> Help</a>
                 </nav>
             </div>
-        </header>
-        
-        <!-- Side Drawer -->
-        <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title"><img src="../images/firebase-logo.png" alt="logo" height="48"></span>
-            <div class="drawer-separator"></div>
-            <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="/public"><i class="material-icons">lock_open</i> Public</a>
-                <a class="mdl-navigation__link" href="/help"><i class="material-icons">help_outline</i> Help</a>
-            </nav>
-        </div>
         
         <!--Main Page -->
         <main class="mdl-layout__content page-content">
@@ -67,24 +67,16 @@
                         <h1 class="mdl-card__title-text mdl-color-text--white">Help</h1>
                     </div>
                     <div class="mdl-card__supporting-text mdl-typography--headline">
-                        <h6>FREE ONLINE HELP</h6>
-                        <p>There are several sources of help online including 
-                            <a class="mdl-color-text--grey-500" href="javascript:void(0)" onclick="window.open('https://firebase.google.com/docs/', 'newwindow', 'width=800, height=400'); return false;">Firebase docs<i class="material-icons oin">open_in_new</i></a> and <a class="mdl-color-text--grey-500"
-                            href="javascript:void(0)" onclick="window.open('https://stackoverflow.com/', 'newwindow', 'width=800, height=400'); return false;">Stack Overflow<i class="material-icons oin">open_in_new</i></a>. 
-                        </p>
-                        <h6>HELP FOR HIRE</h6>
-                        <p>If you would like assistance setting up your Firebase Web project I am available for hire by the hour or project and would love to help. 
-                            More of my Material Design, Google API, and Firebase tools at <a class="mdl-color-text--grey-500" href="javascript:void(0)" onclick="window.open('https://rack.pub', 'newwindow', 'width=800, height=400'); return false;">rack.pub<i class="material-icons oin">open_in_new</i></a>.
-                        </p>
+                        <h6>FAQ</h6>
+                        <p> This product is under development and is not yet ready for commercial use. This page will be updated in the future.</p>
+                       
                     </div>
                     <div class="mdl-card__actions mdl-card--border intro-card-actions">
                         <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/">
                             Home
                         </a>
                         <div class="mdl-layout-spacer"></div>
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="https://rack.pub/ratesheet">
-                            <i class="material-icons align">credit_card</i> Hire Me by the Hour or Project
-                        </a>
+                        
                     </div>
                 </div>
                 <!-- Center Card -->
@@ -99,16 +91,13 @@
             
         <!--Main Page Footer Section -->
         <footer class="mdl-mini-footer">
-            <div class="mdl-mini-footer__left-section">
-                <div class="mdl-logo">
-                    More Information
+                <div class="mdl-mini-footer__left-section">
+                    <ul class="mdl-mini-footer__link-list">
+                        <li><a>GeorgiaTechConnect</a></li>
+                        <li><a>Contact: teamcoldcache@gmail.com</a></li>
+                    </ul>
                 </div>
-                <ul class="mdl-mini-footer__link-list">
-                    <li><a href="https://firebase.google.com/docs/auth/">Firebase Authentication</a></li>
-                    <li><a href="https://firebase.google.com/docs/reference/js/index-all">Firebase Web Reference Index</a></li>
-                </ul>
-            </div>
-        </footer>
+            </footer>
         
     </div>
     

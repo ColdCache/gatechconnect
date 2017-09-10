@@ -780,7 +780,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
       var privateLink = doc.createElement("a");
       privateLink.classList.add('mdl-navigation__link');
-      privateLink.href = "../firebase-auth/private";
+      privateLink.href = "../private";
       privateLink.id = "private-link";
       privateLink.appendChild(icon);
       privateLink.appendChild(anchorText);
