@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-amber.min.css" />
     <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="css/teacher.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -55,53 +56,60 @@
         
         <!--Main Page -->
         <main class="mdl-layout__content page-content">
-            
-            <!--Card Section -->
-            <section class="mdl-grid">
-                
-                <!-- Center Card -->
-                <div class="mdl-layout-spacer"></div>
-                <div class="mdl-card mdl-shadow--2dp mdl-cell" id="private-card">
-                    <div class="mdl-card__title">
-                        <h1 class="mdl-card__title-text mdl-color-text--white">Members Only</h1>
-                    </div>
-                    <div class="mdl-card__supporting-text mdl-typography--headline">
-                        <p>This page is titled Members Only and even has the word private in the web address however the security mechanism here is quite weak. JavaScript code in your browser disabled the links to this page for unauthenticated users however
-                            anyone can plug this web address into their browser and this page will render. Try it.</p>
-                        <p>Client side JavaScript could be used to prohibit rendering of this page to members only but this type of security mechanism could easily be tampered with and undone.</p>
-                        <p>Authorization provided server side by
-                            <a class="mdl-color-text--grey-500" href="#" onclick="window.open('https://firebase.google.com/docs/database/security/', 'newwindow', 'width=800, height=400'); return false;">
-                  Firebase Realtime Database Security Rules<i class="material-icons oin">open_in_new</i></a> secures the data on the next card.</p>
-                    </div>
-                    <div class="mdl-card__actions mdl-card--border intro-card-actions">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/">
-                            Home
-                        </a>
-                        <div class="mdl-layout-spacer"></div>
-                        <button class="mdl-button mdl-button--colored" id="next-button">Next</button>
-                    </div>
-                </div>
-                
-                <div class="mdl-card mdl-shadow--2dp mdl-cell" id="secure-card">
-                    <div class="text-center">
-                        <br>
-                        <br>
-                        <br>
-                        <!-- MDL Spinner Component -->
-                        <div class="mdl-spinner mdl-js-spinner is-active"></div>
-                        <p>Are you sure that your markup node is present in your Realtime Database? The secureData child key with markup value should be there too.</p>
-                        <p>Also, are you signed in?</p>
-                    </div>
-                </div>
-                
-                <!-- Center Card -->
-                <div class="mdl-layout-spacer"></div>
-                
-            <!--/Card Section -->
-            </section>
-            
-            <p class="text-center license">Copyright &#169; 2016 <a class="mdl-color-text--grey-600" href="javascript:void(0)" onclick="window.open('https://rack.pub', 'newwindow', 'width=800, height=400'); return false;">Ron Royston</a>, MIT License</p>
-            
+            <div class="col-md-6">
+                    <h3>
+                        Ungrouped Students
+                    </h3>
+                <table class="student-table">
+                    <tbody class="connect-groups" id="ungrouped-students">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                        </tr>
+                        <tr>
+                            <td>Chase Hamrick</td>
+                            <td>ch232@gatech.edu</td>
+                        </tr>
+                        <tr>
+                            <td>John Schmidt</td>
+                            <td>js124@gatech.edu</td>
+                        </tr>
+                        <tr>
+                            <td>Katherine Delgado</td>
+                            <td>kd53@gatech.edu</td>
+                        </tr>
+                        <tr>
+                            <td>Quang Ty</td>
+                            <td>TyQ21@gatech.edu</td>
+                        </tr>
+                        <tr>
+                            <td>Sheng Li</td>
+                            <td>sli341@gatech.edu</td>
+                        </tr>
+                        <tr>
+                            <td>Best 6th person</td>
+                            <td>b6@gatech.edu</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <h3>
+                    Groups
+                </h3>
+                <table class="student-table">
+                        <tbody class="connect-groups" id="group1">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                            </tr>
+                            <tr>
+                                <td>Random person</td>
+                                <td>randomperson@gatech.edu</td>
+                            </tr>
+                        </tbody>
+                </table>
+            </div>
         </main>
             
         <!--Main Page Footer Section -->
@@ -138,7 +146,11 @@
         
     <script src="https://www.gstatic.com/firebasejs/3.2.1/firebase.js"></script>
     <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-    <script src="script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+	<script src="js/scripts.js"></script>
+	<script src="js/teacher.js"></script>
 </body>
 
 </html>
