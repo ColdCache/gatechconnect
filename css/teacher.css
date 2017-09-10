@@ -5,6 +5,7 @@ table .student-table {
 .student-table th {
     color: #fff;
     background: #337ab7;
+    text-align: left;
 }
 
 .student-table tr td,
