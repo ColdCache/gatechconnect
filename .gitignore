@@ -5,13 +5,20 @@ logs
 npm-debug.log*
 firebase-debug.log*
 
+# TMP files
+*.TMP
+
 # Firebase JSON
 database.rules.json*
 firebase.json*
 firebaserc*
 
 
+# Generated Project Files
+.idea/*
+public/js/.idea/*
+
 # Directories
 node_modules/
 functions/
-.idea/
+firebase-debug.log
