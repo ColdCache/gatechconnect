@@ -1,0 +1,28 @@
+[debug] [2017-09-10T01:17:50.242Z] ----------------------------------------------------------------------
+[debug] [2017-09-10T01:17:50.245Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\schmi\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] [2017-09-10T01:17:50.246Z] CLI Version:   3.10.0
+[debug] [2017-09-10T01:17:50.246Z] Platform:      win32
+[debug] [2017-09-10T01:17:50.246Z] Node Version:  v6.11.3
+[debug] [2017-09-10T01:17:50.246Z] Time:          Sat Sep 09 2017 21:17:50 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-09-10T01:17:50.246Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-09-10T01:17:50.257Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-09-10T01:17:50.258Z] > authorizing via signed-in user
+[debug] [2017-09-10T01:17:50.261Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/gatechconnect  
+ Sat Sep 09 2017 21:17:50 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-09-10T01:17:50.556Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-10T01:17:50.557Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/gatechconnect/tokens  
+ Sat Sep 09 2017 21:17:50 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-09-10T01:17:50.960Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Users\schmi\Documents\GitHub\gatechconnect'...
+[info] 
+[debug] [2017-09-10T01:17:50.970Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/gatechconnect  
+ Sat Sep 09 2017 21:17:50 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-09-10T01:17:51.154Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-10T01:17:51.155Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/671330762711/clients/_:getWebAppConfig  
+ Sat Sep 09 2017 21:17:51 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-09-10T01:17:51.554Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] +  hosting: Local server: http://localhost:5000
+
