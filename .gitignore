@@ -14,4 +14,4 @@ firebaserc*
 # Directories
 node_modules/
 functions/
-
+.idea/
