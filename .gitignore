@@ -1,6 +1,7 @@
 # Logs
 logs
-*.log*
+*.log
+*~
 npm-debug.log*
 firebase-debug.log*
 
@@ -13,4 +14,4 @@ firebaserc*
 # Directories
 node_modules/
 functions/
-firebase-debug.log
+
