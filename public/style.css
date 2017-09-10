@@ -71,7 +71,7 @@ label {
 
 .demo-layout-transparent .mdl-layout__header,
 .demo-layout-transparent .mdl-layout__drawer-button {
-  color: white;
+  color: black;
 }
 
 .mdl-layout__content {
@@ -92,7 +92,6 @@ label {
 .mdl-card__title {
   color: #fff;
   height: 176px;
-  background: url('../images/seaside.jpg') center / cover;
 }
 
 .login-card > .mdl-card__title {
