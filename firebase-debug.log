@@ -26,3 +26,31 @@
 [info] i  hosting: Serving hosting files from: public
 [info] +  hosting: Local server: http://localhost:5000
 
+[debug] [2017-09-10T21:32:43.177Z] ----------------------------------------------------------------------
+[debug] [2017-09-10T21:32:43.179Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\taiga\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] [2017-09-10T21:32:43.179Z] CLI Version:   3.10.1
+[debug] [2017-09-10T21:32:43.180Z] Platform:      win32
+[debug] [2017-09-10T21:32:43.180Z] Node Version:  v6.11.3
+[debug] [2017-09-10T21:32:43.180Z] Time:          Sun Sep 10 2017 17:32:43 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-09-10T21:32:43.180Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-09-10T21:32:43.189Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-09-10T21:32:43.189Z] > authorizing via signed-in user
+[debug] [2017-09-10T21:32:43.190Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/gatechconnect  
+ Sun Sep 10 2017 17:32:43 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-09-10T21:32:43.576Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-10T21:32:43.578Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/gatechconnect/tokens  
+ Sun Sep 10 2017 17:32:43 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-09-10T21:32:43.967Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'J:\GitHub\gatechconnect'...
+[info] 
+[debug] [2017-09-10T21:32:43.978Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/gatechconnect  
+ Sun Sep 10 2017 17:32:43 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-09-10T21:32:44.209Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-10T21:32:44.210Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/671330762711/clients/_:getWebAppConfig  
+ Sun Sep 10 2017 17:32:44 GMT-0400 (Eastern Daylight Time)
+[debug] [2017-09-10T21:32:44.521Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] +  hosting: Local server: http://localhost:5000
+
