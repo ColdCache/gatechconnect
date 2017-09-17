@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         deleteAccountButton.addEventListener("click", function(){
           deleteAccount();
-        });  
+        });
       }
       
       if(pwdUsersOnlyDiv){
@@ -771,29 +771,51 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function addPrivateLinkToDrawer(){
-    if(!doc.getElementById('private-link')){
+    if(!doc.getElementById('profile-link')){
       var icon = doc.createElement("i");
-      var iconText = doc.createTextNode('lock_outline');
-      var anchorText = doc.createTextNode(' Private');
+      var iconText = doc.createTextNode('portrait');
+      var anchorText = doc.createTextNode(' Profile');
       icon.classList.add('material-icons');
       icon.appendChild(iconText);
   
-      var privateLink = doc.createElement("a");
-      privateLink.classList.add('mdl-navigation__link');
-      privateLink.href = "../private";
-      privateLink.id = "private-link";
-      privateLink.appendChild(icon);
-      privateLink.appendChild(anchorText);
+      var profileLink = doc.createElement("a");
+      profileLink.classList.add('mdl-navigation__link');
+      profileLink.href = "../profile";
+      profileLink.id = "profile-link";
+      profileLink.appendChild(icon);
+      profileLink.appendChild(anchorText);
   
       var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[1];
-      navLinks.insertBefore(privateLink, anchorList);
+      navLinks.insertBefore(profileLink, anchorList);
+    }
+	  
+	  if(!doc.getElementById('courses-link')){
+      var icon = doc.createElement("i");
+      var iconText = doc.createTextNode('portrait');
+      var anchorText = doc.createTextNode(' Courses');
+      icon.classList.add('material-icons');
+      icon.appendChild(iconText);
+  
+      var coursesLink = doc.createElement("a");
+      coursesLink.classList.add('mdl-navigation__link');
+      coursesLink.href = "../courses";
+      coursesLink.id = "courses-link";
+      coursesLink.appendChild(icon);
+      coursesLink.appendChild(anchorText);
+  
+      var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[2];
+      navLinks.insertBefore(coursesLink, anchorList);
     }
   }
 
   function removePrivateLinkFromDrawer(){
-    var linkToRemove = doc.getElementById('private-link');
+    var linkToRemove = doc.getElementById('profile-link');
     if(linkToRemove){
       linkToRemove.parentNode.removeChild(linkToRemove);
+    }
+	var coursesLink = doc.getElementById('courses-link');
+    if(coursesLink){
+      coursesLink.parentNode.removeChild(coursesLink);
     }
   }
   
