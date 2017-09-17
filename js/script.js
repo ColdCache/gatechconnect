@@ -807,6 +807,47 @@ document.addEventListener('DOMContentLoaded', function() {
       navLinks.insertBefore(coursesLink, anchorList);
     }
   }
+	
+  // function to add teacher specific links to side nav bar (replicated from source)
+  function addTeacherLinksToDrawer(){
+    if(!doc.getElementById('students-link')){
+      var icon = doc.createElement("i");
+      var iconText = doc.createTextNode('people');
+      var anchorText = doc.createTextNode(' Students');
+      icon.classList.add('material-icons');
+      icon.appendChild(iconText);
+  
+      var studentsLink = doc.createElement("a");
+      studentsLink.classList.add('mdl-navigation__link');
+      studentsLink.href = "../students";
+      studentsLink.id = "students-link";
+      studentsLink.appendChild(icon);
+      studentsLink.appendChild(anchorText);
+  
+      var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[3];
+      navLinks.insertBefore(studentsLink, anchorList);
+    }
+  }
+	
+  function addStudentLinksToDrawer(){
+    if(!doc.getElementById('surveys-link')){
+      var icon = doc.createElement("i");
+      var iconText = doc.createTextNode('clipboard_text');
+      var anchorText = doc.createTextNode(' Surveys');
+      icon.classList.add('material-icons');
+      icon.appendChild(iconText);
+  
+      var surveysLink = doc.createElement("a");
+      surveysLink.classList.add('mdl-navigation__link');
+      surveysLink.href = "../surveys";
+      surveysLink.id = "surveys-link";
+      surveysLink.appendChild(icon);
+      surveysLink.appendChild(anchorText);
+  
+      var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[3];
+      navLinks.insertBefore(surveysLink, anchorList);
+    }
+  }
 
   function removePrivateLinkFromDrawer(){
     var linkToRemove = doc.getElementById('profile-link');
@@ -816,6 +857,20 @@ document.addEventListener('DOMContentLoaded', function() {
 	var coursesLink = doc.getElementById('courses-link');
     if(coursesLink){
       coursesLink.parentNode.removeChild(coursesLink);
+    }
+  }
+	
+  function removeTeacherLinksFromDrawer(){
+    var linkToRemove = doc.getElementById('students-link');
+    if(linkToRemove){
+      linkToRemove.parentNode.removeChild(linkToRemove);
+    }
+  }
+	
+  function removeStudentLinksFromDrawer(){
+    var linkToRemove = doc.getElementById('surveys-link');
+    if(linkToRemove){
+      linkToRemove.parentNode.removeChild(linkToRemove);
     }
   }
   
