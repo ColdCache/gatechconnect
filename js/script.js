@@ -930,3 +930,21 @@ var demo = (function() {
   //API
   return pub;
 }());
+
+// test using test.read('node', 'key')
+var test = (function() {
+  var pub = {};
+  var userId = firebase.auth().currentUser.uid;
+  pub.read = function (node,key){
+    var ref = firebase.database().ref('/');
+    var obj = {};
+    var value = ref.child(node).read(node, key);
+    /* Read 
+	return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+  	var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+  	// ...
+	});
+*/
+  }
+  return pub;
+}());
