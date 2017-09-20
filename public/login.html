@@ -85,7 +85,21 @@
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect oauth-login-button" id="twitter-button">
                                 <img src="images/twitter-box.png" alt="twitter icon" class="social-icon"> <span class="opacity4">twitter</span>
                               </button>
-                        <div class="text-center">- or -</div>
+                        <!-- Adding form to check user's account type on login attempt -->
+                        <div class="text-center">
+                                <form id="user-type-input">
+                                        User Type
+                                          <div>
+                                            <input type="radio" id="student-radio"
+                                             name="usertype" value="student">
+                                            <label for="student-radio">Student</label>
+                                        
+                                            <input type="radio" id="teacher-radio"
+                                             name="usertype" value="teacher">
+                                            <label for="teacher-radio">Instructor</label>
+                                          </div>
+                                        </form>
+                            - or -</div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input mdl-color-text--orange-500" type="text" id="username-input">
                             <label class="mdl-textfield__label" for="username-input">Username</label>
