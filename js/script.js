@@ -791,7 +791,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	  
 	  if(!doc.getElementById('courses-link')){
       var icon = doc.createElement("i");
-      var iconText = doc.createTextNode('portrait');
+      var iconText = doc.createTextNode('pages');
       var anchorText = doc.createTextNode(' Courses');
       icon.classList.add('material-icons');
       icon.appendChild(iconText);
@@ -830,6 +830,24 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 	
   function addStudentLinksToDrawer(){
+    if(!doc.getElementById('groups-link')){
+      var icon = doc.createElement("i");
+      var iconText = doc.createTextNode('recent-actors');
+      var anchorText = doc.createTextNode(' Groups');
+      icon.classList.add('material-icons');
+      icon.appendChild(iconText);
+  
+      var groupsLink = doc.createElement("a");
+      groupsLink.classList.add('mdl-navigation__link');
+      groupsLink.href = "../groups";
+      groupsLink.id = "groups-link";
+      groupsLink.appendChild(icon);
+      groupsLink.appendChild(anchorText);
+  
+      var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[3];
+      navLinks.insertBefore(groupsLink, anchorList);
+    }
+
     if(!doc.getElementById('surveys-link')){
       var icon = doc.createElement("i");
       var iconText = doc.createTextNode('clipboard_text');
@@ -844,7 +862,7 @@ document.addEventListener('DOMContentLoaded', function() {
       surveysLink.appendChild(icon);
       surveysLink.appendChild(anchorText);
   
-      var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[3];
+      var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[4];
       navLinks.insertBefore(surveysLink, anchorList);
     }
   }
