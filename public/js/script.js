@@ -582,6 +582,9 @@ document.addEventListener('DOMContentLoaded', function() {
   function loginUsername(email,password){
     auth.signInWithEmailAndPassword(email, password).then(function(value) {
       //NEED TO PULL USER DATA?
+		putNewUser();
+		var userId = firebase.auth().currentUser.uid;
+		demo.update('Users/Students',userId,"Student");
       redirect("/");
     }).catch(function(error) {
       toast(error.message,7000);

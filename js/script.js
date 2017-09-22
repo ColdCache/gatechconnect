@@ -582,6 +582,10 @@ document.addEventListener('DOMContentLoaded', function() {
   function loginUsername(email,password){
     auth.signInWithEmailAndPassword(email, password).then(function(value) {
       //NEED TO PULL USER DATA?
+		// PULL user data on login, create database entry if missing, pull user type from database, hide pages based on user type
+		putNewUser();
+		var userId = firebase.auth().currentUser.uid;
+		demo.update('Users/Students',userId,"Student");
       redirect("/");
     }).catch(function(error) {
       toast(error.message,7000);
@@ -645,6 +649,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   //CAN ADD USER DATA TO REALTIME DATABASE
+  // Test functionality on login (no user showing up in firebase realtime database)
   function putNewUser (){
     if(displayName){
       db.ref('/users/' + uid).once('value').then(function(snap) {
