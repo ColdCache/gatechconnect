@@ -102,12 +102,16 @@ document.addEventListener('DOMContentLoaded', function() {
   var registrationInputPassword2 = doc.getElementById('registration-input-password2');
   var emailInput = doc.getElementById('email');
   var displayNameInput = doc.getElementById('display-name');
+  
 
   //PRIVATE PAGE
   var nextButton = doc.getElementById('next-button');
   
   //PUBLIC PAGE
   var privatePageButton = doc.getElementById('private-page-button');
+	
+  // ACCOUNT PAGE
+  var submitChangesButton = doc.getElementById('submit-changes-button');
   
   //SHARED
   var email = null;
@@ -116,6 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var photoUrl = null;
   var uid = null;    
   var verifiedUser = false;
+  var accountType = null;
   
   var signInButton = doc.getElementById('sign-in-button');
   var accountButton = doc.getElementById('account-menu-button');
@@ -583,8 +588,6 @@ document.addEventListener('DOMContentLoaded', function() {
     auth.signInWithEmailAndPassword(email, password).then(function(value) {
       //NEED TO PULL USER DATA?
 		putNewUser();
-		var userId = firebase.auth().currentUser.uid;
-		demo.update('Users/Students',userId,"Student");
       redirect("/");
     }).catch(function(error) {
       toast(error.message,7000);
@@ -669,6 +672,29 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
   }
+	
+	// archived version
+	function putNewUserDefunct (){
+    if(displayName){
+      db.ref('/users/' + uid).once('value').then(function(snap) {
+        if(snap.val()){
+          //exit bcs user already exists
+          return;
+        } else {
+          // save the user's profile into the database
+          db.ref('/users/' + uid).set({
+            displayName: displayName,
+            email: email,
+            photoUrl: photoUrl,
+            provider: provider
+          });
+        }
+      }, function(error) {
+        // The Promise was rejected.
+        toast(error);
+      });
+    }
+  }
 
   //DETECTS DUPLICATE DISPLAY NAMES IN USERS BRANCH OF REALTIME DATABASE
   function displayNameExists (email, displayName, password){
@@ -704,6 +730,54 @@ document.addEventListener('DOMContentLoaded', function() {
     privatePageButton.addEventListener("click", function(){
       redirect("/private");
     });        
+  }
+	
+  /*
+  
+  ACCOUNT SETTINGS PAGE FUNCTIONS
+  
+  */
+  // submit changes button listener
+  if(submitChangesButton){
+	  submitChangesButton.addEventListener("click", function(){
+		  // pull form elements from document
+		  /*
+		  var displayNameInput = doc.getElementById('display-name-input');
+		  var emailInput = doc.getElementById('email-input');
+		  */
+		  var accountTypeInput = doc.getElementById('account-type-input');
+		  // pull values from doc elements
+		  var newDisplayName = displayNameInput.value;
+		  var newEmail = emailInput.value;
+		  var newAccountType = accountTypeInput.value;
+		  var user = {
+				displayName: newDisplayName,
+				email: newEmail,
+				accountType: newAccountType
+		  };
+		  // check for data validity
+		  if (!newDisplayName){
+			   user.displayName = displayName;
+		  }
+		  if (!newEmail){
+			  user.email = email;
+		  }
+		  if (!newAccountType){
+			  user.accountType = accountType;
+		  }
+		  updateUserInfo(user);
+		  toast("Account Information Updated.");
+    });
+  }
+	
+  // update user information with user obj
+  function updateUserInfo(user){
+	  var userId = firebase.auth().currentUser.uid;
+	  db.ref('/users/' + userId).set({
+         displayName: user.displayName,
+         email: user.email,
+         accountType: user.accountType
+      });
   }
 
   /*
