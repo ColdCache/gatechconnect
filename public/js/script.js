@@ -740,6 +740,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // submit changes button listener
   if(submitChangesButton){
 	  submitChangesButton.addEventListener("click", function(){
+		  
 		  // pull form elements from document
 		  /*
 		  var displayNameInput = doc.getElementById('display-name-input');
@@ -765,22 +766,17 @@ document.addEventListener('DOMContentLoaded', function() {
 		  if (!newAccountType){
 			  user.accountType = accountType;
 		  }
-		  updateUserInfo(user);
-		  toast("Account Information Updated.");
-    });
-  }
-	
-  // update user information with user obj
-  function updateUserInfo(user){
-	  var userId = firebase.auth().currentUser.uid;
-	  db.ref('/users/' + userId).set({
+		  demo.update("users" + uid,"test","submit changes reached.");
+	  	  var userId = firebase.auth().currentUser.uid;
+	  	  var ref = firebase.database().ref('/users/' + userId);
+	  	  ref.set({
          displayName: user.displayName,
          email: user.email,
          accountType: user.accountType
       });
+		  toast("Account Information Updated.");
+    });
   }
-
-  /*
   
   SHARED FUNCTIONS FUNCTIONS
   
