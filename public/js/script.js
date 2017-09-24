@@ -740,43 +740,51 @@ document.addEventListener('DOMContentLoaded', function() {
   // submit changes button listener
   if(submitChangesButton){
 	  submitChangesButton.addEventListener("click", function(){
-		  
+		  var userId = firebase.auth().currentUser.uid;
+		   
 		  // pull form elements from document
 		  /*
 		  var displayNameInput = doc.getElementById('display-name-input');
 		  var emailInput = doc.getElementById('email-input');
 		  */
-		  var accountTypeInput = doc.getElementById('account-type-input');
+		  
+		  var studentRadioInput = doc.getElementById('student-radio');
+		  var instructorRadioInput = doc.getElementById('instructor-radio');
+		  var newAccountType = null;
+		  if (studentRadioInput.checked) {
+			  newAccountType = 'student';
+		  } else if (instructorRadioInput.checked) {
+			  newAccountType = 'instructor';
+		  }
 		  // pull values from doc elements
 		  var newDisplayName = displayNameInput.value;
 		  var newEmail = emailInput.value;
-		  var newAccountType = accountTypeInput.value;
 		  var user = {
 				displayName: newDisplayName,
 				email: newEmail,
 				accountType: newAccountType
 		  };
+		  
+		  
 		  // check for data validity
-		  if (!newDisplayName){
+		  if (!newDisplayName || !newDisplayName.length){
 			   user.displayName = displayName;
 		  }
-		  if (!newEmail){
+		  if (!newEmail || !newEmail.length){
 			  user.email = email;
 		  }
-		  if (!newAccountType){
+		  if (!newAccountType || !newAccountType.length){
 			  user.accountType = accountType;
 		  }
-		  demo.update("users" + uid,"test","submit changes reached.");
-	  	  var userId = firebase.auth().currentUser.uid;
-	  	  var ref = firebase.database().ref('/users/' + userId);
-	  	  ref.set({
-         displayName: user.displayName,
-         email: user.email,
-         accountType: user.accountType
-      });
-		  toast("Account Information Updated.");
+		  firebase.database().ref().child('users/' + userId).update({
+			  displayName: user.displayName,
+			  email: user.email,
+			  accountType: user.accountType
+		  });
+		  toast('Account Information Updated.');
     });
   }
+	/*
   
   SHARED FUNCTIONS FUNCTIONS
   
