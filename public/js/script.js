@@ -587,11 +587,23 @@ document.addEventListener('DOMContentLoaded', function() {
   function loginUsername(email,password){
     auth.signInWithEmailAndPassword(email, password).then(function(value) {
       //NEED TO PULL USER DATA?
-		putNewUser();
+	  putNewUser();
+	  pullUserData();
       redirect("/");
     }).catch(function(error) {
       toast(error.message,7000);
-    });              
+    });
+  }
+
+  function pullUserData() {
+ 	  var userId = firebase.auth().currentUser.uid;
+	  return firebase.database.ref('users/' + userId).once('value').then(function(snapshot) {
+		displayName = (snapshot.val().displayName);
+		email = (snapshot.val().email);
+  		accountType = (snapshot.val().accountType);
+		console.log(accountType);
+		demo.update('users/' + userId, 'test', accountType);
+	 });
   }
 
   function promptDuplicateName (name){
@@ -743,11 +755,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		  var userId = firebase.auth().currentUser.uid;
 		   
 		  // pull form elements from document
-		  /*
-		  var displayNameInput = doc.getElementById('display-name-input');
-		  var emailInput = doc.getElementById('email-input');
-		  */
-		  
 		  var studentRadioInput = doc.getElementById('student-radio');
 		  var instructorRadioInput = doc.getElementById('instructor-radio');
 		  var newAccountType = null;
@@ -765,7 +772,6 @@ document.addEventListener('DOMContentLoaded', function() {
 				accountType: newAccountType
 		  };
 		  
-		  
 		  // check for data validity
 		  if (!newDisplayName || !newDisplayName.length){
 			   user.displayName = displayName;
@@ -776,12 +782,16 @@ document.addEventListener('DOMContentLoaded', function() {
 		  if (!newAccountType || !newAccountType.length){
 			  user.accountType = accountType;
 		  }
+		  
+		  // update firebase database
 		  firebase.database().ref().child('users/' + userId).update({
 			  displayName: user.displayName,
 			  email: user.email,
 			  accountType: user.accountType
-		  });
-		  toast('Account Information Updated.');
+		  }).
+		  then(function() {
+      		console.log('Update Ran Successfully');
+    	  });
     });
   }
 	/*
@@ -886,6 +896,12 @@ document.addEventListener('DOMContentLoaded', function() {
   
       var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[2];
       navLinks.insertBefore(coursesLink, anchorList);
+	  
+	  if (accountType == "student") {
+		  addStudentLinksToDrawer();
+	  } else if (accountType == "instructor") {
+		  addTeacherLinksToDrawer();
+	  }
     }
   }
 	
@@ -949,27 +965,21 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function removePrivateLinkFromDrawer(){
-    var linkToRemove = doc.getElementById('profile-link');
-    if(linkToRemove){
-      linkToRemove.parentNode.removeChild(linkToRemove);
+    var profileLink = doc.getElementById('profile-link');
+    if(profileLink){
+      profileLink.parentNode.removeChild(profileLink);
     }
 	var coursesLink = doc.getElementById('courses-link');
     if(coursesLink){
       coursesLink.parentNode.removeChild(coursesLink);
     }
-  }
-	
-  function removeTeacherLinksFromDrawer(){
-    var linkToRemove = doc.getElementById('students-link');
-    if(linkToRemove){
-      linkToRemove.parentNode.removeChild(linkToRemove);
+	var studentsLink = doc.getElementById('students-link');
+    if(studentsLink){
+      studentsLink.parentNode.removeChild(studentsLink);
     }
-  }
-	
-  function removeStudentLinksFromDrawer(){
-    var linkToRemove = doc.getElementById('surveys-link');
-    if(linkToRemove){
-      linkToRemove.parentNode.removeChild(linkToRemove);
+	var surveysLink = doc.getElementById('surveys-link');
+    if(surveysLink){
+      surveysLink.parentNode.removeChild(surveysLink);
     }
   }
   
