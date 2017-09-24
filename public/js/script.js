@@ -897,11 +897,14 @@ document.addEventListener('DOMContentLoaded', function() {
       var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[2];
       navLinks.insertBefore(coursesLink, anchorList);
 	  
+	  /*
+	  accountType = userData.read('accountType');
 	  if (accountType == "student") {
 		  addStudentLinksToDrawer();
 	  } else if (accountType == "instructor") {
 		  addTeacherLinksToDrawer();
 	  }
+	  */
     }
   }
 	
@@ -1044,7 +1047,7 @@ var demo = (function() {
 var test = (function() {
   var pub = {};
   var userId = firebase.auth().currentUser.uid;
-  pub.read = function (node,key){
+  pub.read = function (node, key){
     var ref = firebase.database().ref('/');
     var obj = {};
     var value = ref.child(node).read(node, key);
@@ -1056,4 +1059,18 @@ var test = (function() {
 */
   }
   return pub;
+}());
+
+// call using userData.read(property)
+var userData = (function() {
+	var pub = {};
+	var userId = firebase.auth().currentUser.uid;
+	pub.read = function(prop) {
+		var ref = firebase.database().ref('users/' + userId + '/' + prop);
+		var obj = {};
+		var value = ref.once('value').then(function(snapshot) {
+			pub = snapshot.val();
+		});
+	}
+	return pub;
 }());
