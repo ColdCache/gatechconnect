@@ -38,6 +38,7 @@ INITIALIZE
 
 */
 document.addEventListener('DOMContentLoaded', function() {
+  console.log("HIIIIIIIIII");
 
   // FIREBASE CONFIG
   var config = {
@@ -209,6 +210,8 @@ document.addEventListener('DOMContentLoaded', function() {
       break;
   }  
 
+  console.log(uid);
+
   //FIREBASE AUTH STATE CHANGE METHOD
   auth.onAuthStateChanged(function(user) {
     if (user) {
@@ -320,7 +323,33 @@ document.addEventListener('DOMContentLoaded', function() {
     
     //ADJUST USER CHIP IN ANY CASE
     loadAccountChip();
+
+    console.log(location.pathname);
+    if (location.pathname == '/private') {
+      console.log(uid);
+      var classReference = "Classes/" + uid;
+      var cs4001 = db.ref(classReference + "/CS4001");
+      console.log(cs4001.key);
+      var rowNumber = 1;
+      cs4001.orderByChild('LastName').on("child_added", function(snapshot) {
+        console.log(snapshot.key + " is " + snapshot.val().LastName + " " + snapshot.val().FirstName);
+        var table = document.getElementById("ungroupedStudents");
+        var row = table.insertRow(rowNumber);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+
+        cell1.innerHTML = snapshot.val().FirstName;
+        cell2.innerHTML = snapshot.val().LastName;
+        rowNumber++;
+      });
+    }
+    // ValueEventListener rosterListener = new ValueEventListener() {
+
+    // }
+    // cs4001.addValueEventListener(rosterListener);
   });
+
+  console.log(uid);
 
   /*
   
@@ -839,6 +868,11 @@ REVEALED METHODS
 
 //REVEALED METHOD TO ADD NODES WITH DATA TO REALTIME DATABASE
 //eg, demo.update('mynode','myKey','myValue')
+
+var myFunction = (function() {
+   // FIREBASE CONFIG
+}());
+
 var demo = (function() {
   var pub = {};
   pub.update = function (node,key,value){
