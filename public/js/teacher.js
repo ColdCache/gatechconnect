@@ -8,17 +8,19 @@ document.addEventListener('DOMContentLoaded', function() {
     zIndex: 999990
   });
 
-  $('#addClass').submit(function(event){
+  $('#addClass').submit(function(event) {
+    var db = firebase.database();
+    var ref = db.ref();
     $(this).find("#className").prop('disabled', true);
-    console.log("submit to Firebase");
     var titleToSend = $('#classNameTextBox').val();
-    var newClass = {
-      titleToSend: []
-    }
-    var classesRef = ref.child('Classes');
-    var classesRef = classesRef.push();
-    console.log('Class key', classesRef.key);
-    var classRef = classesRef.push(newClass);
-    console.log(classesRef);
+    var classesRef = ref.child("Classes");
+    classesRef.push().set({
+      [titleToSend]: {
+        "SomeStudentKey": {
+          "FirstName": "",
+          "LastName": ""
+        }
+      }
+    });
   });
 });
