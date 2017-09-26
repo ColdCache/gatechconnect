@@ -597,7 +597,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function pullUserData() {
  	  var userId = firebase.auth().currentUser.uid;
-	  return firebase.database.ref('users/' + userId).once('value').then(function(snapshot) {
+	  /*
+	  // pull account type from database
+	  firebase.database().ref().child('users/' + userId).once('value').then(function(snapshot) {
+		 accountType = snapshot.val().accountType; 
+	  });
+	  */
+	  firebase.database.ref('users/' + userId).once('value').then(function(snapshot) {
 		displayName = (snapshot.val().displayName);
 		email = (snapshot.val().email);
   		accountType = (snapshot.val().accountType);
@@ -897,14 +903,14 @@ document.addEventListener('DOMContentLoaded', function() {
       var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[2];
       navLinks.insertBefore(coursesLink, anchorList);
 	  
-	  /*
-	  accountType = userData.read('accountType');
-	  if (accountType == "student") {
-		  addStudentLinksToDrawer();
-	  } else if (accountType == "instructor") {
-		  addTeacherLinksToDrawer();
+	  // show respective pages depending on account type
+	  if (accountType) {
+		  if (accountType == "student") {
+		  	addStudentLinksToDrawer();
+	  	  } else if (accountType == "instructor") {
+		  	addTeacherLinksToDrawer();
+	  	  }
 	  }
-	  */
     }
   }
 	
