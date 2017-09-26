@@ -323,16 +323,44 @@ document.addEventListener('DOMContentLoaded', function() {
     
     //ADJUST USER CHIP IN ANY CASE
     loadAccountChip();
-
-    console.log(location.pathname);
+    // function changeRoster() {
+    //   var currentClass = document.getElementById("classes").value;
+    //   console.log(currentClass);
+    // }
     if (location.pathname == '/private') {
-      console.log(uid);
       var classReference = "Classes/" + uid;
+      var classes = db.ref(classReference);
       var cs4001 = db.ref(classReference + "/CS4001");
-      console.log(cs4001.key);
+      var currentClass = "null";
+      //var dropDown = document.createElement("SELECT");
+      //dropDown.setAttribute("id", "classes");
+      var dropDown = document.getElementById("classes");
+      dropDown.setAttribute("onchange", "var currentClass = document.getElementById('classes').value; var config={apiKey: 'AIzaSyAhKnwZ_l8jwtMQFc7mBh30l96NLyZq03Q',authDomain: 'gatechconnect.firebaseapp.com',databaseURL: 'https://gatechconnect.firebaseio.com',projectId: 'gatechconnect',storageBucket: 'gatechconnect.appspot.com',messagingSenderId: '671330762711'};" +
+                                            "firebase.initializeApp(config, 'privateFirebase'); var newDB = firebase.database(); var newAuth = firebase.auth(); var currentUid = newAuth.currentUser.uid; var rowNumber = 1; console.log(currentClass);" +
+                                            "var classLoc = 'Classes/' + currentUid + '/' + currentClass; var classRef = newDB.ref(classLoc);" +
+                                            "document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';" +
+                                            "classRef.orderByChild('LastName').on('child_added', function(snapshot) {" +
+                                            "var table = document.getElementById('ungroupedStudents');" +
+                                            "var row = table.insertRow(rowNumber);" +
+                                            "var cell1 = row.insertCell(0);" +                                                  
+                                            "var cell2 = row.insertCell(1);" +
+                                            "cell1.innerHTML = snapshot.val().FirstName;" +
+                                            "cell2.innerHTML = snapshot.val().LastName;" +
+                                            "rowNumber++;" +
+                                            "}); firebase.app('privateFirebase').delete();");
+      classes.orderByKey().on("child_added", function(snapshot) {
+        var z = document.createElement("option");
+        z.setAttribute("value", snapshot.key);
+        var t = document.createTextNode(snapshot.key);
+        z.appendChild(t);
+        dropDown.appendChild(z);
+
+        currentClass = dropDown.value;
+      });
+      console.log(currentClass.localeCompare("null") != 0);
+      while (currentClass.localeCompare("null") != 0) {};
       var rowNumber = 1;
-      cs4001.orderByChild('LastName').on("child_added", function(snapshot) {
-        console.log(snapshot.key + " is " + snapshot.val().LastName + " " + snapshot.val().FirstName);
+      currentClass.orderByChild('LastName').on("child_added", function(snapshot) {
         var table = document.getElementById("ungroupedStudents");
         var row = table.insertRow(rowNumber);
         var cell1 = row.insertCell(0);
@@ -343,13 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
         rowNumber++;
       });
     }
-    // ValueEventListener rosterListener = new ValueEventListener() {
-
-    // }
-    // cs4001.addValueEventListener(rosterListener);
   });
-
-  console.log(uid);
 
   /*
   
@@ -869,6 +891,9 @@ REVEALED METHODS
 //REVEALED METHOD TO ADD NODES WITH DATA TO REALTIME DATABASE
 //eg, demo.update('mynode','myKey','myValue')
 
+function changeRoster() {
+  console.log("HI");
+}
 var myFunction = (function() {
    // FIREBASE CONFIG
 }());
