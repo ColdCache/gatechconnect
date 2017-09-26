@@ -597,19 +597,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function pullUserData() {
  	  var userId = firebase.auth().currentUser.uid;
-	  /*
-	  // pull account type from database
-	  firebase.database().ref().child('users/' + userId).once('value').then(function(snapshot) {
-		 accountType = snapshot.val().accountType; 
-	  });
-	  */
-	  firebase.database.ref('users/' + userId).once('value').then(function(snapshot) {
-		displayName = (snapshot.val().displayName);
-		email = (snapshot.val().email);
-  		accountType = (snapshot.val().accountType);
-		console.log(accountType);
-		demo.update('users/' + userId, 'test', accountType);
-	 });
+	  db.ref('/users/' + userId).once('value').then(function(snap) {
+        if(snap.val()){
+          accountType = snap.val().accountType;
+        }}, function(error) {
+        // The Promise was rejected.
+        toast(error);
+      });
+	  demo.update('users/' + userId, 'test', accountType);
   }
 
   function promptDuplicateName (name){
@@ -903,6 +898,16 @@ document.addEventListener('DOMContentLoaded', function() {
       var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[2];
       navLinks.insertBefore(coursesLink, anchorList);
 	  
+	  var userId = firebase.auth().currentUser.uid;
+	  db.ref('/users/' + userId).once('value', function(snap) {
+	  });
+ 	  if (accountType) {
+		  demo.update('users/' + userId, 'test', accountType);
+	  } else {
+		  demo.update('users/' + userId, 'test', 'none');
+	  }
+	  
+		  
 	  // show respective pages depending on account type
 	  if (accountType) {
 		  if (accountType == "student") {
@@ -1046,24 +1051,6 @@ var demo = (function() {
     });       
   }
   //API
-  return pub;
-}());
-
-// test using test.read('node', 'key')
-var test = (function() {
-  var pub = {};
-  var userId = firebase.auth().currentUser.uid;
-  pub.read = function (node, key){
-    var ref = firebase.database().ref('/');
-    var obj = {};
-    var value = ref.child(node).read(node, key);
-    /* Read 
-	return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-  	var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-  	// ...
-	});
-*/
-  }
   return pub;
 }());
 
