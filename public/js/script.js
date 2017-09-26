@@ -597,14 +597,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function pullUserData() {
  	  var userId = firebase.auth().currentUser.uid;
-	  db.ref('/users/' + userId).once('value').then(function(snap) {
-        if(snap.val()){
-          accountType = snap.val().accountType;
-        }}, function(error) {
-        // The Promise was rejected.
-        toast(error);
-      });
-	  demo.update('users/' + userId, 'test', accountType);
+	  db.ref('/users/' + userId).child('accountType').on('value', function(snap) {
+		  accountType = (snap.val()) || 'none';
+	  });
   }
 
   function promptDuplicateName (name){
@@ -897,17 +892,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
       var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[2];
       navLinks.insertBefore(coursesLink, anchorList);
+    }
 	  
-	  var userId = firebase.auth().currentUser.uid;
-	  db.ref('/users/' + userId).once('value', function(snap) {
-	  });
- 	  if (accountType) {
-		  demo.update('users/' + userId, 'test', accountType);
-	  } else {
-		  demo.update('users/' + userId, 'test', 'none');
-	  }
-	  
-		  
 	  // show respective pages depending on account type
 	  if (accountType) {
 		  if (accountType == "student") {
@@ -916,7 +902,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		  	addTeacherLinksToDrawer();
 	  	  }
 	  }
-    }
   }
 	
   // function to add teacher specific links to side nav bar (replicated from source)
