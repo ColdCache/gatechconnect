@@ -893,15 +893,18 @@ document.addEventListener('DOMContentLoaded', function() {
       var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[2];
       navLinks.insertBefore(coursesLink, anchorList);
     }
-	  
-	  // show respective pages depending on account type
-	  if (accountType) {
-		  if (accountType == "student") {
-		  	addStudentLinksToDrawer();
-	  	  } else if (accountType == "instructor") {
-		  	addTeacherLinksToDrawer();
-	  	  }
+	  // pull user type from database
+	  var userId = firebase.auth().currentUser.uid;
+	  db.ref('/users/' + userId).child('accountType').on('value', function(snap) {
+		  accountType = (snap.val()) || 'none';
+		  
+	  // call respective function for drawer links
+	  if (accountType.localeCompare('student') == 0) {
+		  addStudentLinksToDrawer();
+	  } else if (accountType.localeCompare('instructor') == 0) {
+		  addTeacherLinksToDrawer();
 	  }
+	});
   }
 	
   // function to add teacher specific links to side nav bar (replicated from source)
@@ -928,7 +931,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function addStudentLinksToDrawer(){
     if(!doc.getElementById('groups-link')){
       var icon = doc.createElement("i");
-      var iconText = doc.createTextNode('recent-actors');
+      var iconText = doc.createTextNode('collections');
       var anchorText = doc.createTextNode(' Groups');
       icon.classList.add('material-icons');
       icon.appendChild(iconText);
@@ -946,7 +949,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if(!doc.getElementById('surveys-link')){
       var icon = doc.createElement("i");
-      var iconText = doc.createTextNode('clipboard_text');
+      var iconText = doc.createTextNode('assignment');
       var anchorText = doc.createTextNode(' Surveys');
       icon.classList.add('material-icons');
       icon.appendChild(iconText);
