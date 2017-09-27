@@ -90,3 +90,31 @@
 [info] i  hosting: Serving hosting files from: public
 [info] +  hosting: Local server: http://localhost:5000
 
+[debug] [2017-09-27T02:01:34.987Z] ----------------------------------------------------------------------
+[debug] [2017-09-27T02:01:34.989Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2017-09-27T02:01:34.989Z] CLI Version:   3.12.0
+[debug] [2017-09-27T02:01:34.989Z] Platform:      darwin
+[debug] [2017-09-27T02:01:34.989Z] Node Version:  v6.11.2
+[debug] [2017-09-27T02:01:34.990Z] Time:          Tue Sep 26 2017 22:01:34 GMT-0400 (EDT)
+[debug] [2017-09-27T02:01:34.990Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-09-27T02:01:35.004Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-09-27T02:01:35.004Z] > authorizing via signed-in user
+[debug] [2017-09-27T02:01:35.007Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/gatechconnect  
+ Tue Sep 26 2017 22:01:35 GMT-0400 (EDT)
+[debug] [2017-09-27T02:01:35.772Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-27T02:01:35.773Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/gatechconnect/tokens  
+ Tue Sep 26 2017 22:01:35 GMT-0400 (EDT)
+[debug] [2017-09-27T02:01:36.153Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/Sheng/gatechconnect'...
+[info] 
+[debug] [2017-09-27T02:01:36.157Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/gatechconnect  
+ Tue Sep 26 2017 22:01:36 GMT-0400 (EDT)
+[debug] [2017-09-27T02:01:36.444Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-27T02:01:36.444Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/671330762711/clients/_:getWebAppConfig  
+ Tue Sep 26 2017 22:01:36 GMT-0400 (EDT)
+[debug] [2017-09-27T02:01:36.823Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
