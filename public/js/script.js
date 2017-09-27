@@ -581,13 +581,15 @@ document.addEventListener('DOMContentLoaded', function() {
       var displayName = displayNameInput.value;
       var password = registrationInputPassword2.value;
       registerPasswordUser(email,displayName,password);
+
     });        
   }
 
   function loginUsername(email,password){
     auth.signInWithEmailAndPassword(email, password).then(function(value) {
       //NEED TO PULL USER DATA?
-	  putNewUser();
+
+      putNewUser();
 	  pullUserData();
       redirect("/");
     }).catch(function(error) {
@@ -632,7 +634,45 @@ document.addEventListener('DOMContentLoaded', function() {
       toast(error.message);
     });                    
   }
-  
+
+    //CAN ADD USER DATA TO REALTIME DATABASE
+    function putNewUser (){
+        user = auth.currentUser;
+        window.alert("putNewUser called, displayName:"+ user.displayName);
+        if(user.displayName){
+            db.ref('/users/' + uid).once('value').then(function(snap) {
+                if(snap.val()){
+                    //exit bcs user already exists
+                    window.alert("snap has a value!");
+                    return;
+                } else {
+                    // save the user's profile into the database
+                    var studentRadioInput = doc.getElementById('student-radio');
+                    var instructorRadioInput = doc.getElementById('instructor-radio');
+
+                    if (studentRadioInput.checked) {
+                        accountType = 'student';
+                    } else if (instructorRadioInput.checked) {
+                        accountType = 'instructor';
+                    }
+
+                    db.ref('/users/' + uid).set({
+                        displayName: displayName,
+                        email: email,
+                        accountType: accountType,
+                        photoUrl: photoUrl,
+                        provider: provider
+                    });
+                    console.log("put account type in to db!");
+                }
+            }, function(error) {
+                // The Promise was rejected.
+                toast(error);
+            });
+        }
+    }
+
+
   function registerPasswordUser(email,displayName,password,photoURL){
     var user = null;
     //NULLIFY EMPTY ARGUMENTS
@@ -645,10 +685,11 @@ document.addEventListener('DOMContentLoaded', function() {
       user.sendEmailVerification();
     })
     .then(function () {
-      user.updateProfile({
-        displayName: displayName,
-        photoURL: photoURL
-      });
+        user.updateProfile({
+            displayName: displayName,
+            photoURL: photoURL
+        });
+        window.alert("resiger PwUser called, displayName=" + displayName);
     })
     .catch(function(error) {
       toast(error.message,7000);
@@ -657,28 +698,7 @@ document.addEventListener('DOMContentLoaded', function() {
     registerCard.style.display = "none";
   }
 
-  //CAN ADD USER DATA TO REALTIME DATABASE
-  function putNewUser (){
-    if(displayName){
-      db.ref('/users/' + uid).once('value').then(function(snap) {
-        if(snap.val()){
-          //exit bcs user already exists
-          return;
-        } else {
-          // save the user's profile into the database
-          db.ref('/users/' + uid).set({
-            displayName: displayName,
-            email: email,
-            photoUrl: photoUrl,
-            provider: provider
-          });
-        }
-      }, function(error) {
-        // The Promise was rejected.
-        toast(error);
-      });
-    }
-  }
+
 	
 	// archived version
 	function putNewUserDefunct (){
