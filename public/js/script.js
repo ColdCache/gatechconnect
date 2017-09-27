@@ -38,7 +38,6 @@ INITIALIZE
 
 */
 document.addEventListener('DOMContentLoaded', function() {
-  console.log("HIIIIIIIIII");
 
   // FIREBASE CONFIG
   var config = {
@@ -210,8 +209,6 @@ document.addEventListener('DOMContentLoaded', function() {
       break;
   }  
 
-  console.log(uid);
-
   //FIREBASE AUTH STATE CHANGE METHOD
   auth.onAuthStateChanged(function(user) {
     if (user) {
@@ -323,22 +320,20 @@ document.addEventListener('DOMContentLoaded', function() {
     
     //ADJUST USER CHIP IN ANY CASE
     loadAccountChip();
-    // function changeRoster() {
-    //   var currentClass = document.getElementById("classes").value;
-    //   console.log(currentClass);
-    // }
+
     if (location.pathname == '/private') {
       var classReference = "Classes/" + uid;
       var classes = db.ref(classReference);
       var cs4001 = db.ref(classReference + "/CS4001");
-      var currentClass = "null";
-      //var dropDown = document.createElement("SELECT");
-      //dropDown.setAttribute("id", "classes");
+
       var dropDown = document.getElementById("classes");
+      currentClass = dropDown.value;
+      //dropDown.setAttribute("onchange", changeRoster());
       dropDown.setAttribute("onchange", "var currentClass = document.getElementById('classes').value; var config={apiKey: 'AIzaSyAhKnwZ_l8jwtMQFc7mBh30l96NLyZq03Q',authDomain: 'gatechconnect.firebaseapp.com',databaseURL: 'https://gatechconnect.firebaseio.com',projectId: 'gatechconnect',storageBucket: 'gatechconnect.appspot.com',messagingSenderId: '671330762711'};" +
-                                            "firebase.initializeApp(config, 'privateFirebase'); var newDB = firebase.database(); var newAuth = firebase.auth(); var currentUid = newAuth.currentUser.uid; var rowNumber = 1; console.log(currentClass);" +
+                                            "firebase.initializeApp(config, 'privateFirebase'); var newDB = firebase.database(); var newAuth = firebase.auth(); var currentUid = newAuth.currentUser.uid; var rowNumber = 1;" +
                                             "var classLoc = 'Classes/' + currentUid + '/' + currentClass; var classRef = newDB.ref(classLoc);" +
                                             "document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';" +
+                                            "if (currentClass.localeCompare('Initial') != 0) {" +
                                             "classRef.orderByChild('LastName').on('child_added', function(snapshot) {" +
                                             "var table = document.getElementById('ungroupedStudents');" +
                                             "var row = table.insertRow(rowNumber);" +
@@ -347,7 +342,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                             "cell1.innerHTML = snapshot.val().FirstName;" +
                                             "cell2.innerHTML = snapshot.val().LastName;" +
                                             "rowNumber++;" +
-                                            "}); firebase.app('privateFirebase').delete();");
+                                            "});" +
+                                            "} firebase.app('privateFirebase').delete();");
       classes.orderByKey().on("child_added", function(snapshot) {
         var z = document.createElement("option");
         z.setAttribute("value", snapshot.key);
@@ -357,19 +353,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
         currentClass = dropDown.value;
       });
-      console.log(currentClass.localeCompare("null") != 0);
-      while (currentClass.localeCompare("null") != 0) {};
-      var rowNumber = 1;
-      currentClass.orderByChild('LastName').on("child_added", function(snapshot) {
-        var table = document.getElementById("ungroupedStudents");
-        var row = table.insertRow(rowNumber);
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
+      //dropDown.setAttribute("onchange", test());
 
-        cell1.innerHTML = snapshot.val().FirstName;
-        cell2.innerHTML = snapshot.val().LastName;
-        rowNumber++;
-      });
+      //changeRoster();
+      // var rowNumber = 1;
+      // cs4001.orderByChild('LastName').on("child_added", function(snapshot) {
+      //   var table = document.getElementById("ungroupedStudents");
+      //   var row = table.insertRow(rowNumber);
+      //   var cell1 = row.insertCell(0);
+      //   var cell2 = row.insertCell(1);
+
+      //   cell1.innerHTML = snapshot.val().FirstName;
+      //   cell2.innerHTML = snapshot.val().LastName;
+      //   rowNumber++;
+      // });
     }
   });
 
@@ -890,10 +887,37 @@ REVEALED METHODS
 
 //REVEALED METHOD TO ADD NODES WITH DATA TO REALTIME DATABASE
 //eg, demo.update('mynode','myKey','myValue')
-
 function changeRoster() {
-  console.log("HI");
+  var currentClass = document.getElementById('classes').value; 
+  console.log(currentClass);
+  console.log("hi");
+  var config={apiKey: 'AIzaSyAhKnwZ_l8jwtMQFc7mBh30l96NLyZq03Q',
+              authDomain: 'gatechconnect.firebaseapp.com',
+              databaseURL: 'https://gatechconnect.firebaseio.com',
+              projectId: 'gatechconnect',
+              storageBucket: 'gatechconnect.appspot.com',
+              messagingSenderId: '671330762711'};
+  firebase.initializeApp(config, "privateFirebase"); 
+  var newDB = firebase.database(); 
+  var newAuth = firebase.auth();
+  var currentUid = newAuth.currentUser.uid;
+  var rowNumber = 1; console.log(currentClass);
+  var classLoc = 'Classes/' + currentUid + '/' + currentClass;
+  console.log(classLoc);
+  var classRef = newDB.ref(classLoc);
+  document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
+  classRef.orderByChild('LastName').on('child_added', function(snapshot) {
+    var table = document.getElementById('ungroupedStudents');
+    var row = table.insertRow(rowNumber);
+    var cell1 = row.insertCell(0);                                                 
+    var cell2 = row.insertCell(1);
+    cell1.innerHTML = snapshot.val().FirstName;
+    cell2.innerHTML = snapshot.val().LastName;
+    rowNumber++;
+  }); 
+  firebase.app('privateFirebase').delete();
 }
+
 var myFunction = (function() {
    // FIREBASE CONFIG
 }());
