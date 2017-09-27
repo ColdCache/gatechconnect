@@ -587,17 +587,16 @@ document.addEventListener('DOMContentLoaded', function() {
   function loginUsername(email,password){
     auth.signInWithEmailAndPassword(email, password).then(function(value) {
       //NEED TO PULL USER DATA?
-        putNewUser();
-        pullUserData();
-        redirect("/");
+	  putNewUser();
+	  pullUserData();
+      redirect("/");
     }).catch(function(error) {
       toast(error.message,7000);
     });
   }
 
   function pullUserData() {
- 	  var userId = firebase.auth().currentUser.uid;
-	  db.ref('/users/' + userId).child('accountType').on('value', function(snap) {
+	  db.ref('/users/' + uid).child('accountType').on('value', function(snap) {
 		  accountType = (snap.val()) || 'none';
 	  });
   }
@@ -748,7 +747,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // submit changes button listener
   if(submitChangesButton){
 	  submitChangesButton.addEventListener("click", function(){
-		  var userId = firebase.auth().currentUser.uid;
 		   
 		  // pull form elements from document
 		  var studentRadioInput = doc.getElementById('student-radio');
@@ -780,12 +778,13 @@ document.addEventListener('DOMContentLoaded', function() {
 		  }
 		  
 		  // update firebase database
-		  firebase.database().ref().child('users/' + userId).update({
+		  var ref = firebase.database().ref();
+		  ref.child('users/' + uid).update({
 			  displayName: user.displayName,
 			  email: user.email,
 			  accountType: user.accountType
 		  }).
-          then(function() {
+		  then(function() {
       		console.log('Update Ran Successfully');
     	  });
     });
@@ -894,8 +893,7 @@ document.addEventListener('DOMContentLoaded', function() {
       navLinks.insertBefore(coursesLink, anchorList);
     }
 	  // pull user type from database
-	  var userId = firebase.auth().currentUser.uid;
-	  db.ref('/users/' + userId).child('accountType').on('value', function(snap) {
+	  db.ref('/users/' + uid).child('accountType').on('value', function(snap) {
 		  accountType = (snap.val()) || 'none';
 		  
 	  // call respective function for drawer links
@@ -1043,15 +1041,14 @@ var demo = (function() {
 }());
 
 // call using userData.read(property)
-// var userData = (function() {
-// 	var pub = {};
-// 	var userId = firebase.auth().currentUser.uid;
-// 	pub.read = function(prop) {
-// 		var ref = firebase.database().ref('users/' + userId + '/' + prop);
-// 		var obj = {};
-// 		var value = ref.once('value').then(function(snapshot) {
-// 			pub = snapshot.val();
-// 		});
-// 	}
-// 	return pub;
-// }());
+var userData = (function() {
+	var pub = {};
+	pub.read = function(prop) {
+		var ref = firebase.database().ref('users/' + uid + '/' + prop);
+		var obj = {};
+		var value = ref.once('value').then(function(snapshot) {
+			pub = snapshot.val();
+		});
+	}
+	return pub;
+}());
