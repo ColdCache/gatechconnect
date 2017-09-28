@@ -580,8 +580,15 @@ document.addEventListener('DOMContentLoaded', function() {
       var email = emailInput.value;
       var displayName = displayNameInput.value;
       var password = registrationInputPassword2.value;
-      registerPasswordUser(email,displayName,password);
-
+	  var studentRadioInput = doc.getElementById('student-radio');
+	  var instructorRadioInput = doc.getElementById('instructor-radio');
+	  var accountType = null;
+	  if (studentRadioInput.checked) {
+		  accountType = 'student';
+	  } else if (instructorRadioInput.checked) {
+		  accountType = 'instructor';
+	  }
+      registerPasswordUser(email,displayName,password, accountType);
     });        
   }
 
@@ -671,7 +678,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-  function registerPasswordUser(email,displayName,password,photoURL){
+  function registerPasswordUser(email,displayName,password, accountType){
     var user = null;
     //NULLIFY EMPTY ARGUMENTS
     for (var i = 0; i < arguments.length; i++) {
@@ -684,9 +691,19 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .then(function () {
         user.updateProfile({
-            displayName: displayName,
-            photoURL: photoURL
+            displayName: displayName
         });
+		// creates user in database
+		var userId = user.uid;
+		var ref = firebase.database().ref();
+		ref.child('users/' + userId).set({
+			displayName: displayName,
+			email: email,
+			accountType: accountType,
+			provider: 'password'
+		}).then(function() {
+      	console.log('User entry successfully created in database.');
+    });
         console.log("Successfully registered user.");
     })
     .catch(function(error) {
@@ -695,8 +712,6 @@ document.addEventListener('DOMContentLoaded', function() {
     toast('Validation link was sent to ' + email + '.', 7000);
     registerCard.style.display = "none";
   }
-
-
 	
 	// archived version
 	function putNewUserDefunct (){
