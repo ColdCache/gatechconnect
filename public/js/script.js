@@ -809,7 +809,18 @@ document.addEventListener('DOMContentLoaded', function() {
 			  newClassLevel = classLevel;
 		  }
 		  
+		  var userUpdate = {
+			  firstName: newFirstName,
+			  lastName: newLastName,
+			  displayName: newDisplayName,
+			  email: newEmail,
+			  accountType: newAccountType,
+			  classLevel: newClassLevel
+		  }
+		  
 		  // update firebase database
+		  dataUpdate.update(userUpdate);
+		  /*
 		  var ref = firebase.database().ref();
 		  ref.child('users/' + uid).update({
 			  firstName: newFirstName,
@@ -821,6 +832,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		  }).then(function() {
       		console.log('Update Ran Successfully');
     	  });
+		  */
     });
   }
 	/*
@@ -1074,15 +1086,16 @@ var demo = (function() {
   return pub;
 }());
 
-// call using userData.read(property)
-var userData = (function() {
-	var pub = {};
-	pub.read = function(prop) {
-		var ref = firebase.database().ref('users/' + uid + '/' + prop);
-		var obj = {};
-		var value = ref.once('value').then(function(snapshot) {
-			pub = snapshot.val();
-		});
-	}
-	return pub;
+// dataUpdate.update(data)
+var dataUpdate = (function() {
+  var pub = {};
+  pub.update = function (data){
+    var ref = firebase.database().ref('/');
+		var userId = firebase.auth().currentUser.uid;
+		ref.child('users/' + userId).update(data).then(function() {
+      	  console.log('Update Ran Successfully');
+    	});
+  }
+  //API
+  return pub;
 }());
