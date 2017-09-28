@@ -793,29 +793,33 @@ document.addEventListener('DOMContentLoaded', function() {
 		  // pull values from doc elements
 		  var newDisplayName = displayNameInput.value;
 		  var newEmail = emailInput.value;
-		  var user = {
-				displayName: newDisplayName,
-				email: newEmail,
-				accountType: newAccountType
-		  };
+		  var updateUser = {
+              displayName: newDisplayName,
+              email: newEmail,
+              accountType: newAccountType
+          };
 		  
 		  // check for data validity
 		  if (!newDisplayName || !newDisplayName.length){
-			   user.displayName = displayName;
+			   updateUser.displayName = displayName;
 		  }
 		  if (!newEmail || !newEmail.length){
-			  user.email = email;
+			  updateUser.email = email;
 		  }
 		  if (!newAccountType || !newAccountType.length){
-			  user.accountType = accountType;
+			  updateUser.accountType = accountType;
 		  }
-		  
+          user = auth.currentUser;
+
+          user.updateProfile({
+              displayName: newDisplayName
+          });
 		  // update firebase database
 		  var ref = firebase.database().ref();
 		  ref.child('users/' + uid).update({
-			  displayName: user.displayName,
-			  email: user.email,
-			  accountType: user.accountType
+              displayName: updateUser.displayName,
+              email:updateUser.email,
+              accountType: updateUser.accountType
 		  }).
 		  then(function() {
       		console.log('Update Ran Successfully');
