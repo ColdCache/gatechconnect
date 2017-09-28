@@ -85,7 +85,22 @@
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect oauth-login-button" id="twitter-button">
                                 <img src="images/twitter-box.png" alt="twitter icon" class="social-icon"> <span class="opacity4">twitter</span>
                               </button>
-                        <div class="text-center">- or -</div>
+                        <div class="text-center">
+                               <!-- Checking for user type no longer necessary
+                               done on login
+                                <form id="user-type-input">
+                                        User Type
+                                          <div>
+                                            <input type="radio" id="student-radio"
+                                             name="usertype" value="student">
+                                            <label for="student-radio">Student</label>
+                                        
+                                            <input type="radio" id="teacher-radio"
+                                             name="usertype" value="teacher">
+                                            <label for="teacher-radio">Instructor</label>
+                                          </div>
+                                        </form>-->
+                            - or -</div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input mdl-color-text--orange-500" type="text" id="username-input">
                             <label class="mdl-textfield__label" for="username-input">Username</label>
@@ -112,7 +127,7 @@
                     <div class="mdl-card__supporting-text mdl-typography--headline text-center" id="register-supporting-text">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input mdl-color-text--orange-500" type="email" id="email">
-                            <label class="mdl-textfield__label" for="username">Email</label>
+                            <label class="mdl-textfield__label" for="email">Email</label>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input mdl-color-text--orange-500" type="text" id="display-name">
@@ -125,6 +140,13 @@
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="registration-input-password2-mdl-textfield">
                             <input class="mdl-textfield__input mdl-color-text--orange-500" type="password" id="registration-input-password2">
                             <label class="mdl-textfield__label" for="registration-input-password2">Re-Enter Password</label>
+                        </div>
+                        <h6>User Type</h6>
+                        <div>
+                            <input type="radio" id="student-radio" name="account-type-input" value="student">
+                            <label for="student-radio">Student</label>
+                            <input type="radio" id="instructor-radio" name="account-type-input" value="instructor">
+                            <label for="instructor-radio">Instructor</label>
                         </div>
                     </div>
                     <div class="mdl-card__actions mdl-card--border intro-card-actions">

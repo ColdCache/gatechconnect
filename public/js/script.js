@@ -102,12 +102,16 @@ document.addEventListener('DOMContentLoaded', function() {
   var registrationInputPassword2 = doc.getElementById('registration-input-password2');
   var emailInput = doc.getElementById('email');
   var displayNameInput = doc.getElementById('display-name');
+  
 
   //PRIVATE PAGE
   var nextButton = doc.getElementById('next-button');
   
   //PUBLIC PAGE
   var privatePageButton = doc.getElementById('private-page-button');
+	
+  // ACCOUNT PAGE
+  var submitChangesButton = doc.getElementById('submit-changes-button');
   
   //SHARED
   var email = null;
@@ -116,6 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var photoUrl = null;
   var uid = null;    
   var verifiedUser = false;
+  var accountType = null;
   
   var signInButton = doc.getElementById('sign-in-button');
   var accountButton = doc.getElementById('account-menu-button');
@@ -258,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         deleteAccountButton.addEventListener("click", function(){
           deleteAccount();
-        });  
+        });
       }
       
       if(pwdUsersOnlyDiv){
@@ -576,16 +581,26 @@ document.addEventListener('DOMContentLoaded', function() {
       var displayName = displayNameInput.value;
       var password = registrationInputPassword2.value;
       registerPasswordUser(email,displayName,password);
+
     });        
   }
 
   function loginUsername(email,password){
     auth.signInWithEmailAndPassword(email, password).then(function(value) {
       //NEED TO PULL USER DATA?
+
+      putNewUser();
+	  pullUserData();
       redirect("/");
     }).catch(function(error) {
       toast(error.message,7000);
-    });              
+    });
+  }
+
+  function pullUserData() {
+	  db.ref('/users/' + uid).child('accountType').on('value', function(snap) {
+		  accountType = (snap.val()) || 'none';
+	  });
   }
 
   function promptDuplicateName (name){
@@ -619,7 +634,43 @@ document.addEventListener('DOMContentLoaded', function() {
       toast(error.message);
     });                    
   }
-  
+
+    //CAN ADD USER DATA TO REALTIME DATABASE
+    function putNewUser (){
+        user = auth.currentUser;
+        if(user.displayName){
+            db.ref('/users/' + uid).once('value').then(function(snap) {
+                if(snap.val()){
+                    //exit bcs user already exists
+                    return;
+                } else {
+                    // save the user's profile into the database
+                    var studentRadioInput = doc.getElementById('student-radio');
+                    var instructorRadioInput = doc.getElementById('instructor-radio');
+
+                    if (studentRadioInput.checked) {
+                        accountType = 'student';
+                    } else if (instructorRadioInput.checked) {
+                        accountType = 'instructor';
+                    }
+					
+                    db.ref('/users/' + uid).set({
+                        displayName: displayName,
+                        email: email,
+                        accountType: accountType,
+                        photoUrl: photoUrl,
+                        provider: provider
+                    });
+                    console.log("put account type in to db!");
+                }
+            }, function(error) {
+                // The Promise was rejected.
+                toast(error);
+            });
+        }
+    }
+
+
   function registerPasswordUser(email,displayName,password,photoURL){
     var user = null;
     //NULLIFY EMPTY ARGUMENTS
@@ -632,10 +683,11 @@ document.addEventListener('DOMContentLoaded', function() {
       user.sendEmailVerification();
     })
     .then(function () {
-      user.updateProfile({
-        displayName: displayName,
-        photoURL: photoURL
-      });
+        user.updateProfile({
+            displayName: displayName,
+            photoURL: photoURL
+        });
+        console.log("Successfully registered user.");
     })
     .catch(function(error) {
       toast(error.message,7000);
@@ -644,8 +696,10 @@ document.addEventListener('DOMContentLoaded', function() {
     registerCard.style.display = "none";
   }
 
-  //CAN ADD USER DATA TO REALTIME DATABASE
-  function putNewUser (){
+
+	
+	// archived version
+	function putNewUserDefunct (){
     if(displayName){
       db.ref('/users/' + uid).once('value').then(function(snap) {
         if(snap.val()){
@@ -702,8 +756,58 @@ document.addEventListener('DOMContentLoaded', function() {
       redirect("/private");
     });        
   }
-
+	
   /*
+  
+  ACCOUNT SETTINGS PAGE FUNCTIONS
+  
+  */
+  // submit changes button listener
+  if(submitChangesButton){
+	  submitChangesButton.addEventListener("click", function(){
+		   
+		  // pull form elements from document
+		  var studentRadioInput = doc.getElementById('student-radio');
+		  var instructorRadioInput = doc.getElementById('instructor-radio');
+		  var newAccountType = null;
+		  if (studentRadioInput.checked) {
+			  newAccountType = 'student';
+		  } else if (instructorRadioInput.checked) {
+			  newAccountType = 'instructor';
+		  }
+		  // pull values from doc elements
+		  var newDisplayName = displayNameInput.value;
+		  var newEmail = emailInput.value;
+		  var user = {
+				displayName: newDisplayName,
+				email: newEmail,
+				accountType: newAccountType
+		  };
+		  
+		  // check for data validity
+		  if (!newDisplayName || !newDisplayName.length){
+			   user.displayName = displayName;
+		  }
+		  if (!newEmail || !newEmail.length){
+			  user.email = email;
+		  }
+		  if (!newAccountType || !newAccountType.length){
+			  user.accountType = accountType;
+		  }
+		  
+		  // update firebase database
+		  var ref = firebase.database().ref();
+		  ref.child('users/' + uid).update({
+			  displayName: user.displayName,
+			  email: user.email,
+			  accountType: user.accountType
+		  }).
+		  then(function() {
+      		console.log('Update Ran Successfully');
+    	  });
+    });
+  }
+	/*
   
   SHARED FUNCTIONS FUNCTIONS
   
@@ -771,29 +875,129 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function addPrivateLinkToDrawer(){
-    if(!doc.getElementById('private-link')){
+    if(!doc.getElementById('profile-link')){
       var icon = doc.createElement("i");
-      var iconText = doc.createTextNode('lock_outline');
-      var anchorText = doc.createTextNode(' Private');
+      var iconText = doc.createTextNode('portrait');
+      var anchorText = doc.createTextNode(' Profile');
       icon.classList.add('material-icons');
       icon.appendChild(iconText);
   
-      var privateLink = doc.createElement("a");
-      privateLink.classList.add('mdl-navigation__link');
-      privateLink.href = "../private";
-      privateLink.id = "private-link";
-      privateLink.appendChild(icon);
-      privateLink.appendChild(anchorText);
+      var profileLink = doc.createElement("a");
+      profileLink.classList.add('mdl-navigation__link');
+      profileLink.href = "../profile";
+      profileLink.id = "profile-link";
+      profileLink.appendChild(icon);
+      profileLink.appendChild(anchorText);
   
       var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[1];
-      navLinks.insertBefore(privateLink, anchorList);
+      navLinks.insertBefore(profileLink, anchorList);
+    }
+	  
+	  if(!doc.getElementById('courses-link')){
+      var icon = doc.createElement("i");
+      var iconText = doc.createTextNode('pages');
+      var anchorText = doc.createTextNode(' Courses');
+      icon.classList.add('material-icons');
+      icon.appendChild(iconText);
+  
+      var coursesLink = doc.createElement("a");
+      coursesLink.classList.add('mdl-navigation__link');
+      coursesLink.href = "../courses";
+      coursesLink.id = "courses-link";
+      coursesLink.appendChild(icon);
+      coursesLink.appendChild(anchorText);
+  
+      var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[2];
+      navLinks.insertBefore(coursesLink, anchorList);
+    }
+	  // pull user type from database
+	  db.ref('/users/' + uid).child('accountType').on('value', function(snap) {
+		  accountType = (snap.val()) || 'none';
+		  
+	  // call respective function for drawer links
+	  if (accountType.localeCompare('student') == 0) {
+		  addStudentLinksToDrawer();
+	  } else if (accountType.localeCompare('instructor') == 0) {
+		  addTeacherLinksToDrawer();
+	  }
+	});
+  }
+	
+  // function to add teacher specific links to side nav bar (replicated from source)
+  function addTeacherLinksToDrawer(){
+    if(!doc.getElementById('students-link')){
+      var icon = doc.createElement("i");
+      var iconText = doc.createTextNode('people');
+      var anchorText = doc.createTextNode(' Students');
+      icon.classList.add('material-icons');
+      icon.appendChild(iconText);
+  
+      var studentsLink = doc.createElement("a");
+      studentsLink.classList.add('mdl-navigation__link');
+      studentsLink.href = "../students";
+      studentsLink.id = "students-link";
+      studentsLink.appendChild(icon);
+      studentsLink.appendChild(anchorText);
+  
+      var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[3];
+      navLinks.insertBefore(studentsLink, anchorList);
+    }
+  }
+	
+  function addStudentLinksToDrawer(){
+    if(!doc.getElementById('groups-link')){
+      var icon = doc.createElement("i");
+      var iconText = doc.createTextNode('collections');
+      var anchorText = doc.createTextNode(' Groups');
+      icon.classList.add('material-icons');
+      icon.appendChild(iconText);
+  
+      var groupsLink = doc.createElement("a");
+      groupsLink.classList.add('mdl-navigation__link');
+      groupsLink.href = "../groups";
+      groupsLink.id = "groups-link";
+      groupsLink.appendChild(icon);
+      groupsLink.appendChild(anchorText);
+  
+      var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[3];
+      navLinks.insertBefore(groupsLink, anchorList);
+    }
+
+    if(!doc.getElementById('surveys-link')){
+      var icon = doc.createElement("i");
+      var iconText = doc.createTextNode('assignment');
+      var anchorText = doc.createTextNode(' Surveys');
+      icon.classList.add('material-icons');
+      icon.appendChild(iconText);
+  
+      var surveysLink = doc.createElement("a");
+      surveysLink.classList.add('mdl-navigation__link');
+      surveysLink.href = "../surveys";
+      surveysLink.id = "surveys-link";
+      surveysLink.appendChild(icon);
+      surveysLink.appendChild(anchorText);
+  
+      var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[4];
+      navLinks.insertBefore(surveysLink, anchorList);
     }
   }
 
   function removePrivateLinkFromDrawer(){
-    var linkToRemove = doc.getElementById('private-link');
-    if(linkToRemove){
-      linkToRemove.parentNode.removeChild(linkToRemove);
+    var profileLink = doc.getElementById('profile-link');
+    if(profileLink){
+      profileLink.parentNode.removeChild(profileLink);
+    }
+	var coursesLink = doc.getElementById('courses-link');
+    if(coursesLink){
+      coursesLink.parentNode.removeChild(coursesLink);
+    }
+	var studentsLink = doc.getElementById('students-link');
+    if(studentsLink){
+      studentsLink.parentNode.removeChild(studentsLink);
+    }
+	var surveysLink = doc.getElementById('surveys-link');
+    if(surveysLink){
+      surveysLink.parentNode.removeChild(surveysLink);
     }
   }
   
@@ -852,4 +1056,17 @@ var demo = (function() {
   }
   //API
   return pub;
+}());
+
+// call using userData.read(property)
+var userData = (function() {
+	var pub = {};
+	pub.read = function(prop) {
+		var ref = firebase.database().ref('users/' + uid + '/' + prop);
+		var obj = {};
+		var value = ref.once('value').then(function(snapshot) {
+			pub = snapshot.val();
+		});
+	}
+	return pub;
 }());

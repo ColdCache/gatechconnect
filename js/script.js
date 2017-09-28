@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         deleteAccountButton.addEventListener("click", function(){
           deleteAccount();
-        });  
+        });
       }
       
       if(pwdUsersOnlyDiv){
@@ -582,6 +582,10 @@ document.addEventListener('DOMContentLoaded', function() {
   function loginUsername(email,password){
     auth.signInWithEmailAndPassword(email, password).then(function(value) {
       //NEED TO PULL USER DATA?
+		// PULL user data on login, create database entry if missing, pull user type from database, hide pages based on user type
+		putNewUser();
+		var userId = firebase.auth().currentUser.uid;
+		demo.update('Users/Students',userId,"Student");
       redirect("/");
     }).catch(function(error) {
       toast(error.message,7000);
@@ -645,6 +649,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   //CAN ADD USER DATA TO REALTIME DATABASE
+  // Test functionality on login (no user showing up in firebase realtime database)
   function putNewUser (){
     if(displayName){
       db.ref('/users/' + uid).once('value').then(function(snap) {
@@ -771,27 +776,122 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function addPrivateLinkToDrawer(){
-    if(!doc.getElementById('private-link')){
+    if(!doc.getElementById('profile-link')){
       var icon = doc.createElement("i");
-      var iconText = doc.createTextNode('lock_outline');
-      var anchorText = doc.createTextNode(' Private');
+      var iconText = doc.createTextNode('portrait');
+      var anchorText = doc.createTextNode(' Profile');
       icon.classList.add('material-icons');
       icon.appendChild(iconText);
   
-      var privateLink = doc.createElement("a");
-      privateLink.classList.add('mdl-navigation__link');
-      privateLink.href = "../private";
-      privateLink.id = "private-link";
-      privateLink.appendChild(icon);
-      privateLink.appendChild(anchorText);
+      var profileLink = doc.createElement("a");
+      profileLink.classList.add('mdl-navigation__link');
+      profileLink.href = "../profile";
+      profileLink.id = "profile-link";
+      profileLink.appendChild(icon);
+      profileLink.appendChild(anchorText);
   
       var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[1];
-      navLinks.insertBefore(privateLink, anchorList);
+      navLinks.insertBefore(profileLink, anchorList);
+    }
+	  
+	  if(!doc.getElementById('courses-link')){
+      var icon = doc.createElement("i");
+      var iconText = doc.createTextNode('pages');
+      var anchorText = doc.createTextNode(' Courses');
+      icon.classList.add('material-icons');
+      icon.appendChild(iconText);
+  
+      var coursesLink = doc.createElement("a");
+      coursesLink.classList.add('mdl-navigation__link');
+      coursesLink.href = "../courses";
+      coursesLink.id = "courses-link";
+      coursesLink.appendChild(icon);
+      coursesLink.appendChild(anchorText);
+  
+      var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[2];
+      navLinks.insertBefore(coursesLink, anchorList);
+    }
+  }
+	
+  // function to add teacher specific links to side nav bar (replicated from source)
+  function addTeacherLinksToDrawer(){
+    if(!doc.getElementById('students-link')){
+      var icon = doc.createElement("i");
+      var iconText = doc.createTextNode('people');
+      var anchorText = doc.createTextNode(' Students');
+      icon.classList.add('material-icons');
+      icon.appendChild(iconText);
+  
+      var studentsLink = doc.createElement("a");
+      studentsLink.classList.add('mdl-navigation__link');
+      studentsLink.href = "../students";
+      studentsLink.id = "students-link";
+      studentsLink.appendChild(icon);
+      studentsLink.appendChild(anchorText);
+  
+      var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[3];
+      navLinks.insertBefore(studentsLink, anchorList);
+    }
+  }
+	
+  function addStudentLinksToDrawer(){
+    if(!doc.getElementById('groups-link')){
+      var icon = doc.createElement("i");
+      var iconText = doc.createTextNode('recent-actors');
+      var anchorText = doc.createTextNode(' Groups');
+      icon.classList.add('material-icons');
+      icon.appendChild(iconText);
+  
+      var groupsLink = doc.createElement("a");
+      groupsLink.classList.add('mdl-navigation__link');
+      groupsLink.href = "../groups";
+      groupsLink.id = "groups-link";
+      groupsLink.appendChild(icon);
+      groupsLink.appendChild(anchorText);
+  
+      var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[3];
+      navLinks.insertBefore(groupsLink, anchorList);
+    }
+
+    if(!doc.getElementById('surveys-link')){
+      var icon = doc.createElement("i");
+      var iconText = doc.createTextNode('clipboard_text');
+      var anchorText = doc.createTextNode(' Surveys');
+      icon.classList.add('material-icons');
+      icon.appendChild(iconText);
+  
+      var surveysLink = doc.createElement("a");
+      surveysLink.classList.add('mdl-navigation__link');
+      surveysLink.href = "../surveys";
+      surveysLink.id = "surveys-link";
+      surveysLink.appendChild(icon);
+      surveysLink.appendChild(anchorText);
+  
+      var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[4];
+      navLinks.insertBefore(surveysLink, anchorList);
     }
   }
 
   function removePrivateLinkFromDrawer(){
-    var linkToRemove = doc.getElementById('private-link');
+    var linkToRemove = doc.getElementById('profile-link');
+    if(linkToRemove){
+      linkToRemove.parentNode.removeChild(linkToRemove);
+    }
+	var coursesLink = doc.getElementById('courses-link');
+    if(coursesLink){
+      coursesLink.parentNode.removeChild(coursesLink);
+    }
+  }
+	
+  function removeTeacherLinksFromDrawer(){
+    var linkToRemove = doc.getElementById('students-link');
+    if(linkToRemove){
+      linkToRemove.parentNode.removeChild(linkToRemove);
+    }
+  }
+	
+  function removeStudentLinksFromDrawer(){
+    var linkToRemove = doc.getElementById('surveys-link');
     if(linkToRemove){
       linkToRemove.parentNode.removeChild(linkToRemove);
     }
@@ -851,5 +951,23 @@ var demo = (function() {
     });       
   }
   //API
+  return pub;
+}());
+
+// test using test.read('node', 'key')
+var test = (function() {
+  var pub = {};
+  var userId = firebase.auth().currentUser.uid;
+  pub.read = function (node,key){
+    var ref = firebase.database().ref('/');
+    var obj = {};
+    var value = ref.child(node).read(node, key);
+    /* Read 
+	return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+  	var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+  	// ...
+	});
+*/
+  }
   return pub;
 }());

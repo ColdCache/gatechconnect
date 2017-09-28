@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+    
 <head>
     <meta charset=utf-8 />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,18 +9,18 @@
     <!-- Description should be roughly 155 characters, no double quotes, use keywords -->
     <meta name="description" content="Firebase v3 Web Auth Full Functionality Example Code" />
     <!-- Format as Primary Keyword - Secondary Keyword | Brand Name, keep under 55 characters -->
-    <title>Firebase v3 Web Auth Sandbox</title>
+    <title>Georgia Tech Connect</title>
     <!-- Minimize the number of CSS files for performance -->
-    <link rel="shortcut icon" href="favicon.png">
+    <link rel="icon" href="/images/logo.ico?" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,100,300,700italic,500,500italic,400italic,300italic,100italic|Roboto+Condensed:300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-amber.min.css" />
     <link href="css/style.css" rel="stylesheet" type="text/css" />
 </head>
-
+    
 <body>
     <div class="demo-layout-transparent mdl-layout mdl-js-layout">
-            
+        
         <!-- Header -->
         <header class="mdl-layout__header mdl-layout__header--transparent ">
                 <div class="mdl-layout__header-row mdl-color-text--grey-700">
@@ -48,7 +48,7 @@
                 <span class="mdl-layout-title">Connect</span>
                 <div class="drawer-separator"></div>
                 <nav class="mdl-navigation">
-				  <!-- Materialize icons can be found at "http://materializecss.com/icons.html"-->
+				  	<!-- Materialize icons can be found at "http://materializecss.com/icons.html"-->
 					<a class="mdl-navigation__link" href="/index"><i class="material-icons">lock_open</i> Home</a>
 					<a class="mdl-navigation__link" href="/about"><i class="material-icons">public</i> About</a>
 					<!-- To Do: Change Student/Teacher nav buttons to only show for respective person.	-->
@@ -57,53 +57,60 @@
 					<a class="mdl-navigation__link" href="/help"><i class="material-icons">help_outline</i> Help</a>
             </nav>
             </div>
-            
+        
         <!--Main Page -->
         <main class="mdl-layout__content page-content">
-                
+            
             <!--Card Section -->
             <section class="mdl-grid">
-                    
+                
                 <!-- Center Card -->
                 <div class="mdl-layout-spacer"></div>
                     
-                <!-- Account Card -->
-                <div class="mdl-card mdl-shadow--2dp mdl-cell" id="account-card">
+                <div class="mdl-card mdl-shadow--2dp mdl-cell" id="help-card">
                     <div class="mdl-card__title">
-                        <h1 class="mdl-card__title-text mdl-color-text--white">My Account</h1>
+                        <h1 class="mdl-card__title-text mdl-color-text--white">Account Settings</h1>
                     </div>
-                    <div class="mdl-card__supporting-text mdl-typography--headline text-center">
-                        <p class="text-left">
-                            All members have a unique identifier called a UID. Developers will typically create a users node in the Realtime Database and populate it with the UID's of each member. Data specific to a user can then be stored and queried.
+                    <div class="mdl-card__supporting-text mdl-typography--headline">
+                        <p>
+                        <form id="user-settings">
+                           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input mdl-color-text--orange-500" type="text" id="display-name">
+								<label class="mdl-textfield__label" for="display-name">Display Name</label>
+                        	</div>
+                           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input mdl-color-text--orange-500" type="text" id="email">
+								<label class="mdl-textfield__label" for="email">Email</label>
+                        	</div>
+                            <h6>User Type</h6>
+                            <div>
+								<input type="radio" id="student-radio" name="account-type-input" value="student">
+								<label for="student-radio">Student</label>
+								<input type="radio" id="instructor-radio" name="account-type-input" value="instructor">
+								<label for="instructor-radio">Instructor</label>
+                           </div>
+                           <div class="mdl-layout-spacer"></div>
+                           <br />
+                           <div class="mdl-card__actions mdl-card--border intro-card-actions">
+                           <div class="mdl-layout-spacer"></div>
+                           <button class="mdl-button mdl-button--colored" id="submit-changes-button">Submit</button>
+                           </div>
+                        </form>
                         </p>
-                        <!--Only password based members see this -->
-                        <div class="text-center" id="pwd-users-only-div">
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="new-email-input-mdl-textfield">
-                                <input class="mdl-textfield__input mdl-color-text--orange-500" type="text" id="new-email-input">
-                                <label class="mdl-textfield__label" for="unew-email-input">New Email Address</label>
-                            </div>
-                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="new-email-submit-button" disabled>
-                                Submit
-                            </button>
-                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="new-password-submit-button">
-                                Reset Password
-                            </button>
-                        </div>
                     </div>
+                    <!-- Home Button on bottom of card
                     <div class="mdl-card__actions mdl-card--border intro-card-actions">
                         <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/">
                             Home
                         </a>
                         <div class="mdl-layout-spacer"></div>
-                        <button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="delete-account-button" disabled>
-                            <i class="material-icons align">delete</i> Delete Account
-                        </button>
-                    </div>
+                        
+                        
+                    </div>-->
                 </div>
-                    
                 <!-- Center Card -->
                 <div class="mdl-layout-spacer"></div>
-                    
+                
             <!--/Card Section -->
             </section>
             
@@ -122,18 +129,18 @@
             </footer>
         
     </div>
-        
+    
     <!--Toast Messages Markup -->
     <div id="toast" class="mdl-js-snackbar mdl-snackbar">
         <div class="mdl-snackbar__text"></div>
         <button class="mdl-snackbar__action" type="button"></button>
     </div>
-        
+    
     <!-- IE Compatibility shims -->
       <!--[if lt IE 9]>
         <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js""></script>
       <![endif]-->
-
+        
       <!--[if IE]>
         <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.7/es5-shim.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/classlist/2014.01.31/classList.min.js"></script>
@@ -143,7 +150,7 @@
       <![endif]-->
     <!-- end shims -->
         
-    <script src="https://www.gstatic.com/firebasejs/3.2.1/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
     <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
     <script src="js/script.js"></script>
 </body>
