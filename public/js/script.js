@@ -638,12 +638,10 @@ document.addEventListener('DOMContentLoaded', function() {
     //CAN ADD USER DATA TO REALTIME DATABASE
     function putNewUser (){
         user = auth.currentUser;
-        window.alert("putNewUser called, displayName:"+ user.displayName);
         if(user.displayName){
             db.ref('/users/' + uid).once('value').then(function(snap) {
                 if(snap.val()){
                     //exit bcs user already exists
-                    window.alert("snap has a value!");
                     return;
                 } else {
                     // save the user's profile into the database
@@ -655,7 +653,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     } else if (instructorRadioInput.checked) {
                         accountType = 'instructor';
                     }
-
+					
                     db.ref('/users/' + uid).set({
                         displayName: displayName,
                         email: email,
