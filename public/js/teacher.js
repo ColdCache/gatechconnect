@@ -21,4 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+
+  $('#groupSizeForm').submit(function(event) {
+    var currentClass = document.getElementById('classes').value;
+    var groupSizeToSend = $('#groupSizeTextBox').val();
+    alert(groupSizeToSend);
+  });
 });
