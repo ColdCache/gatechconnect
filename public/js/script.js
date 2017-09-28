@@ -751,66 +751,38 @@ document.addEventListener('DOMContentLoaded', function() {
 		  // pull form elements from document
 		  var studentRadioInput = doc.getElementById('student-radio');
 		  var instructorRadioInput = doc.getElementById('instructor-radio');
-		  var firstNameInput = doc.getElementById('first-name');
-		  var lastNameInput = doc.getElementById('last-name');
-		  
-		  
+		  var newAccountType = null;
 		  if (studentRadioInput.checked) {
 			  newAccountType = 'student';
 		  } else if (instructorRadioInput.checked) {
 			  newAccountType = 'instructor';
-		  } else {
-			  // no account type selected, pull from database
-		  }
-		  var freshmanRadioInput = doc.getElementById('freshman-radio');
-		  var sophomoreRadioInput = doc.getElementById('sophomore-radio');
-		  var juniorRadioInput = doc.getElementById('junior-radio');
-		  var seniorRadioInput = doc.getElementById('senior-radio');
-		  
-		  
-		  if (freshmanRadioInput.checked) {
-			  newClassLevel = 'freshman';
-		  } else if (sophomoreRadioInput.checked) {
-			  newClassLevel = 'sophomore';
-		  } else if (juniorRadioInput.checked) {
-			  newClassLevel = 'junior';
-		  } else if (seniorRadioInput.checked) {
-			  newClassLevel = 'senior';
-		  } else {
-			  // no class level selected
 		  }
 		  // pull values from doc elements
 		  var newDisplayName = displayNameInput.value;
 		  var newEmail = emailInput.value;
-		  var newFirstName = firstNameInput.value;
-		  var newLastName = lastNameInput.value;
-		  var newAccountType = null;
-		  var newClassLevel = null;
+		  var user = {
+				displayName: newDisplayName,
+				email: newEmail,
+				accountType: newAccountType
+		  };
 		  
 		  // check for data validity
 		  if (!newDisplayName || !newDisplayName.length){
-			   newDisplayName = displayName;
+			   user.displayName = displayName;
 		  }
 		  if (!newEmail || !newEmail.length){
-			  newEmail = email;
-		  }
-		  if (!newFirstName || !newFirstName.length || !newLastName || !newLastName.length){
-			  newFirstName = firstName;
-			  newLastName = lastName;
+			  user.email = email;
 		  }
 		  if (!newAccountType || !newAccountType.length){
-			  newAccountType = accountType;
+			  user.accountType = accountType;
 		  }
 		  
 		  // update firebase database
 		  var ref = firebase.database().ref();
 		  ref.child('users/' + uid).update({
-			  displayName: newDisplayName,
-			  firstName: newFirstName,
-			  lastName: newLastName,
-			  email: newEmail,
-			  accountType: newAccountType,
-			  classLevel: newClassLevel
+			  displayName: user.displayName,
+			  email: user.email,
+			  accountType: user.accountType
 		  }).
 		  then(function() {
       		console.log('Update Ran Successfully');
