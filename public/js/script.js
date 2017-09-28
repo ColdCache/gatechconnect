@@ -121,6 +121,11 @@ document.addEventListener('DOMContentLoaded', function() {
   var uid = null;    
   var verifiedUser = false;
   var accountType = null;
+  var classLevel = null;
+  var department = null;
+  var phoneNumber = null;
+  var firstName = null;
+  var lastName = null;
   
   var signInButton = doc.getElementById('sign-in-button');
   var accountButton = doc.getElementById('account-menu-button');
@@ -749,42 +754,71 @@ document.addEventListener('DOMContentLoaded', function() {
 	  submitChangesButton.addEventListener("click", function(){
 		   
 		  // pull form elements from document
+		  var firstNameInput = doc.getElementById('firstName');
+		  var lastNameInput = doc.getElementById('lastName');
 		  var studentRadioInput = doc.getElementById('student-radio');
 		  var instructorRadioInput = doc.getElementById('instructor-radio');
+		  var freshmanRadioInput = doc.getElementById('freshman-radio');
+		  var sophomoreRadioInput = doc.getElementById('sophomore-radio');
+		  var juniorRadioInput = doc.getElementById('junior-radio');
+		  var seniorRadioInput = doc.getElementById('senior-radio');
+		  
+		  // pull values from form elements
 		  var newAccountType = null;
+		  var newClassLevel = null;
+		  var newFirstName = firstNameInput.value;
+		  var newLastName = lastNameInput.value;
+		  var newDisplayName = displayNameInput.value;
+		  var newEmail = emailInput.value;
+		  
 		  if (studentRadioInput.checked) {
 			  newAccountType = 'student';
 		  } else if (instructorRadioInput.checked) {
 			  newAccountType = 'instructor';
+		  } else {
+			  // no account type selected
 		  }
-		  // pull values from doc elements
-		  var newDisplayName = displayNameInput.value;
-		  var newEmail = emailInput.value;
-		  var user = {
-				displayName: newDisplayName,
-				email: newEmail,
-				accountType: newAccountType
-		  };
+		  
+		  if (freshmanRadioInput.checked) {
+			  newClassLevel = 'freshman';
+		  } else if (sophomoreRadioInput.checked) {
+			  newClassLevel = 'sophomore';
+		  } else if (juniorRadioInput.checked) {
+			  newClassLevel = 'junior';
+		  } else if (seniorRadioInput.checked) {
+			  newClassLevel = 'senior';
+		  } else {
+			  // no class level selected
+		  }
 		  
 		  // check for data validity
+		  if (!newFirstName || !newFirstName.length || !newLastName || !newLastName.length){
+			   newFirstName = firstName;
+			   newLastName = lastName;
+		  }
 		  if (!newDisplayName || !newDisplayName.length){
-			   user.displayName = displayName;
+			   newDisplayName = displayName;
 		  }
 		  if (!newEmail || !newEmail.length){
-			  user.email = email;
+			  newEmail = email;
 		  }
 		  if (!newAccountType || !newAccountType.length){
-			  user.accountType = accountType;
+			  newAccountType = accountType;
+		  }
+		  if (!newClassLevel || !newClassLevel.length){
+			  newClassLevel = classLevel;
 		  }
 		  
 		  // update firebase database
 		  var ref = firebase.database().ref();
 		  ref.child('users/' + uid).update({
-			  displayName: user.displayName,
-			  email: user.email,
-			  accountType: user.accountType
-		  }).
-		  then(function() {
+			  firstName: newFirstName,
+			  lastName: newLastName,
+			  displayName: newDisplayName,
+			  email: newEmail,
+			  accountType: newAccountType,
+			  classLevel: newClassLevel
+		  }).then(function() {
       		console.log('Update Ran Successfully');
     	  });
     });
