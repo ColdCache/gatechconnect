@@ -820,19 +820,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		  
 		  // update firebase database
 		  dataUpdate.update(userUpdate);
-		  /*
-		  var ref = firebase.database().ref();
-		  ref.child('users/' + uid).update({
-			  firstName: newFirstName,
-			  lastName: newLastName,
-			  displayName: newDisplayName,
-			  email: newEmail,
-			  accountType: newAccountType,
-			  classLevel: newClassLevel
-		  }).then(function() {
-      		console.log('Update Ran Successfully');
-    	  });
-		  */
     });
   }
 	/*
