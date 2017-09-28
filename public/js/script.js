@@ -689,7 +689,7 @@ document.addEventListener('DOMContentLoaded', function() {
             displayName: displayName,
             photoURL: photoURL
         });
-        window.alert("resiger PwUser called, displayName=" + displayName);
+        console.log("Successfully registered user.");
     })
     .catch(function(error) {
       toast(error.message,7000);
