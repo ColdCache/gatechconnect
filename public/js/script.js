@@ -324,7 +324,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (location.pathname == '/private') {
       var classReference = "Classes/" + uid;
       var classes = db.ref(classReference);
-      var cs4001 = db.ref(classReference + "/CS4001");
 
       var dropDown = document.getElementById("classes");
       currentClass = dropDown.value;
@@ -336,7 +335,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             "classRef.orderByChild('LastName').on('child_added', function(snapshot) {" +
                                             "var table = document.getElementById('ungroupedStudents');" +
                                             "var row = table.insertRow(rowNumber);" +
-                                            "var cell1 = row.insertCell(0);" +                                                  
+                                            "var cell1 = row.insertCell(0);" +                                   
                                             "var cell2 = row.insertCell(1);" +
                                             "cell1.innerHTML = snapshot.val().FirstName;" +
                                             "cell2.innerHTML = snapshot.val().LastName;" +
