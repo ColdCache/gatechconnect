@@ -37,6 +37,8 @@
 INITIALIZE
 
 */
+var uid = null;
+
 document.addEventListener('DOMContentLoaded', function() {
 
   // FIREBASE CONFIG
@@ -114,7 +116,6 @@ document.addEventListener('DOMContentLoaded', function() {
   var provider = null;
   var displayName = null;
   var photoUrl = null;
-  var uid = null;    
   var verifiedUser = false;
   
   var signInButton = doc.getElementById('sign-in-button');

@@ -14,14 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
     $(this).find("#className").prop('disabled', true);
     var titleToSend = $('#classNameTextBox').val();
     var classesRef = ref.child("Classes");
-    classesRef.set({
-      [uid]: {
-        [titleToSend]: {
-          "SomeStudentId": {
-            "FirstName": "",
-            "LastName": ""
-          }
-        }
+    classesRef.child(uid).child(titleToSend).set({
+      "SomeStudentId": {
+        "FirstName": "First",
+        "LastName": "Last"
       }
     });
   });
