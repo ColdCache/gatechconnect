@@ -595,19 +595,29 @@ document.addEventListener('DOMContentLoaded', function() {
   function loginUsername(email,password){
     auth.signInWithEmailAndPassword(email, password).then(function(value) {
       //NEED TO PULL USER DATA?
+        user = auth.currentUser;
 
-      putNewUser();
-	  pullUserData();
-      redirect("/");
+        var curUser = db.ref('/users/' + user.uid);
+        if (curUser.child('accountType').equalTo('instructor')) {
+            redirect("/private");
+        } else if (curUser.child('accountType').equalTo('student')) {
+            //TODO student page
+            redirect("/");
+        }
+
     }).catch(function(error) {
       toast(error.message,7000);
     });
   }
 
   function pullUserData() {
-	  db.ref('/users/' + uid).child('accountType').on('value', function(snap) {
+      user = auth.currentUser;
+
+      db.ref('/users/' + user.uid).child('accountType').on('value', function(snap) {
 		  accountType = (snap.val()) || 'none';
 	  });
+	  console.log("accountType" +accountType);
+
   }
 
   function promptDuplicateName (name){
@@ -652,15 +662,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 } else {
                     // save the user's profile into the database
-                    var studentRadioInput = doc.getElementById('student-radio');
-                    var instructorRadioInput = doc.getElementById('instructor-radio');
-
-                    if (studentRadioInput.checked) {
-                        accountType = 'student';
-                    } else if (instructorRadioInput.checked) {
-                        accountType = 'instructor';
-                    }
-					
                     db.ref('/users/' + uid).set({
                         displayName: displayName,
                         email: email,
