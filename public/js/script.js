@@ -223,7 +223,8 @@ document.addEventListener('DOMContentLoaded', function() {
       email = user.email ? user.email : null;
       photoUrl = user.photoURL ? user.photoURL : null;
       uid = user.uid ? user.uid : null;
-      
+      accountType = user.accountType ? user.accountType: null;
+
       switch(provider) {
         case 'facebook':
         case 'github':
@@ -271,7 +272,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if(verifiedUser){
             // display account update options
             pwdUsersOnlyDiv.style.display = "inline";
-           
+
             //enable email submit button only if input not empty
             newEmailInputMdlTextfield.addEventListener("input", function() {
               if (this != null) {
@@ -298,7 +299,7 @@ document.addEventListener('DOMContentLoaded', function() {
         privatePageButton.disabled = false;
       }
       addPrivateLinkToDrawer();
-      
+
     //USER NOT SIGNED IN
     } else {
       
@@ -309,7 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
       email = null;
       photoUrl = null;
       uid = null;
-      
+      accountType = null;
       //DISABLE BUTTON AND LINKS
       if(privatePageButton){
         privatePageButton.disabled = true;
@@ -582,7 +583,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var password = registrationInputPassword2.value;
 	  var studentRadioInput = doc.getElementById('student-radio');
 	  var instructorRadioInput = doc.getElementById('instructor-radio');
-	  var accountType = null;
+
 	  if (studentRadioInput.checked) {
 		  accountType = 'student';
 	  } else if (instructorRadioInput.checked) {
@@ -598,12 +599,17 @@ document.addEventListener('DOMContentLoaded', function() {
         user = auth.currentUser;
 
         var curUser = db.ref('/users/' + user.uid);
-        if (curUser.child('accountType').equalTo('instructor')) {
-            redirect("/private");
-        } else if (curUser.child('accountType').equalTo('student')) {
-            //TODO student page
-            redirect("/");
-        }
+        // console.log('curUser= ' + curUser.child('accountType'));
+        curUser.child('accountType').once('value').then(function(snap) {
+          // console.log('snap: ' + snap.val());
+          if (snap.val() == 'instructor') {
+                redirect("/private");
+          } else  {
+                //TODO student page
+              redirect("/");
+          }
+
+        });
 
     }).catch(function(error) {
       toast(error.message,7000);
@@ -813,11 +819,11 @@ document.addEventListener('DOMContentLoaded', function() {
           user = auth.currentUser;
 
           user.updateProfile({
-              displayName: newDisplayName
+            displayName: newDisplayName
           });
 		  // update firebase database
 		  var ref = firebase.database().ref();
-		  ref.child('users/' + uid).update({
+		  ref.child('users/' + user.uid).update({
               displayName: updateUser.displayName,
               email:updateUser.email,
               accountType: updateUser.accountType

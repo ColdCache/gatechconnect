@@ -1,36 +1,36 @@
-[debug] [2017-09-27T19:37:57.238Z] ----------------------------------------------------------------------
-[debug] [2017-09-27T19:37:57.240Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
-[debug] [2017-09-27T19:37:57.241Z] CLI Version:   3.12.0
-[debug] [2017-09-27T19:37:57.241Z] Platform:      darwin
-[debug] [2017-09-27T19:37:57.241Z] Node Version:  v6.11.2
-[debug] [2017-09-27T19:37:57.241Z] Time:          Wed Sep 27 2017 15:37:57 GMT-0400 (EDT)
-[debug] [2017-09-27T19:37:57.241Z] ----------------------------------------------------------------------
+[debug] [2017-09-29T19:30:45.343Z] ----------------------------------------------------------------------
+[debug] [2017-09-29T19:30:45.345Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2017-09-29T19:30:45.346Z] CLI Version:   3.12.0
+[debug] [2017-09-29T19:30:45.346Z] Platform:      darwin
+[debug] [2017-09-29T19:30:45.346Z] Node Version:  v6.11.2
+[debug] [2017-09-29T19:30:45.346Z] Time:          Fri Sep 29 2017 15:30:45 GMT-0400 (EDT)
+[debug] [2017-09-29T19:30:45.346Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2017-09-27T19:37:57.257Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2017-09-27T19:37:57.257Z] > authorizing via signed-in user
-[debug] [2017-09-27T19:37:57.259Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] [2017-09-27T19:37:57.259Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/cgriccWlJ4gMnBLKCWBaxr8LTNbflejIlk8nmd_yDck',
+[debug] [2017-09-29T19:30:45.362Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-09-29T19:30:45.363Z] > authorizing via signed-in user
+[debug] [2017-09-29T19:30:45.364Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-09-29T19:30:45.365Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/cgriccWlJ4gMnBLKCWBaxr8LTNbflejIlk8nmd_yDck',
   client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
   client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
   grant_type: 'refresh_token',
   scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
- Wed Sep 27 2017 15:37:57 GMT-0400 (EDT)
-[debug] [2017-09-27T19:37:57.360Z] <<< HTTP RESPONSE 200
-[debug] [2017-09-27T19:37:57.368Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/gatechconnect  
- Wed Sep 27 2017 15:37:57 GMT-0400 (EDT)
-[debug] [2017-09-27T19:37:57.666Z] <<< HTTP RESPONSE 200
-[debug] [2017-09-27T19:37:57.667Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/gatechconnect/tokens  
- Wed Sep 27 2017 15:37:57 GMT-0400 (EDT)
-[debug] [2017-09-27T19:37:58.273Z] <<< HTTP RESPONSE 200
+ Fri Sep 29 2017 15:30:45 GMT-0400 (EDT)
+[debug] [2017-09-29T19:30:45.469Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-29T19:30:45.476Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/gatechconnect  
+ Fri Sep 29 2017 15:30:45 GMT-0400 (EDT)
+[debug] [2017-09-29T19:30:45.742Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-29T19:30:45.743Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/gatechconnect/tokens  
+ Fri Sep 29 2017 15:30:45 GMT-0400 (EDT)
+[debug] [2017-09-29T19:30:46.072Z] <<< HTTP RESPONSE 200
 [info] 
 [info] === Serving from '/Users/Sheng/gatechconnect'...
 [info] 
-[debug] [2017-09-27T19:37:58.277Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/gatechconnect  
- Wed Sep 27 2017 15:37:58 GMT-0400 (EDT)
-[debug] [2017-09-27T19:37:58.460Z] <<< HTTP RESPONSE 200
-[debug] [2017-09-27T19:37:58.461Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/671330762711/clients/_:getWebAppConfig  
- Wed Sep 27 2017 15:37:58 GMT-0400 (EDT)
-[debug] [2017-09-27T19:37:58.760Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-29T19:30:46.076Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/gatechconnect  
+ Fri Sep 29 2017 15:30:46 GMT-0400 (EDT)
+[debug] [2017-09-29T19:30:46.268Z] <<< HTTP RESPONSE 200
+[debug] [2017-09-29T19:30:46.269Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/671330762711/clients/_:getWebAppConfig  
+ Fri Sep 29 2017 15:30:46 GMT-0400 (EDT)
+[debug] [2017-09-29T19:30:46.590Z] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: public
 [info] ✔  hosting: Local server: http://localhost:5000
 
