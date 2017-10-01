@@ -860,7 +860,6 @@ REVEALED METHODS
 //eg, demo.update('mynode','myKey','myValue')
 function changeRoster() {
   var currentClass = document.getElementById('classes').value; 
-  console.log(currentClass);
   var config={apiKey: 'AIzaSyAhKnwZ_l8jwtMQFc7mBh30l96NLyZq03Q',
               authDomain: 'gatechconnect.firebaseapp.com',
               databaseURL: 'https://gatechconnect.firebaseio.com',
@@ -871,9 +870,8 @@ function changeRoster() {
   var newDB = firebase.database(); 
   var newAuth = firebase.auth();
   var currentUid = newAuth.currentUser.uid;
-  var rowNumber = 1; console.log(currentClass);
+  var rowNumber = 1;
   var classLoc = 'Classes/' + currentUid + '/' + currentClass;
-  console.log(classLoc);
   var classRef = newDB.ref(classLoc);
   document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
   if (currentClass.localeCompare('Initial') != 0) {
