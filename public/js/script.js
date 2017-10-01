@@ -859,7 +859,7 @@ REVEALED METHODS
 //REVEALED METHOD TO ADD NODES WITH DATA TO REALTIME DATABASE
 //eg, demo.update('mynode','myKey','myValue')
 function changeRoster() {
-  var currentClass = document.getElementById('classes').value; 
+  var currentClass = document.getElementById('classes').value;
   var config={apiKey: 'AIzaSyAhKnwZ_l8jwtMQFc7mBh30l96NLyZq03Q',
               authDomain: 'gatechconnect.firebaseapp.com',
               databaseURL: 'https://gatechconnect.firebaseio.com',
@@ -875,6 +875,7 @@ function changeRoster() {
   var classRef = newDB.ref(classLoc);
   document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
   if (currentClass.localeCompare('Initial') != 0) {
+    document.getElementById('groupSize').disabled = false;
     classRef.orderByChild('LastName').on('child_added', function(snapshot) {
       var table = document.getElementById('ungroupedStudents');
       var row = table.insertRow(rowNumber);
@@ -884,6 +885,8 @@ function changeRoster() {
       cell2.innerHTML = snapshot.val().LastName;
       rowNumber++;
     });
+  } else {
+    document.getElementById('groupSize').disabled = true;
   }
   firebase.app('privateFirebase').delete();
 }
