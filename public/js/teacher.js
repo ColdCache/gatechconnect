@@ -22,8 +22,25 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  $('#groupSizeForm').submit(function(event) {
+  $('#numGroupsForm').submit(function(event) {
+    alert("penis");
     var currentClass = document.getElementById('classes').value;
-    var groupSizeToSend = $('#groupSizeTextBox').val();
+    var numGroups = $('#numGroupsTextBox').val();
+    var classSize = 0;
+    var classLoc = 'Classes/' + uid + '/' + currentClass;
+    var classRef = firebase.database().ref(classLoc);
+    classRef.once('value', function(snapshot) {
+       classSize = snapshot.numChildren();
+    });
+    if (classSize < numGroups) {
+      alert('The number of groups cannot be larger than the number of students in the class.');
+    } else {
+      var maxGroupSize = Math.floor(classSize / numGroups);
+      var leftoverStudents = classSize % numGroups;
+      var minGroupSize = maxGroupSize - 1;
+      var minGroupSizedGroups = maxGroupSize - leftoverStudents;
+      var maxGroupSizedGroups = numGroups - minGroupSizedGroups;
+      alert(maxGroupSizedGroups + ' groups of size ' + maxGroupSize + ' and ' + minGroupSizedGroups + ' groups of size ' + minGroupSize + '.');
+    }
   });
 });

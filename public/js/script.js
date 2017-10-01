@@ -875,7 +875,7 @@ function changeRoster() {
   var classRef = newDB.ref(classLoc);
   document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
   if (currentClass.localeCompare('Initial') != 0) {
-    document.getElementById('groupSize').disabled = false;
+    document.getElementById('numGroups').disabled = false;
     classRef.orderByChild('LastName').on('child_added', function(snapshot) {
       var table = document.getElementById('ungroupedStudents');
       var row = table.insertRow(rowNumber);
