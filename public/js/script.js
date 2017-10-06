@@ -121,9 +121,9 @@ document.addEventListener('DOMContentLoaded', function() {
   var uid = null;    
   var verifiedUser = false;
   var accountType = null;
-  var classLevel = null;
+  var year = null;
   var department = null;
-  var phoneNumber = null;
+  var phone = null;
   var firstName = null;
   var lastName = null;
   
@@ -228,7 +228,8 @@ document.addEventListener('DOMContentLoaded', function() {
       email = user.email ? user.email : null;
       photoUrl = user.photoURL ? user.photoURL : null;
       uid = user.uid ? user.uid : null;
-      
+      pullUserData();
+		
       switch(provider) {
         case 'facebook':
         case 'github':
@@ -313,6 +314,9 @@ document.addEventListener('DOMContentLoaded', function() {
       displayName = null;
       email = null;
       photoUrl = null;
+	  department = null;
+	  accountType = null;
+	  phone = null;
       uid = null;
       
       //DISABLE BUTTON AND LINKS
@@ -601,8 +605,27 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function pullUserData() {
+	  // Todo: condense user properties into object and change function to iterate over properties while pulling data
 	  db.ref('/users/' + uid).child('accountType').on('value', function(snap) {
 		  accountType = (snap.val()) || 'none';
+	  });
+	  db.ref('/users/' + uid).child('department').on('value', function(snap) {
+		  department = (snap.val()) || 'none';
+	  });
+	  db.ref('/users/' + uid).child('lastName').on('value', function(snap) {
+		  lastName = (snap.val()) || 'none';
+	  });
+	  db.ref('/users/' + uid).child('firstName').on('value', function(snap) {
+		  firstName = (snap.val()) || 'none';
+	  });
+	  db.ref('/users/' + uid).child('email').on('value', function(snap) {
+		  email = (snap.val()) || 'none';
+	  });
+	  db.ref('/users/' + uid).child('year').on('value', function(snap) {
+		  year = (snap.val()) || 'none';
+	  });
+	  db.ref('/users/' + uid).child('phone').on('value', function(snap) {
+		  phone = (snap.val()) || 'none';
 	  });
   }
 
@@ -752,7 +775,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // submit changes button listener
   if(submitChangesButton){
 	  submitChangesButton.addEventListener("click", function(){
-		   
 		  // pull form elements from document
 		  var firstNameInput = doc.getElementById('firstName');
 		  var lastNameInput = doc.getElementById('lastName');
@@ -762,14 +784,18 @@ document.addEventListener('DOMContentLoaded', function() {
 		  var sophomoreRadioInput = doc.getElementById('sophomore-radio');
 		  var juniorRadioInput = doc.getElementById('junior-radio');
 		  var seniorRadioInput = doc.getElementById('senior-radio');
+		  var departmentInput = doc.getElementById('department');
+		  var phoneInput = doc.getElementById('phone');
 		  
 		  // pull values from form elements
 		  var newAccountType = null;
-		  var newClassLevel = null;
+		  var newYear = null;
 		  var newFirstName = firstNameInput.value;
 		  var newLastName = lastNameInput.value;
 		  var newDisplayName = displayNameInput.value;
 		  var newEmail = emailInput.value;
+		  var newDepartment = departmentInput.value;
+		  var newPhone = phoneInput.value;
 		  
 		  if (studentRadioInput.checked) {
 			  newAccountType = 'student';
@@ -780,13 +806,13 @@ document.addEventListener('DOMContentLoaded', function() {
 		  }
 		  
 		  if (freshmanRadioInput.checked) {
-			  newClassLevel = 'freshman';
+			  newYear = 'freshman';
 		  } else if (sophomoreRadioInput.checked) {
-			  newClassLevel = 'sophomore';
+			  newYear = 'sophomore';
 		  } else if (juniorRadioInput.checked) {
-			  newClassLevel = 'junior';
+			  newYear = 'junior';
 		  } else if (seniorRadioInput.checked) {
-			  newClassLevel = 'senior';
+			  newYear = 'senior';
 		  } else {
 			  // no class level selected
 		  }
@@ -805,9 +831,24 @@ document.addEventListener('DOMContentLoaded', function() {
 		  if (!newAccountType || !newAccountType.length){
 			  newAccountType = accountType;
 		  }
-		  if (!newClassLevel || !newClassLevel.length){
-			  newClassLevel = classLevel;
+		  if (!newYear || !newYear.length){
+			  newYear = year;
 		  }
+		  if (!newDepartment || !newDepartment.length) {
+			  newDepartment = department;
+		  }
+		  if (!newPhone || !newPhone.length) {
+			  newPhone = phone;
+		  }
+		  
+		  firstName = newFirstName;
+		  lastName = newLastName;
+		  displayName = newDisplayName;
+		  email = newEmail;
+		  accountType = newAccountType;
+		  year = newYear;
+		  department = newDepartment;
+		  phone = newPhone;
 		  
 		  var userUpdate = {
 			  firstName: newFirstName,
@@ -815,9 +856,10 @@ document.addEventListener('DOMContentLoaded', function() {
 			  displayName: newDisplayName,
 			  email: newEmail,
 			  accountType: newAccountType,
-			  classLevel: newClassLevel
+			  year: newYear,
+			  department: newDepartment,
+			  phone: newPhone
 		  }
-		  
 		  // update firebase database
 		  dataUpdate.update(userUpdate);
     });
@@ -899,7 +941,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
       var profileLink = doc.createElement("a");
       profileLink.classList.add('mdl-navigation__link');
-      profileLink.href = "../profile";
+      profileLink.href = "../account";
       profileLink.id = "profile-link";
       profileLink.appendChild(icon);
       profileLink.appendChild(anchorText);
@@ -927,7 +969,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 	  // pull user type from database
 	  db.ref('/users/' + uid).child('accountType').on('value', function(snap) {
-		  accountType = (snap.val()) || 'none';
+		  accountType = snap.val();
 		  
 	  // call respective function for drawer links
 	  if (accountType.localeCompare('student') == 0) {
@@ -1053,7 +1095,7 @@ document.addEventListener('DOMContentLoaded', function() {
 /*
 
 REVEALED METHODS
-
+..
 */
 
 //REVEALED METHOD TO ADD NODES WITH DATA TO REALTIME DATABASE
