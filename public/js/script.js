@@ -780,16 +780,13 @@ document.addEventListener('DOMContentLoaded', function() {
 		  var lastNameInput = doc.getElementById('lastName');
 		  var studentRadioInput = doc.getElementById('student-radio');
 		  var instructorRadioInput = doc.getElementById('instructor-radio');
-		  var freshmanRadioInput = doc.getElementById('freshman-radio');
-		  var sophomoreRadioInput = doc.getElementById('sophomore-radio');
-		  var juniorRadioInput = doc.getElementById('junior-radio');
-		  var seniorRadioInput = doc.getElementById('senior-radio');
 		  var departmentInput = doc.getElementById('department');
 		  var phoneInput = doc.getElementById('phone');
+		  var yearInput = doc.getElementById('year');
 		  
 		  // pull values from form elements
 		  var newAccountType = null;
-		  var newYear = null;
+		  var newYear = yearInput.value;
 		  var newFirstName = firstNameInput.value;
 		  var newLastName = lastNameInput.value;
 		  var newDisplayName = displayNameInput.value;
@@ -803,18 +800,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			  newAccountType = 'instructor';
 		  } else {
 			  // no account type selected
-		  }
-		  
-		  if (freshmanRadioInput.checked) {
-			  newYear = 'freshman';
-		  } else if (sophomoreRadioInput.checked) {
-			  newYear = 'sophomore';
-		  } else if (juniorRadioInput.checked) {
-			  newYear = 'junior';
-		  } else if (seniorRadioInput.checked) {
-			  newYear = 'senior';
-		  } else {
-			  // no class level selected
 		  }
 		  
 		  // check for data validity
