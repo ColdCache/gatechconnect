@@ -130,9 +130,13 @@
                             <label class="mdl-textfield__label" for="username">Email</label>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input mdl-color-text--orange-500" type="text" id="display-name">
-                            <label class="mdl-textfield__label" for="display-name">Display Name</label>
-                        </div>
+								<input class="mdl-textfield__input mdl-color-text--orange-500" type="text" id="firstName">
+								<label class="mdl-textfield__label" for="firstName">First Name</label>
+                        	</div>
+                           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<input class="mdl-textfield__input mdl-color-text--orange-500" type="text" id="lastName">
+								<label class="mdl-textfield__label" for="lastName">Last Name</label>
+                        	</div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input mdl-color-text--orange-500" type="password" id="registration-input-password">
                             <label class="mdl-textfield__label" for="registration-input-password">Password</label>
@@ -141,6 +145,13 @@
                             <input class="mdl-textfield__input mdl-color-text--orange-500" type="password" id="registration-input-password2">
                             <label class="mdl-textfield__label" for="registration-input-password2">Re-Enter Password</label>
                         </div>
+                        <h6>User Type</h6>
+                            <div>
+								<input type="radio" id="student-radio" name="account-type-input" value="student">
+								<label for="student-radio">Student</label>
+								<input type="radio" id="instructor-radio" name="account-type-input" value="instructor">
+								<label for="teacher-radio">Instructor</label>
+                           </div>
                     </div>
                     <div class="mdl-card__actions mdl-card--border intro-card-actions">
                         <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="back-button">

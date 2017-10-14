@@ -102,6 +102,11 @@ document.addEventListener('DOMContentLoaded', function() {
   var registrationInputPassword2 = doc.getElementById('registration-input-password2');
   var emailInput = doc.getElementById('email');
   var displayNameInput = doc.getElementById('display-name');
+  var firstNameInput = doc.getElementById('firstName');
+  var lastNameInput = doc.getElementById('lastName');
+  var studentRadioInput = doc.getElementById('student-radio');
+  var instructorRadioInput = doc.getElementById('instructor-radio');
+	
   
 
   //PRIVATE PAGE
@@ -586,10 +591,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if(submitButton){
     submitButton.addEventListener("click", function(){
-      var email = emailInput.value;
-      var displayName = displayNameInput.value;
-      var password = registrationInputPassword2.value;
-      registerPasswordUser(email,displayName,password);
+      email = emailInput.value;
+	  firstName = firstNameInput.value;
+	  lastName = lastNameInput.value;
+      password = registrationInputPassword2.value;
+	  accountType = null;
+	  displayName = firstName + " " + lastName;
+	  if (studentRadioInput.checked) {
+			  accountType = 'student';
+	  } else if (instructorRadioInput.checked) {
+			  accountType = 'instructor';
+	  }
+      registerPasswordUser(email,firstName,lastName,accountType,password);
     });        
   }
 
@@ -661,7 +674,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });                    
   }
   
-  function registerPasswordUser(email,displayName,password,photoURL){
+  function registerPasswordUser(email,firstName,lastName,accountType,password){
     var user = null;
     //NULLIFY EMPTY ARGUMENTS
     for (var i = 0; i < arguments.length; i++) {
@@ -671,11 +684,16 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(function () {
       user = auth.currentUser;
       user.sendEmailVerification();
+	  putNewUser();
     })
     .then(function () {
+	  var displayName = firstName + " " + lastName;
       user.updateProfile({
-        displayName: displayName,
-        photoURL: photoURL
+		email: email,
+        firstName: firstName,
+		lastName: lastName,
+		displayName: displayName,
+		accountType: accountType
       });
     })
     .catch(function(error) {
@@ -686,7 +704,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   //CAN ADD USER DATA TO REALTIME DATABASE
-  function putNewUser (){
+  function putNewUser(){
     if(displayName){
       db.ref('/users/' + uid).once('value').then(function(snap) {
         if(snap.val()){
@@ -695,9 +713,12 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
           // save the user's profile into the database
           db.ref('/users/' + uid).set({
+			firstName: firstName,
+			lastName: lastName,
             displayName: displayName,
             email: email,
             photoUrl: photoUrl,
+			accountType: accountType,
             provider: provider
           });
         }
