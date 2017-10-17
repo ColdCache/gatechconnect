@@ -330,12 +330,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // Creates variable for the currently loaded sites drop down menu to hold the class names
       var dropDown = document.getElementById("classes");
+<<<<<<< HEAD
 
       //currentClass = dropDown.value;
       //dropDown.setAttribute("onchange", changeRoster());
       // Adds onchange attribute that loads the currently selected classes roster and places them in the table when the value of the dropdown changes
       // ******NOTE - this is using inline HTML right now because for some reason calling a function wouldn't work. Temporary measure******
       //                                       ****** might swap to function call in future****
+=======
+      currentClass = dropDown.value;
+>>>>>>> 0e450982884245bbe4ae3ac33639bdf11dd0b9cf
       dropDown.setAttribute("onchange", "var currentClass = document.getElementById('classes').value; var config={apiKey: 'AIzaSyAhKnwZ_l8jwtMQFc7mBh30l96NLyZq03Q',authDomain: 'gatechconnect.firebaseapp.com',databaseURL: 'https://gatechconnect.firebaseio.com',projectId: 'gatechconnect',storageBucket: 'gatechconnect.appspot.com',messagingSenderId: '671330762711'};" +
                                             "firebase.initializeApp(config, 'privateFirebase'); var newDB = firebase.database(); var newAuth = firebase.auth(); var currentUid = newAuth.currentUser.uid; var rowNumber = 1;" +
                                             "var classLoc = 'Classes/' + currentUid + '/' + currentClass; var classRef = newDB.ref(classLoc);" +
@@ -899,7 +903,6 @@ REVEALED METHODS
 function changeRoster() {
   var currentClass = document.getElementById('classes').value; 
   console.log(currentClass);
-  console.log("hi");
   var config={apiKey: 'AIzaSyAhKnwZ_l8jwtMQFc7mBh30l96NLyZq03Q',
               authDomain: 'gatechconnect.firebaseapp.com',
               databaseURL: 'https://gatechconnect.firebaseio.com',
