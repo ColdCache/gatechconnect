@@ -17,9 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (user) {
       // User is signed in.
       console.log("Logged in!");
+      $("#sign-in").hide();
     } else {
       // No user is signed in.
-      $("#dropdown").hide();
+      console.log("NOT logged in!");
+      $("#teacher-dropdown").hide();
+      $("#student-dropdown").hide();
     }
   });
 });

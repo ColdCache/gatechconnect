@@ -24,6 +24,7 @@
         <![endif]-->
 
         <!-- Figure out how to use this later: <script src="assets/js/modernizr.js"></script> -->
+        <script src="assets/js/index.js"></script>
     </head>
 
     <body>
@@ -44,13 +45,20 @@
                         <li class="active"><a href="index.html">HOME</a></li>
                         <li><a href="about.html">ABOUT</a></li>
                         <li><a href="contact.html">CONTACT</a></li>
-                        <li class="dropdown">
+                        <li id="sign-in"><a href="login.html">SIGN IN</a></li>
+                        <li class="dropdown" id="teacher-dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">TEACHER <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="blog.html">BLOG</a></li>
-                                <li><a href="single-post.html">SINGLE POST</a></li>
-                                <li><a href="portfolio.html">PORTFOLIO</a></li>
-                                <li><a href="single-project.html">SINGLE PROJECT</a></li>
+                                <li><a href="single-post.html">CLASS EDIT</a></li>
+                                <li><a href="portfolio.html">SORTING</a></li>
+                                <li><a href="single-project.html">SURVEYS</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown" id="student-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" hidden>STUDENT <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="blog.html">CLASSES</a></li>
+                                <li><a href="single-project.html">GROUPS</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -163,6 +171,5 @@
         <script src="assets/js/jquery.prettyPhoto.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
         <script src="assets/js/custom.js"></script>
-        <script src="assets/js/index.js"></script>
     </body>
 </html>
