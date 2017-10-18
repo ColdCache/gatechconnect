@@ -551,23 +551,23 @@ label {
 }
 
 .login-card > .mdl-card__title {
-  background: url('../images/sun.png') center / cover;
+  background: url('../img/sun.png') center / cover;
 }
 
 #private-card > .mdl-card__title {
-  background: url('../images/top.jpg') center / cover;
+  background: url('../img/top.jpg') center / cover;
 }
 
 #public-card > .mdl-card__title {
-  background: url('../images/mountains.png') center / cover;
+  background: url('../img/mountains.png') center / cover;
 }
 
 #help-card > .mdl-card__title {
-  background: url('../images/help.jpg') center / cover;
+  background: url('../img/help.jpg') center / cover;
 }
 
 #action-handler > .mdl-card__title {
-  background: url('../images/lines.png') center / cover;
+  background: url('../img/lines.png') center / cover;
 }
 
 #account-menu-button {
