@@ -196,6 +196,39 @@ a:focus {
 	border-bottom: 2px solid #ffffff;
 	margin-bottom: 25px;
 }
+@media (min-width: 768px) {
+	.col-sm-2-4 {
+		position: relative;
+		min-height: 1px;
+		padding-right: 15px;
+		padding-left: 15px;
+		float: left;
+		width: 20%;
+	}
+}
+
+@media (min-width: 992px) {
+	.col-md-2-4 {
+		position: relative;
+		min-height: 1px;
+		padding-right: 15px;
+		padding-left: 15px;
+		float: left;
+		width: 20%;
+	}
+}
+
+@media (min-width: 1200px) {
+	.col-lg-2-4 {
+		position: relative;
+		min-height: 1px;
+		padding-right: 15px;
+		padding-left: 15px;
+		float: left;
+		width: 20%;
+	}
+}
+
 /*	################################################################
 	SITE WRAPS
 ################################################################# */
