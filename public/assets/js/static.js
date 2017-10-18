@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("NOT logged in!");
         $("#teacher-dropdown").hide();
         $("#student-dropdown").hide();
+        $("#sign-out").hide();
       }
     });
   });
