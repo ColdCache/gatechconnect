@@ -871,7 +871,7 @@ function changeRoster() {
   var newAuth = firebase.auth();
   var currentUid = newAuth.currentUser.uid;
   var rowNumber = 1;
-  var classLoc = 'Classes/' + currentUid + '/' + currentClass;
+  var classLoc = 'Classes/' + currentUid + '/' + currentClass + '/ungrouped';
   var classRef = newDB.ref(classLoc);
   document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
   if (currentClass.localeCompare('Initial') != 0) {
