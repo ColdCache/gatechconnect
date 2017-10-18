@@ -13,16 +13,20 @@ document.addEventListener('DOMContentLoaded', function() {
   firebase.initializeApp(config); 
   var auth = firebase.auth();
 
-  auth.onAuthStateChanged(function(user) {
-    if (user) {
-      // User is signed in.
-      console.log("Logged in!");
-      $("#sign-in").hide();
-    } else {
-      // No user is signed in.
-      console.log("NOT logged in!");
-      $("#teacher-dropdown").hide();
-      $("#student-dropdown").hide();
-    }
+  $('#footer').load('footer.html');
+  // Wait until navigation bar loads before changing div visibility
+  $('#navbar').load('navbar.html', function() {
+    auth.onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        console.log("Logged in!");
+        $("#sign-in").hide();
+      } else {
+        // No user is signed in.
+        console.log("NOT logged in!");
+        $("#teacher-dropdown").hide();
+        $("#student-dropdown").hide();
+      }
+    });
   });
 });
