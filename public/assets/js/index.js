@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
   auth.onAuthStateChanged(function(user) {
     if (user) {
       // User is signed in.
-      console.log("u logged in nigga");
+      console.log("Logged in!");
     } else {
       // No user is signed in.
       $("#dropdown").hide();
