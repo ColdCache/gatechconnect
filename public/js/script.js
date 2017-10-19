@@ -338,6 +338,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
         currentClass = dropDown.value;
       });
+
+      // var groupReference = "Classes/" + uid + '/' + currentClass + '/grouped';
+      // var groups = db.ref(groupReference);
+
+      // var dropDown2 = document.getElementById("groups");
+      // currentGroup = dropDown.value;
+      // console.log("current group" + currentGroup);
+      // dropDown.addEventListener("change", changeGroup);
+      // groups.orderByKey().on("child_added", function(snapshot) {
+      //   var z = document.createElement("option");
+      //   z.setAttribute("value", snapshot.key);
+      //   var t = document.createTextNode(snapshot.key);
+      //   z.appendChild(t);
+      //   dropDown2.appendChild(z);
+
+      //   currentGroup = dropDown.value;
+      // });
     }
   });
 
@@ -858,6 +875,47 @@ REVEALED METHODS
 
 //REVEALED METHOD TO ADD NODES WITH DATA TO REALTIME DATABASE
 //eg, demo.update('mynode','myKey','myValue')
+function changeGroup() {
+  var currentClass = document.getElementById('classes').value;
+  var currentGroup = document.getElementById('groups').value;
+  var config={apiKey: 'AIzaSyAhKnwZ_l8jwtMQFc7mBh30l96NLyZq03Q',
+              authDomain: 'gatechconnect.firebaseapp.com',
+              databaseURL: 'https://gatechconnect.firebaseio.com',
+              projectId: 'gatechconnect',
+              storageBucket: 'gatechconnect.appspot.com',
+              messagingSenderId: '671330762711'};
+  firebase.initializeApp(config, "privateFirebase2"); 
+  var newDB = firebase.database(); 
+  var newAuth = firebase.auth();  
+  var currentUid = newAuth.currentUser.uid;
+  var rowNumber = 1;
+  var groupLoc = 'Classes/' + currentUid + '/' + currentClass + '/grouped/' + currentGroup;
+  var groupRef = newDB.ref(groupLoc);
+  document.getElementById('grouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
+
+  if (currentGroup.localeCompare('Initial') != 0) {
+    document.getElementById('numGroups').disabled = false;
+    groupRef.orderByChild('LastName').on('child_added', function(snapshot) {
+      var table = document.getElementById('groupedStudents');
+      var row = table.insertRow(rowNumber);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      cell1.innerHTML = snapshot.val().FirstName;
+      cell2.innerHTML = snapshot.val().LastName;
+      rowNumber++;
+    });
+  } else {
+      var dropDown2 = document.getElementById("groups");
+      console.log("current group " + currentGroup);
+      //dropDown2.remove(1);
+      //dropDown2.remove(2);
+      var length = dropDown2.length;
+      console.log(length);
+    //document.getElementById('groupSize').disabled = true;
+  }
+  firebase.app('privateFirebase2').delete();
+}
+
 function changeRoster() {
   var currentClass = document.getElementById('classes').value;
   var config={apiKey: 'AIzaSyAhKnwZ_l8jwtMQFc7mBh30l96NLyZq03Q',
@@ -879,14 +937,34 @@ function changeRoster() {
     classRef.orderByChild('LastName').on('child_added', function(snapshot) {
       var table = document.getElementById('ungroupedStudents');
       var row = table.insertRow(rowNumber);
-      var cell1 = row.insertCell(0);                                                 
+      var cell1 = row.insertCell(0);
       var cell2 = row.insertCell(1);
       cell1.innerHTML = snapshot.val().FirstName;
       cell2.innerHTML = snapshot.val().LastName;
       rowNumber++;
     });
+
+    var groupReference = "Classes/" + uid + '/' + currentClass + '/grouped';
+    var groups = newDB.ref(groupReference);
+
+    var dropDown2 = document.getElementById("groups");
+    while (dropDown2.length > 1) {
+      dropDown2.remove(dropDown2.length -1);
+    }
+    dropDown2.addEventListener("change", changeGroup);
+
+    groups.orderByKey().on("child_added", function(snapshot) {
+      var z = document.createElement("option");
+      z.setAttribute("value", snapshot.key);
+      var t = document.createTextNode(snapshot.key);
+      z.appendChild(t);
+      dropDown2.appendChild(z);
+    });
+
+    dropDown2.value = "Initial";
+
   } else {
-    document.getElementById('groupSize').disabled = true;
+    //document.getElementById('groupSize').disabled = true;
   }
   firebase.app('privateFirebase').delete();
 }
