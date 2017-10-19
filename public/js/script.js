@@ -893,26 +893,19 @@ function changeGroup() {
   var groupRef = newDB.ref(groupLoc);
   document.getElementById('grouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
 
-  if (currentGroup.localeCompare('Initial') != 0) {
-    document.getElementById('numGroups').disabled = false;
-    groupRef.orderByChild('LastName').on('child_added', function(snapshot) {
-      var table = document.getElementById('groupedStudents');
-      var row = table.insertRow(rowNumber);
-      var cell1 = row.insertCell(0);
-      var cell2 = row.insertCell(1);
-      cell1.innerHTML = snapshot.val().FirstName;
-      cell2.innerHTML = snapshot.val().LastName;
-      rowNumber++;
-    });
-  } else {
-      var dropDown2 = document.getElementById("groups");
-      console.log("current group " + currentGroup);
-      //dropDown2.remove(1);
-      //dropDown2.remove(2);
-      var length = dropDown2.length;
-      console.log(length);
-    //document.getElementById('groupSize').disabled = true;
-  }
+  document.getElementById('numGroups').disabled = false;
+
+  var table = document.getElementById('groupedStudents');
+  
+  groupRef.orderByChild('LastName').on('child_added', function(snapshot) {
+    var row = table.insertRow(rowNumber);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    cell1.innerHTML = snapshot.val().FirstName;
+    cell2.innerHTML = snapshot.val().LastName;
+    rowNumber++;
+  });
+
   firebase.app('privateFirebase2').delete();
 }
 
@@ -932,40 +925,44 @@ function changeRoster() {
   var classLoc = 'Classes/' + currentUid + '/' + currentClass + '/ungrouped';
   var classRef = newDB.ref(classLoc);
   document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
-  if (currentClass.localeCompare('Initial') != 0) {
-    document.getElementById('numGroups').disabled = false;
-    classRef.orderByChild('LastName').on('child_added', function(snapshot) {
-      var table = document.getElementById('ungroupedStudents');
-      var row = table.insertRow(rowNumber);
-      var cell1 = row.insertCell(0);
-      var cell2 = row.insertCell(1);
-      cell1.innerHTML = snapshot.val().FirstName;
-      cell2.innerHTML = snapshot.val().LastName;
-      rowNumber++;
-    });
+  // if (currentClass.localeCompare('Initial') != 0) {
+  document.getElementById('numGroups').disabled = false;
+  classRef.orderByChild('LastName').on('child_added', function(snapshot) {
+    var table = document.getElementById('ungroupedStudents');
+    var row = table.insertRow(rowNumber);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    cell1.innerHTML = snapshot.val().FirstName;
+    cell2.innerHTML = snapshot.val().LastName;
+    rowNumber++;
+  });
 
-    var groupReference = "Classes/" + uid + '/' + currentClass + '/grouped';
-    var groups = newDB.ref(groupReference);
+  var groupReference = "Classes/" + uid + '/' + currentClass + '/grouped';
+  var groups = newDB.ref(groupReference);
 
-    var dropDown2 = document.getElementById("groups");
-    while (dropDown2.length > 1) {
-      dropDown2.remove(dropDown2.length -1);
-    }
-    dropDown2.addEventListener("change", changeGroup);
-
-    groups.orderByKey().on("child_added", function(snapshot) {
-      var z = document.createElement("option");
-      z.setAttribute("value", snapshot.key);
-      var t = document.createTextNode(snapshot.key);
-      z.appendChild(t);
-      dropDown2.appendChild(z);
-    });
-
-    dropDown2.value = "Initial";
-
-  } else {
-    //document.getElementById('groupSize').disabled = true;
+  var dropDown2 = document.getElementById("groups");
+  while (dropDown2.length > 1) {
+    dropDown2.remove(dropDown2.length -1);
   }
+
+  var table2 = document.getElementById('groupedStudents');
+  
+  while (table2.rows.length > 1) {
+    table2.deleteRow(table2.rows.length - 1);
+  }
+
+  dropDown2.addEventListener("change", changeGroup);
+
+  groups.orderByKey().on("child_added", function(snapshot) {
+    var z = document.createElement("option");
+    z.setAttribute("value", snapshot.key);
+    var t = document.createTextNode(snapshot.key);
+    z.appendChild(t);
+    dropDown2.appendChild(z);
+  });
+
+  dropDown2.value = "Initial";
+
   firebase.app('privateFirebase').delete();
 }
 
