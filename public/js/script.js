@@ -338,23 +338,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         currentClass = dropDown.value;
       });
-
-      // var groupReference = "Classes/" + uid + '/' + currentClass + '/grouped';
-      // var groups = db.ref(groupReference);
-
-      // var dropDown2 = document.getElementById("groups");
-      // currentGroup = dropDown.value;
-      // console.log("current group" + currentGroup);
-      // dropDown.addEventListener("change", changeGroup);
-      // groups.orderByKey().on("child_added", function(snapshot) {
-      //   var z = document.createElement("option");
-      //   z.setAttribute("value", snapshot.key);
-      //   var t = document.createTextNode(snapshot.key);
-      //   z.appendChild(t);
-      //   dropDown2.appendChild(z);
-
-      //   currentGroup = dropDown.value;
-      // });
     }
   });
 
