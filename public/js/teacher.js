@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   $('#numGroupsForm').submit(function(event) {
-    alert("penis");
+    alert("uhhh");
     var currentClass = document.getElementById('classes').value;
     var numGroups = $('#numGroupsTextBox').val();
     var classSize = 0;
