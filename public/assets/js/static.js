@@ -10,7 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
   };
   
   //INITIALIZE FIREBASE WEB APP
-  firebase.initializeApp(config); 
+  if (!firebase.apps.length) {
+    firebase.initializeApp(config);
+  }
   var auth = firebase.auth();
 
   $('#footer').load('footer.html');

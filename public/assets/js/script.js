@@ -52,7 +52,9 @@ document.addEventListener('DOMContentLoaded', function() {
   };
   
   //INITIALIZE FIREBASE WEB APP
-  firebase.initializeApp(config); 
+  if (!firebase.apps.length) {
+    firebase.initializeApp(config);
+  }
   var db = firebase.database();
   var auth = firebase.auth();
   
@@ -121,8 +123,6 @@ document.addEventListener('DOMContentLoaded', function() {
   var signInButton = doc.getElementById('sign-in-button');
   var accountButton = doc.getElementById('account-menu-button');
   var helpButton = doc.getElementById('help-button');
-  var drawer = doc.getElementsByClassName('mdl-layout__drawer')[0];
-  var navLinks = drawer.getElementsByClassName('mdl-navigation')[0];
 
   //LOCAL STORAGE TEST
   Object.defineProperty(this, "ls", {
@@ -174,15 +174,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });        
   }
-
-  //SHARED  
-  signInButton.addEventListener("click", function(){
-    window.location = "/login";
-  });
-
-  helpButton.addEventListener("click", function(){
-    window.location = "/help";
-  }); 
 
   //SOCIAL MEDIA BUTTONS
   if(providers){
@@ -293,7 +284,6 @@ document.addEventListener('DOMContentLoaded', function() {
       if(privatePageButton){
         privatePageButton.disabled = false;
       }
-      addPrivateLinkToDrawer();
       
     //USER NOT SIGNED IN
     } else {
@@ -307,10 +297,6 @@ document.addEventListener('DOMContentLoaded', function() {
       uid = null;
       
       //DISABLE BUTTON AND LINKS
-      if(privatePageButton){
-        privatePageButton.disabled = true;
-      }
-      removePrivateLinkFromDrawer();
       
       if(loginCard && logoutCard && noticeCard){
         loginCard.style.display = "inline";
@@ -318,9 +304,6 @@ document.addEventListener('DOMContentLoaded', function() {
         noticeCard.style.display = "none";         
       }
     }
-    
-    //ADJUST USER CHIP IN ANY CASE
-    loadAccountChip();
 
     if (location.pathname == '/private') {
       var classReference = "Classes/" + uid;
@@ -457,7 +440,6 @@ document.addEventListener('DOMContentLoaded', function() {
       // TODO: Display a link back to the app, or sign-in the user directly
       // if the page belongs to the same domain as the app:
       auth.signInWithEmailAndPassword(email, newPassword);
-      loadAccountChip();
       toast('Password Changed',7000);
     }).catch(function(error) {
       // Error occurred during confirmation. The code might have expired or the
@@ -492,9 +474,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Try to apply the email verification code.
     auth.applyActionCode(oobCode).then(function(resp) {
       // js doesn't see email verified yet so we short circuit loadAccountChip.
-      loadAccountChip('good');
       toast('Email address has been verified',9000);
-      addPrivateLinkToDrawer();
     }).catch(function(error) {
       // Code is invalid or expired. Ask the user to verify their email address again.
       toast(error.message);
@@ -741,55 +721,6 @@ document.addEventListener('DOMContentLoaded', function() {
   SHARED FUNCTIONS FUNCTIONS
   
   */
-
-  // TOP RIGHT USER ELEMENT SWITCH
-  function loadAccountChip(msg){
-    accountButton.innerHTML = '';
-
-    //MSG SHORT CIRCUIT PROVIDES MEMBER ACCESS UPON EMAIL VERIFIED PAGE LOAD
-    if(msg){
-      if(displayName){
-        signInButton.style.display = "none";
-        accountButton.style.display = "inline";        
-      } else {
-        signInButton.style.display = "inline";
-        accountButton.style.display = "inline";         
-      }
-      
-    } else {
-      if(!uid || !displayName){
-        signInButton.style.display = "inline";
-        accountButton.style.display = "none";
-      } else {
-        signInButton.style.display = "none";
-        accountButton.style.display = "inline";            
-      }      
-    }
-      
-    if(msg){
-    
-    } else {
-      if(!verifiedUser && provider == "password"){
-        signInButton.style.display = "none";
-        return;
-      }      
-    }
-    
-    accountButton.innerHTML = '<span> ' + displayName + ' </span><ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="account-menu-button"><li class="mdl-menu__item" id="account-settings-button">Account Settings</li><li class="mdl-menu__item" id="sign-out-button">Logout</li></ul>';
-    
-    var signOutButton = doc.getElementById('sign-out-button');
-    var accountSettingsButton = doc.getElementById('account-settings-button');
-    
-    signOutButton.addEventListener("click", function(){
-      signout();
-    });
-    
-    accountSettingsButton.addEventListener("click", function(){
-      redirect ("/account");
-    });
-    
-    window.componentHandler.upgradeAllRegistered();
-  }
   
   // SIGN OUT
   function signout (){
@@ -801,33 +732,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }, function(error) {
       toast('Sign out Failed');
     });       
-  }
-
-  function addPrivateLinkToDrawer(){
-    if(!doc.getElementById('private-link')){
-      var icon = doc.createElement("i");
-      var iconText = doc.createTextNode('lock_outline');
-      var anchorText = doc.createTextNode(' Private');
-      icon.classList.add('material-icons');
-      icon.appendChild(iconText);
-  
-      var privateLink = doc.createElement("a");
-      privateLink.classList.add('mdl-navigation__link');
-      privateLink.href = "../private";
-      privateLink.id = "private-link";
-      privateLink.appendChild(icon);
-      privateLink.appendChild(anchorText);
-  
-      var anchorList = navLinks.getElementsByClassName('mdl-navigation__link')[1];
-      navLinks.insertBefore(privateLink, anchorList);
-    }
-  }
-
-  function removePrivateLinkFromDrawer(){
-    var linkToRemove = doc.getElementById('private-link');
-    if(linkToRemove){
-      linkToRemove.parentNode.removeChild(linkToRemove);
-    }
   }
   
   function redirect(path){
