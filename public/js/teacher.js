@@ -14,11 +14,15 @@ document.addEventListener('DOMContentLoaded', function() {
     $(this).find("#className").prop('disabled', true);
     var titleToSend = $('#classNameTextBox').val();
     var classesRef = ref.child("classes");
-    classesRef.push({
+    var classKey = classesRef.push({
       "classMembers" : { "studentID" : true },
       "className" : titleToSend,
       "groups" : { "groupID" : true },
       "teacher" : uid
+    }).key;
+    var teacherClassesRef = ref.child("users/" + uid + "/classes");
+    teacherClassesRef.update({
+      [classKey]: "true"
     });
   });
 
