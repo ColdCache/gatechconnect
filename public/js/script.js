@@ -876,8 +876,6 @@ function changeGroup() {
   var groupRef = newDB.ref(groupLoc);
   document.getElementById('grouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
 
-  document.getElementById('numGroups').disabled = false;
-
   var table = document.getElementById('groupedStudents');
   
   groupRef.orderByChild('LastName').on('child_added', function(snapshot) {
@@ -908,8 +906,6 @@ function changeRoster() {
   var classLoc = 'Classes/' + currentUid + '/' + currentClass + '/ungrouped';
   var classRef = newDB.ref(classLoc);
   document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
-  // if (currentClass.localeCompare('Initial') != 0) {
-  document.getElementById('numGroups').disabled = false;
   classRef.orderByChild('LastName').on('child_added', function(snapshot) {
     var table = document.getElementById('ungroupedStudents');
     var row = table.insertRow(rowNumber);

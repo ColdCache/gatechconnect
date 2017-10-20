@@ -22,8 +22,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  $("#classes").change(function() {
+    var numGroupsSubmit = document.getElementById('numGroups');
+    if ($(this).val() == 'Initial') {
+      numGroupsSubmit.disabled = true;
+    } else {
+      numGroupsSubmit.disabled = false;
+    }
+  });
+
   $('#numGroupsForm').submit(function(event) {
-    alert("uhhh");
+    console.log("uhhh");
     var currentClass = document.getElementById('classes').value;
     var numGroups = $('#numGroupsTextBox').val();
     var classSize = 0;
@@ -32,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
     classRef.once('value', function(snapshot) {
        classSize = snapshot.numChildren();
     });
-    if (classSize < numGroups) {
+    /*if (classSize < numGroups) {
       alert('The number of groups cannot be larger than the number of students in the class.');
     } else {
       var maxGroupSize = Math.floor(classSize / numGroups);
@@ -41,6 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
       var minGroupSizedGroups = maxGroupSize - leftoverStudents;
       var maxGroupSizedGroups = numGroups - minGroupSizedGroups;
       alert(maxGroupSizedGroups + ' groups of size ' + maxGroupSize + ' and ' + minGroupSizedGroups + ' groups of size ' + minGroupSize + '.');
-    }
+    }*/
   });
 });
