@@ -13,12 +13,12 @@ document.addEventListener('DOMContentLoaded', function() {
     var ref = db.ref();
     $(this).find("#className").prop('disabled', true);
     var titleToSend = $('#classNameTextBox').val();
-    var classesRef = ref.child("Classes");
-    classesRef.child(uid).child(titleToSend).set({
-      "SomeStudentId": {
-        "FirstName": "First",
-        "LastName": "Last"
-      }
+    var classesRef = ref.child("classes");
+    classesRef.push({
+      "classMembers" : { "studentID" : true },
+      "className" : titleToSend,
+      "groups" : { "groupID" : true },
+      "teacher" : uid
     });
   });
 
@@ -32,15 +32,17 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   $('#numGroupsForm').submit(function(event) {
-    console.log("uhhh");
+    event.preventDefault(); // prevents page refresh on submit
     var currentClass = document.getElementById('classes').value;
     var numGroups = $('#numGroupsTextBox').val();
     var classSize = 0;
-    var classLoc = 'Classes/' + uid + '/' + currentClass;
-    var classRef = firebase.database().ref(classLoc);
-    classRef.once('value', function(snapshot) {
-       classSize = snapshot.numChildren();
+    var groupsLoc = 'classes/' + uid + '/' + currentClass + 'grouped';
+    var groupsRef = firebase.database().ref(groupsLoc);
+
+    groupsRef.once('value', function(snapshot) {
+      console.log(snapshot.key);
     });
+    alert(classSize)
     /*if (classSize < numGroups) {
       alert('The number of groups cannot be larger than the number of students in the class.');
     } else {

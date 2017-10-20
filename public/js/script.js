@@ -323,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadAccountChip();
 
     if (location.pathname == '/private') {
-      var classReference = "Classes/" + uid;
+      var classReference = "classes/" + uid;
       var classes = db.ref(classReference);
 
       var dropDown = document.getElementById("classes");
@@ -872,7 +872,7 @@ function changeGroup() {
   var newAuth = firebase.auth();  
   var currentUid = newAuth.currentUser.uid;
   var rowNumber = 1;
-  var groupLoc = 'Classes/' + currentUid + '/' + currentClass + '/grouped/' + currentGroup;
+  var groupLoc = 'classes/' + currentUid + '/' + currentClass + '/grouped/' + currentGroup;
   var groupRef = newDB.ref(groupLoc);
   document.getElementById('grouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
 
@@ -903,7 +903,7 @@ function changeRoster() {
   var newAuth = firebase.auth();
   var currentUid = newAuth.currentUser.uid;
   var rowNumber = 1;
-  var classLoc = 'Classes/' + currentUid + '/' + currentClass + '/ungrouped';
+  var classLoc = 'classes/' + currentUid + '/' + currentClass + '/ungrouped';
   var classRef = newDB.ref(classLoc);
   document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
   classRef.orderByChild('LastName').on('child_added', function(snapshot) {
@@ -916,7 +916,7 @@ function changeRoster() {
     rowNumber++;
   });
 
-  var groupReference = "Classes/" + uid + '/' + currentClass + '/grouped';
+  var groupReference = "classes/" + uid + '/' + currentClass + '/grouped';
   var groups = newDB.ref(groupReference);
 
   var dropDown2 = document.getElementById("groups");
