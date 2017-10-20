@@ -37,11 +37,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   $('#numGroupsForm').submit(function(event) {
     event.preventDefault(); // prevents page refresh on submit
+    var classesRef = ref.child("classes");
+    var teacherClassesRef = ref.child("users/" + uid + "/classes");
+    var classIDs = teacherClassesRef.getChildren();
+    classIDs.forEach(function(item){
+      console.log(item);
+    });
     var currentClass = document.getElementById('classes').value;
     var numGroups = $('#numGroupsTextBox').val();
     var classSize = 0;
-    var groupsLoc = 'classes/' + uid + '/' + currentClass + 'grouped';
-    var groupsRef = firebase.database().ref(groupsLoc);
+    
 
     groupsRef.once('value', function(snapshot) {
       console.log(snapshot.key);
