@@ -321,24 +321,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     //ADJUST USER CHIP IN ANY CASE
     loadAccountChip();
-
-    if (location.pathname == '/private') {
-      var classReference = "classes/" + uid;
-      var classes = db.ref(classReference);
-
-      var dropDown = document.getElementById("classes");
-      currentClass = dropDown.value;
-      dropDown.addEventListener("change", changeRoster);
-      classes.orderByKey().on("child_added", function(snapshot) {
-        var z = document.createElement("option");
-        z.setAttribute("value", snapshot.key);
-        var t = document.createTextNode(snapshot.key);
-        z.appendChild(t);
-        dropDown.appendChild(z);
-
-        currentClass = dropDown.value;
-      });
-    }
   });
 
   /*
@@ -858,92 +840,6 @@ REVEALED METHODS
 
 //REVEALED METHOD TO ADD NODES WITH DATA TO REALTIME DATABASE
 //eg, demo.update('mynode','myKey','myValue')
-function changeGroup() {
-  var currentClass = document.getElementById('classes').value;
-  var currentGroup = document.getElementById('groups').value;
-  var config={apiKey: 'AIzaSyAhKnwZ_l8jwtMQFc7mBh30l96NLyZq03Q',
-              authDomain: 'gatechconnect.firebaseapp.com',
-              databaseURL: 'https://gatechconnect.firebaseio.com',
-              projectId: 'gatechconnect',
-              storageBucket: 'gatechconnect.appspot.com',
-              messagingSenderId: '671330762711'};
-  firebase.initializeApp(config, "privateFirebase2"); 
-  var newDB = firebase.database(); 
-  var newAuth = firebase.auth();  
-  var currentUid = newAuth.currentUser.uid;
-  var rowNumber = 1;
-  var groupLoc = 'classes/' + currentUid + '/' + currentClass + '/grouped/' + currentGroup;
-  var groupRef = newDB.ref(groupLoc);
-  document.getElementById('grouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
-
-  var table = document.getElementById('groupedStudents');
-  
-  groupRef.orderByChild('LastName').on('child_added', function(snapshot) {
-    var row = table.insertRow(rowNumber);
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    cell1.innerHTML = snapshot.val().FirstName;
-    cell2.innerHTML = snapshot.val().LastName;
-    rowNumber++;
-  });
-
-  firebase.app('privateFirebase2').delete();
-}
-
-function changeRoster() {
-  var currentClass = document.getElementById('classes').value;
-  var config={apiKey: 'AIzaSyAhKnwZ_l8jwtMQFc7mBh30l96NLyZq03Q',
-              authDomain: 'gatechconnect.firebaseapp.com',
-              databaseURL: 'https://gatechconnect.firebaseio.com',
-              projectId: 'gatechconnect',
-              storageBucket: 'gatechconnect.appspot.com',
-              messagingSenderId: '671330762711'};
-  firebase.initializeApp(config, "privateFirebase"); 
-  var newDB = firebase.database(); 
-  var newAuth = firebase.auth();
-  var currentUid = newAuth.currentUser.uid;
-  var rowNumber = 1;
-  var classLoc = 'classes/' + currentUid + '/' + currentClass + '/ungrouped';
-  var classRef = newDB.ref(classLoc);
-  document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
-  classRef.orderByChild('LastName').on('child_added', function(snapshot) {
-    var table = document.getElementById('ungroupedStudents');
-    var row = table.insertRow(rowNumber);
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    cell1.innerHTML = snapshot.val().FirstName;
-    cell2.innerHTML = snapshot.val().LastName;
-    rowNumber++;
-  });
-
-  var groupReference = "classes/" + uid + '/' + currentClass + '/grouped';
-  var groups = newDB.ref(groupReference);
-
-  var dropDown2 = document.getElementById("groups");
-  while (dropDown2.length > 1) {
-    dropDown2.remove(dropDown2.length -1);
-  }
-
-  var table2 = document.getElementById('groupedStudents');
-  
-  while (table2.rows.length > 1) {
-    table2.deleteRow(table2.rows.length - 1);
-  }
-
-  dropDown2.addEventListener("change", changeGroup);
-
-  groups.orderByKey().on("child_added", function(snapshot) {
-    var z = document.createElement("option");
-    z.setAttribute("value", snapshot.key);
-    var t = document.createTextNode(snapshot.key);
-    z.appendChild(t);
-    dropDown2.appendChild(z);
-  });
-
-  dropDown2.value = "Initial";
-
-  firebase.app('privateFirebase').delete();
-}
 
 var myFunction = (function() {
    // FIREBASE CONFIG
