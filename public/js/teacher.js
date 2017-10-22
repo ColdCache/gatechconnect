@@ -42,63 +42,50 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // LOAD TEACHER'S CLASS LIST
-  console.log(";__;");
-  var dropDown = document.getElementById("classes");
-  currentClass = dropDown.value;
-  var teacherClassesRef = db.ref("users/" + uid + "/classes");
-  console.log(teacherClassesRef.toString());
-  teacherClassesRef.orderByKey().on('value', function(snapshot) {
-    console.log(snapshot.exists());
-    snapshot.forEach(function(childSnapshot) {
-      console.log("The key should be: " + childSnapshot.val());
-    });
-    var classRef = db.ref("classes/" + snapshot.key + "/className");
-    classRef.on('value', function(classSnap) {
-      console.log(classSnap.val());
-      var z = document.createElement("option");
-      z.setAttribute("value", classSnap.val());
-      var t = document.createTextNode(classSnap.val());
-      z.appendChild(t);
-      dropDown.appendChild(z);
-      currentClass = dropDown.value;
+  firebase.auth().onAuthStateChanged(function(user) {
+    var uid = null;
+    if (user) {
+      uid = user.uid ? user.uid : null;
+    }
+    var dropDown = document.getElementById("classes");
+    var currentClass = dropDown.value;
+    var teacherClassesRef = db.ref("users/" + uid + "/classes");
+    teacherClassesRef.orderByKey().on('child_added', function(snapshot) {
+      var classRef = db.ref("classes/" + snapshot.key + "/className");
+      classRef.on('value', function(classSnap) {
+        var z = document.createElement("option");
+        z.setAttribute("value", classSnap.val());
+        var t = document.createTextNode(classSnap.val());
+        z.appendChild(t);
+        dropDown.appendChild(z);
+        currentClass = dropDown.value;
+      });
     });
   });
 
-  // LOAD TEACHER'S CLASS LIST
-  /*var dropDown = document.getElementById("classes");
-  currentClass = dropDown.value;
-  var teacherClassesRef = db.ref("users/" + uid + "/classes");
-  teacherClassesRef.orderByKey().on("child_added", function(snapshot) {
-    var classRef = db.ref("classes/" + snapshot.key + "/className");
-    classRef.on('value', function(classSnap) {
-      var z = document.createElement("option");
-      z.setAttribute("value", classSnap.val());
-      var t = document.createTextNode(classSnap.val());
-      z.appendChild(t);
-      dropDown.appendChild(z);
-      currentClass = dropDown.value;
-    });
-  });*/
-
-  /*
   function changeGroup() {
     var currentClass = document.getElementById('classes').value;
     var currentGroup = document.getElementById('groups').value; // group name
-    var config={apiKey: 'AIzaSyAhKnwZ_l8jwtMQFc7mBh30l96NLyZq03Q',
-                authDomain: 'gatechconnect.firebaseapp.com',
-                databaseURL: 'https://gatechconnect.firebaseio.com',
-                projectId: 'gatechconnect',
-                storageBucket: 'gatechconnect.appspot.com',
-                messagingSenderId: '671330762711'};
-    firebase.initializeApp(config, "privateFirebase2"); 
-    var newDB = firebase.database(); 
-    var newAuth = firebase.auth();  
-    var currentUid = newAuth.currentUser.uid;
     var rowNumber = 1;
-    var groupLoc = 'classes/' + currentUid + '/' + currentClass + '/grouped/' + currentGroup;
-    var groupRef = newDB.ref(groupLoc);
+
     document.getElementById('grouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
+    var table = document.getElementById('groupedStudents');
+
+    var teacherGroupsRef = db.ref("users/" + uid + "/groups");
+    teacherGroupsRef.orderByKey().on('child_added', function(snapshot) {
+      var groupRef = db.ref("groups/" + snapshot.key + "/name");
+      groupRef.on('value', function(groupSnap) {
+        if (groupSnap.val() == currentGroup) {
+          console.log("found it");
+          groupMembersRef.orderByKey().on('child_added', function(memberSnap) {
+            var groupMembersRef = db.ref("users/" + memberSnap.key);
+          });
+          break;
+        } else {
+          console.log("not it");
+        }
+      });
+    });
   
     var table = document.getElementById('groupedStudents');
     
@@ -113,19 +100,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
     firebase.app('privateFirebase2').delete();
   }
-
+/*
   function changeRoster() {
     var currentClass = document.getElementById('classes').value;
-    var config={apiKey: 'AIzaSyAhKnwZ_l8jwtMQFc7mBh30l96NLyZq03Q',
-                authDomain: 'gatechconnect.firebaseapp.com',
-                databaseURL: 'https://gatechconnect.firebaseio.com',
-                projectId: 'gatechconnect',
-                storageBucket: 'gatechconnect.appspot.com',
-                messagingSenderId: '671330762711'};
-    firebase.initializeApp(config, "privateFirebase"); 
-    var newDB = firebase.database(); 
-    var newAuth = firebase.auth();
-    var currentUid = newAuth.currentUser.uid;
     var rowNumber = 1;
   
     var teacherClassesRef = db.ref("users/" + uid + "/classes");
@@ -172,8 +149,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   
     dropDown2.value = "Initial";
-  
-    firebase.app('privateFirebase').delete();
   }*/
 
   $("#classes").change(function() {
