@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  /*
   function changeGroup() {
     var currentClass = document.getElementById('classes').value;
     var currentGroup = document.getElementById('groups').value; // group name
@@ -89,10 +90,10 @@ document.addEventListener('DOMContentLoaded', function() {
     var currentUid = newAuth.currentUser.uid;
     var rowNumber = 1;
   
-    /*var teacherClassesRef = db.ref("users/" + uid + "/classes");
+    var teacherClassesRef = db.ref("users/" + uid + "/classes");
     teacherClassesRef.orderByKey().on("child_added", function(snapshot) {
       var classRef = db.ref("classes/" + snapshot.key + "/className");
-      classRef.on('value', function(classSnap) {*/
+      classRef.on('value', function(classSnap) {
 
     var classLoc = 'classes/' + currentUid + '/' + currentClass + '/ungrouped';
   
@@ -135,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
     dropDown2.value = "Initial";
   
     firebase.app('privateFirebase').delete();
-  }
+  }*/
 
   $("#classes").change(function() {
     var numGroupsSubmit = document.getElementById('numGroups');
