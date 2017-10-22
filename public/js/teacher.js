@@ -49,9 +49,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     var dropDown = document.getElementById("classes");
     var currentClass = dropDown.value;
-    var teacherClassesRef = db.ref("users/" + uid + "/classes");
-    teacherClassesRef.orderByKey().on('child_added', function(snapshot) {
-      var classRef = db.ref("classes/" + snapshot.key + "/className");
+    var teacherClassesRef = db.ref("users/" + uid + "/classes"); // ref for teacher classes
+    teacherClassesRef.orderByKey().on('child_added', function(snapshot) { // for each teacher class
+      var classRef = db.ref("classes/" + snapshot.key + "/className"); // ref for teacher class name
       classRef.on('value', function(classSnap) {
         var z = document.createElement("option");
         z.setAttribute("value", classSnap.val());
@@ -71,34 +71,30 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('grouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
     var table = document.getElementById('groupedStudents');
 
-    var teacherGroupsRef = db.ref("users/" + uid + "/groups");
-    teacherGroupsRef.orderByKey().on('child_added', function(snapshot) {
-      var groupRef = db.ref("groups/" + snapshot.key + "/name");
+    var teacherGroupsRef = db.ref("users/" + uid + "/groups"); // ref for teacher groups
+    teacherGroupsRef.orderByKey().on('child_added', function(snapshot) { // for each teacher group
+      var groupRef = db.ref("groups/" + snapshot.key + "/name"); // ref for teacher groups name
       groupRef.on('value', function(groupSnap) {
-        if (groupSnap.val() == currentGroup) {
-          console.log("found it");
-          groupMembersRef.orderByKey().on('child_added', function(memberSnap) {
-            var groupMembersRef = db.ref("users/" + memberSnap.key);
+        if (groupSnap.val() == currentGroup) { // check for teacher group with current group name
+          console.log("found it: " + groupSnap.val());
+          groupMembersRef.orderByKey().on('child_added', function(memberSnap) { // for each group member
+            var groupMembersRef = db.ref("users/" + memberSnap.key); // ref for user group members
+            groupMembersRef.on('value', function(userSnap) {
+              var row = table.insertRow(rowNumber);
+              var cell1 = row.insertCell(0);
+              var cell2 = row.insertCell(1);
+              cell1.innerHTML = snapshot.val().FirstName;
+              cell2.innerHTML = snapshot.val().LastName;
+              rowNumber++;
+              console.log(userSnap.val().firstName);
+              console.log(userSnap.val().lastName);
+            });
           });
-          break;
         } else {
           console.log("not it");
         }
       });
     });
-  
-    var table = document.getElementById('groupedStudents');
-    
-    groupRef.orderByChild('LastName').on('child_added', function(snapshot) {
-      var row = table.insertRow(rowNumber);
-      var cell1 = row.insertCell(0);
-      var cell2 = row.insertCell(1);
-      cell1.innerHTML = snapshot.val().FirstName;
-      cell2.innerHTML = snapshot.val().LastName;
-      rowNumber++;
-    });
-  
-    firebase.app('privateFirebase2').delete();
   }
 /*
   function changeRoster() {
