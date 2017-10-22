@@ -1,7 +1,22 @@
-var db = firebase.database();
-var ref = db.ref();
-
 document.addEventListener('DOMContentLoaded', function() {
+  // FIREBASE CONFIG
+  var config = {
+    apiKey: "AIzaSyAhKnwZ_l8jwtMQFc7mBh30l96NLyZq03Q",
+    authDomain: "gatechconnect.firebaseapp.com",
+    databaseURL: "https://gatechconnect.firebaseio.com",
+    projectId: "gatechconnect",
+    storageBucket: "gatechconnect.appspot.com",
+    messagingSenderId: "671330762711"
+  };
+  
+  //INITIALIZE FIREBASE WEB APP
+  if (!firebase.apps.length) {
+    firebase.initializeApp(config);
+  }
+
+  var db = firebase.database();
+  var ref = db.ref();
+
   $("tbody.connect-groups").sortable({
     connectWith: ".connect-groups",
     items: "> tr:not(:first)",
@@ -28,7 +43,30 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // LOAD TEACHER'S CLASS LIST
+  console.log(";__;");
   var dropDown = document.getElementById("classes");
+  currentClass = dropDown.value;
+  var teacherClassesRef = db.ref("users/" + uid + "/classes");
+  console.log(teacherClassesRef.toString());
+  teacherClassesRef.orderByKey().on('value', function(snapshot) {
+    console.log(snapshot.exists());
+    snapshot.forEach(function(childSnapshot) {
+      console.log("The key should be: " + childSnapshot.val());
+    });
+    var classRef = db.ref("classes/" + snapshot.key + "/className");
+    classRef.on('value', function(classSnap) {
+      console.log(classSnap.val());
+      var z = document.createElement("option");
+      z.setAttribute("value", classSnap.val());
+      var t = document.createTextNode(classSnap.val());
+      z.appendChild(t);
+      dropDown.appendChild(z);
+      currentClass = dropDown.value;
+    });
+  });
+
+  // LOAD TEACHER'S CLASS LIST
+  /*var dropDown = document.getElementById("classes");
   currentClass = dropDown.value;
   var teacherClassesRef = db.ref("users/" + uid + "/classes");
   teacherClassesRef.orderByKey().on("child_added", function(snapshot) {
@@ -41,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
       dropDown.appendChild(z);
       currentClass = dropDown.value;
     });
-  });
+  });*/
 
   /*
   function changeGroup() {

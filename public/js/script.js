@@ -328,23 +328,6 @@ document.addEventListener('DOMContentLoaded', function() {
   FUNCTIONS
   
   */
-
-  // LOAD TEACHER'S CLASS LIST
-  var dropDown = document.getElementById("classes");
-  currentClass = dropDown.value;
-  var teacherClassesRef = db.ref("users/" + uid + "/classes");
-  teacherClassesRef.orderByKey().on("child_added", function(snapshot) {
-    var classRef = db.ref("classes/" + snapshot.key + "/className");
-    classRef.on('value', function(classSnap) {
-      console.log("shoot me");
-      var z = document.createElement("option");
-      z.setAttribute("value", classSnap.val());
-      var t = document.createTextNode(classSnap.val());
-      z.appendChild(t);
-      dropDown.appendChild(z);
-      currentClass = dropDown.value;
-    });
-  });
   
   // ACCOUNT PAGE FUNCTIONS
   
