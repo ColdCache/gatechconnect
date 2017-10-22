@@ -158,20 +158,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
   $('#numGroupsForm').submit(function(event) {
     event.preventDefault(); // prevents page refresh on submit
-    var classesRef = ref.child("classes");
-    var teacherClassesRef = ref.child("users/" + uid + "/classes");
-    var classIDs = teacherClassesRef.getChildren();
-    classIDs.forEach(function(item){
-      console.log(item);
-    });
     var currentClass = document.getElementById('classes').value;
+    var teacherClassesRef = db.ref("users/" + uid + "/classes");
+    teacherClassesRef.orderByKey().on('child_added', function(snapshot) { // for each teacher class
+      var classRef = db.ref("classes/" + snapshot.key + "/className"); // ref for teacher class name
+      classRef.on('value', function(classSnap) {
+        if (classSnap.val() == currentClass) { // check for matching class by name
+          console.log("The matching class is: " + classSnap.val());
+          var teacherClassesRef = db.ref("users/" + uid + "/classes");
+        }
+      });
+    });
     var numGroups = $('#numGroupsTextBox').val();
     var classSize = 0;
-    
-
-    groupsRef.once('value', function(snapshot) {
-      console.log(snapshot.key);
-    });
     alert(classSize)
     /*if (classSize < numGroups) {
       alert('The number of groups cannot be larger than the number of students in the class.');
