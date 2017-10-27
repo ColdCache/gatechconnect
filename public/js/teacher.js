@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var db = firebase.database();
   var ref = db.ref();
   var classSize;
+  var currentClass;
 
   $("tbody.connect-groups").sortable({
     connectWith: ".connect-groups",
@@ -50,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
       uid = user.uid ? user.uid : null;
     }
     var dropDown = document.getElementById("classes");
-    var currentClass = dropDown.value;
+    currentClass = dropDown.value;
     var teacherClassesRef = db.ref("users/" + uid + "/classes"); // ref for teacher classes
     teacherClassesRef.orderByKey().on('child_added', function(snapshot) { // for each teacher class
       var classRef = db.ref("classes/" + snapshot.key + "/className"); // ref for teacher class name
@@ -154,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
    * not selected */
   $("#classes").change(function() {
     classSize = 0;
-    var currentClass = document.getElementById('classes').value;
+    currentClass = document.getElementById('classes').value;
     var teacherClassesRef = db.ref("users/" + uid + "/classes");
     teacherClassesRef.orderByKey().on('child_added', function(snapshot) { // for each teacher class
       var classRef = db.ref("classes/" + snapshot.key); // ref for teacher class
@@ -217,4 +218,29 @@ document.addEventListener('DOMContentLoaded', function() {
       alert('Please enter a group size greater than 0.');
     }
   });
+
+  /* Adds group to appropriate sections of FireBase database (groups, users, classes)
+   * WORK IN PROGRESS*/
+  function addGroup(groupNumber, groupSize, classMemberIndex) {
+    var groupName = "Group " + groupNumber;
+    var groupsRef = db.ref("groups");
+    // Add a group to groups section of database
+    var groupsKey = groupsRef.push({
+      "class" : classID,
+      "members" : { "studentID" : true }, // change to iterate over groupNumber students starting from classMemberIndex
+      "name" : groupName,
+      "teacher" : uid
+    }).key;
+    // Add group ID under groups for specific class in database
+    var classGroupsRef = db.ref("classes/groups").update({
+      [groupsKey]: true      
+    });
+    /* Add group ID under groups for specific users in database */
+    // this adds the group under the teacher's group list
+    var userGroupsRef = db.ref("users/" + uid + "/groups").update({
+      [groupsKey]: true
+    })
+    // iterate over students in this group and add under their userid
+    console.log("group added");
+  }
 });
