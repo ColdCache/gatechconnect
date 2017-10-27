@@ -38,5 +38,12 @@ document.getElementById('register-submit').addEventListener('click', function() 
 })
 
 document.getElementById('login-submit').addEventListener('click', function() {
-
+	var email_input = document.getElementById('email');
+	var email = email_input.value;
+	var password_input = document.getElementById('password');
+	var password = password_input.value;
+	var loginPromise = auth.signInWithEmailAndPassword(email, password);
+	loginPromise.catch(function(error) {
+		console.log(error);
+	});
 })

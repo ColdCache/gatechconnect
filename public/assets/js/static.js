@@ -14,6 +14,7 @@ if (!firebase.apps.length) {
 }
 var auth = firebase.auth();
 var database = firebase.database();
+var user = auth.currentUser;
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -23,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
     auth.onAuthStateChanged(function(user) {
       if (user) {
         // User is signed in.
-        user = auth.currentUser;
         console.log("Logged in!");
         $("#sign-in").hide();
         $("#teacher-dropdown").show();
@@ -39,6 +39,13 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+});
 
-  
+$("#signout").click(function() {
+  console.log("signing out");
+  auth.signOut().then(function() {
+    console.log("User successfully signed out.");
+  }).catch(function(error) {
+    alert(error.message);
+  });
 });

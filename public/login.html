@@ -52,7 +52,7 @@
                                     <form id="login-form" action="#" method="post" role="form" style="display: block;">
                                         <h2>LOGIN</h2>
                                         <div class="form-group">
-                                            <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required>
+                                            <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email" value="" required>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
@@ -62,7 +62,7 @@
                                             <label for="checkbox1">Remember Me</label>   
                                         </div>
                                         <div class="col-xs-6 form-group pull-right">     
-                                                <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+                                                <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In" onclick="return false">
                                         </div>
                                     </form>
                                     <form id="register-form" action="#" method="post" role="form" style="display: none;">
@@ -119,7 +119,8 @@
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
         
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
         <script src="assets/js/retina-1.1.0.js"></script>
         <script src="assets/js/jquery.hoverdir.js"></script>
