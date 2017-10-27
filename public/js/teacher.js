@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var db = firebase.database();
   var ref = db.ref();
+  var classSize;
 
   $("tbody.connect-groups").sortable({
     connectWith: ".connect-groups",
@@ -149,6 +150,25 @@ document.addEventListener('DOMContentLoaded', function() {
   }*/
 
   $("#classes").change(function() {
+    classSize = 0;
+    var currentClass = document.getElementById('classes').value;
+    var teacherClassesRef = db.ref("users/" + uid + "/classes");
+    teacherClassesRef.orderByKey().on('child_added', function(snapshot) { // for each teacher class
+      var classRef = db.ref("classes/" + snapshot.key); // ref for teacher class
+      classRef.on('value', function(classSnap) {
+        if (classSnap.val().className == currentClass) { // check for matching class by name
+          var teacherClassesRef = db.ref("users/" + uid + "/classes");
+          var classMembersRef = db.ref("classes/" + snapshot.key + "/classMembers");
+          classMembersRef.on('value', function(classMemberSnap) {
+            classMemberSnap.forEach(function(classMember) {
+              console.log(classMember.key); // for debugging
+              classSize++;
+              console.log(classSize); // for debugging
+            });
+          });
+        }
+      });
+    });
     var numGroupsSubmit = document.getElementById('numGroups');
     if ($(this).val() == 'Initial') {
       numGroupsSubmit.disabled = true;
@@ -157,45 +177,38 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
+  /* This function determines number of groups + their respective group sizes
+   * based on teacher input of number of total groups */
   $('#numGroupsForm').submit(function(event) {
     event.preventDefault(); // prevents page refresh on submit
     var numGroups = $('#numGroupsTextBox').val();
     if (Number.isInteger(Number(numGroups)) && (numGroups > 0)) { // make sure proper text field input
-      var classSize = 0;
-      var currentClass = document.getElementById('classes').value;
-      var teacherClassesRef = db.ref("users/" + uid + "/classes");
-      teacherClassesRef.orderByKey().on('child_added', function(snapshot) { // for each teacher class
-        var classRef = db.ref("classes/" + snapshot.key); // ref for teacher class
-        classRef.on('value', function(classSnap) {
-          if (classSnap.val().className == currentClass) { // check for matching class by name
-            console.log("The matching class is: " + classSnap.val().className); // for debugging
-            var teacherClassesRef = db.ref("users/" + uid + "/classes");
-            var classMembersRef = db.ref("classes/" + snapshot.key + "/classMembers");
-            classMembersRef.on('value', function(classMemberSnap) {
-              classMemberSnap.forEach(function(classMember) {
-                console.log(classMember.key); // for debugging
-                classSize++;
-                console.log(classSize); // for debugging
-              });
-            });
-          }
-        });
-      });
       if (classSize < numGroups) {
         alert('The number of groups (' + numGroups + ') cannot be larger than the number of students (' + classSize + ') in the class.');
       } else {
-        var numGroupsMinSize = 0;
-        var numGroupsMaxSize = 0;
-        var minGroupSize = Math.floor(classSize / numGroups);
-        var maxGroupSize = minGroupSize + 1;
-        var fractionMaxSizedGroups = (classSize / numGroups) - minGroupSize;
+        var minGroupSizedGroups = 0;
+        var maxGroupSizedGroups = 0;
+        var minGroupSize =  0;
+        var maxGroupSize = 0;
+        var fractionMaxSizedGroups = 0.0;
+        minGroupSize = Math.floor(classSize / numGroups);
+        maxGroupSize = minGroupSize + 1;
+        fractionMaxSizedGroups = classSize / numGroups - minGroupSize;
         for (var i = 0; i < numGroups; i++) {
-          if ((i / numGroups) == fractionMaxSizedGroups) {
+          if ((Math.abs(Number(i / numGroups) - fractionMaxSizedGroups)) <= 0.001) { // margin of error for decimals
             maxGroupSizedGroups = i;
+            minGroupSizedGroups = numGroups - maxGroupSizedGroups;
             break;
           }
         }
-        alert(numGroupsMaxSize + ' groups of size ' + maxGroupSize + ' and ' + numGroupsMinSize + ' groups of size ' + minGroupSize + '.');
+        var alertNumGroupsWithSizes = "";
+        if (minGroupSizedGroups > 0) {
+          alertNumGroupsWithSizes += minGroupSizedGroups + ' group(s) of size ' + minGroupSize + '.\n';
+        }
+        if (maxGroupSizedGroups > 0) {
+          alertNumGroupsWithSizes += maxGroupSizedGroups + ' group(s) of size ' + maxGroupSize + '.';
+        }
+        alert(alertNumGroupsWithSizes);
       }
     } else if (!Number.isInteger(Number(numGroups))) {
       alert('Please enter a valid integer.');
