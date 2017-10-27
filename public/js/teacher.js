@@ -149,6 +149,9 @@ document.addEventListener('DOMContentLoaded', function() {
     dropDown2.value = "Initial";
   }*/
 
+  /* Determines class size based on the current class selected +
+   * disables submit button for number of groups if a class is
+   * not selected */
   $("#classes").change(function() {
     classSize = 0;
     var currentClass = document.getElementById('classes').value;
@@ -161,9 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
           var classMembersRef = db.ref("classes/" + snapshot.key + "/classMembers");
           classMembersRef.on('value', function(classMemberSnap) {
             classMemberSnap.forEach(function(classMember) {
-              console.log(classMember.key); // for debugging
               classSize++;
-              console.log(classSize); // for debugging
             });
           });
         }
@@ -177,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  /* This function determines number of groups + their respective group sizes
+  /* Determines number of groups + their respective group sizes
    * based on teacher input of number of total groups */
   $('#numGroupsForm').submit(function(event) {
     event.preventDefault(); // prevents page refresh on submit
