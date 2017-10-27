@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+// signout on click
 $("#signout").click(function() {
   console.log("signing out");
   auth.signOut().then(function() {
