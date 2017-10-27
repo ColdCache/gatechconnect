@@ -35,8 +35,9 @@ document.addEventListener('DOMContentLoaded', function() {
       "className" : titleToSend,
       "groups" : { "groupID" : true },
       "teacher" : uid
-    }).key;
+    }).key; // add class to classes table in database
     var teacherClassesRef = ref.child("users/" + uid + "/classes");
+    // add class key under instructor classes in database
     teacherClassesRef.update({
       [classKey]: "true"
     });
@@ -158,29 +159,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
   $('#numGroupsForm').submit(function(event) {
     event.preventDefault(); // prevents page refresh on submit
+    var classSize = 0;
     var currentClass = document.getElementById('classes').value;
     var teacherClassesRef = db.ref("users/" + uid + "/classes");
     teacherClassesRef.orderByKey().on('child_added', function(snapshot) { // for each teacher class
-      var classRef = db.ref("classes/" + snapshot.key + "/className"); // ref for teacher class name
+      var classRef = db.ref("classes/" + snapshot.key); // ref for teacher class
       classRef.on('value', function(classSnap) {
-        if (classSnap.val() == currentClass) { // check for matching class by name
-          console.log("The matching class is: " + classSnap.val());
+        if (classSnap.val().className == currentClass) { // check for matching class by name
+          console.log("The matching class is: " + classSnap.val().className); // for debugging
           var teacherClassesRef = db.ref("users/" + uid + "/classes");
+          var classMembersRef = db.ref("classes/" + snapshot.key + "/classMembers");
+          classMembersRef.on('value', function(classMemberSnap) {
+            classMemberSnap.forEach(function(classMember) {
+              console.log(classMember.key); // for debugging
+              classSize++;
+              console.log(classSize); // for debugging
+            });
+          });
         }
       });
     });
     var numGroups = $('#numGroupsTextBox').val();
-    var classSize = 0;
-    alert(classSize)
-    /*if (classSize < numGroups) {
-      alert('The number of groups cannot be larger than the number of students in the class.');
+    if (classSize < numGroups) {
+      alert('The number of groups (' + numGroups + ') cannot be larger than the number of students (' + classSize + ') in the class.');
     } else {
-      var maxGroupSize = Math.floor(classSize / numGroups);
+      var maxGroupSize = Math.ceil(classSize / numGroups);
       var leftoverStudents = classSize % numGroups;
       var minGroupSize = maxGroupSize - 1;
-      var minGroupSizedGroups = maxGroupSize - leftoverStudents;
+      /*var minGroupSizedGroups = maxGroupSize - leftoverStudents;
       var maxGroupSizedGroups = numGroups - minGroupSizedGroups;
-      alert(maxGroupSizedGroups + ' groups of size ' + maxGroupSize + ' and ' + minGroupSizedGroups + ' groups of size ' + minGroupSize + '.');
-    }*/
+      alert(maxGroupSizedGroups + ' groups of size ' + maxGroupSize + ' and ' + minGroupSizedGroups + ' groups of size ' + minGroupSize + '.');*/
+    }
   });
 });
