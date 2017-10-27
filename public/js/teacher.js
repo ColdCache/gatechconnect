@@ -159,36 +159,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
   $('#numGroupsForm').submit(function(event) {
     event.preventDefault(); // prevents page refresh on submit
-    var classSize = 0;
-    var currentClass = document.getElementById('classes').value;
-    var teacherClassesRef = db.ref("users/" + uid + "/classes");
-    teacherClassesRef.orderByKey().on('child_added', function(snapshot) { // for each teacher class
-      var classRef = db.ref("classes/" + snapshot.key); // ref for teacher class
-      classRef.on('value', function(classSnap) {
-        if (classSnap.val().className == currentClass) { // check for matching class by name
-          console.log("The matching class is: " + classSnap.val().className); // for debugging
-          var teacherClassesRef = db.ref("users/" + uid + "/classes");
-          var classMembersRef = db.ref("classes/" + snapshot.key + "/classMembers");
-          classMembersRef.on('value', function(classMemberSnap) {
-            classMemberSnap.forEach(function(classMember) {
-              console.log(classMember.key); // for debugging
-              classSize++;
-              console.log(classSize); // for debugging
-            });
-          });
-        }
-      });
-    });
     var numGroups = $('#numGroupsTextBox').val();
-    if (classSize < numGroups) {
-      alert('The number of groups (' + numGroups + ') cannot be larger than the number of students (' + classSize + ') in the class.');
+    if (Number.isInteger(Number(numGroups)) && (numGroups > 0)) { // make sure proper text field input
+      var classSize = 0;
+      var currentClass = document.getElementById('classes').value;
+      var teacherClassesRef = db.ref("users/" + uid + "/classes");
+      teacherClassesRef.orderByKey().on('child_added', function(snapshot) { // for each teacher class
+        var classRef = db.ref("classes/" + snapshot.key); // ref for teacher class
+        classRef.on('value', function(classSnap) {
+          if (classSnap.val().className == currentClass) { // check for matching class by name
+            console.log("The matching class is: " + classSnap.val().className); // for debugging
+            var teacherClassesRef = db.ref("users/" + uid + "/classes");
+            var classMembersRef = db.ref("classes/" + snapshot.key + "/classMembers");
+            classMembersRef.on('value', function(classMemberSnap) {
+              classMemberSnap.forEach(function(classMember) {
+                console.log(classMember.key); // for debugging
+                classSize++;
+                console.log(classSize); // for debugging
+              });
+            });
+          }
+        });
+      });
+      if (classSize < numGroups) {
+        alert('The number of groups (' + numGroups + ') cannot be larger than the number of students (' + classSize + ') in the class.');
+      } else {
+        var numGroupsMinSize = 0;
+        var numGroupsMaxSize = 0;
+        var minGroupSize = Math.floor(classSize / numGroups);
+        var maxGroupSize = minGroupSize + 1;
+        var fractionMaxSizedGroups = (classSize / numGroups) - minGroupSize;
+        for (var i = 0; i < numGroups; i++) {
+          if ((i / numGroups) == fractionMaxSizedGroups) {
+            maxGroupSizedGroups = i;
+            break;
+          }
+        }
+        alert(numGroupsMaxSize + ' groups of size ' + maxGroupSize + ' and ' + numGroupsMinSize + ' groups of size ' + minGroupSize + '.');
+      }
+    } else if (!Number.isInteger(Number(numGroups))) {
+      alert('Please enter a valid integer.');
     } else {
-      var maxGroupSize = Math.ceil(classSize / numGroups);
-      var leftoverStudents = classSize % numGroups;
-      var minGroupSize = maxGroupSize - 1;
-      /*var minGroupSizedGroups = maxGroupSize - leftoverStudents;
-      var maxGroupSizedGroups = numGroups - minGroupSizedGroups;
-      alert(maxGroupSizedGroups + ' groups of size ' + maxGroupSize + ' and ' + minGroupSizedGroups + ' groups of size ' + minGroupSize + '.');*/
+      alert('Please enter a group size greater than 0.');
     }
   });
 });
