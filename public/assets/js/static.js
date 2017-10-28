@@ -16,19 +16,32 @@ document.addEventListener('DOMContentLoaded', function() {
   var auth = firebase.auth();
 
   $('#footer').load('footer.html');
-  // Wait until navigation bar loads before changing div visibility
+  
+  // Wait until navigation bar loads
   $('#navbar').load('navbar.html', function() {
+    $('#sign-out').click(function() {
+      auth.signOut().then(function() {
+        alert('Successfully signed out.');
+      }, function(error) {
+        alert('Error signing out.');
+      });
+    });
+
     auth.onAuthStateChanged(function(user) {
       if (user) {
         // User is signed in.
         console.log("Logged in!");
         $("#sign-in").hide();
+        $("#teacher-dropdown").show();
+        $("#student-dropdown").show();
+        $("#sign-out").show();
       } else {
         // No user is signed in.
         console.log("NOT logged in!");
         $("#teacher-dropdown").hide();
         $("#student-dropdown").hide();
         $("#sign-out").hide();
+        $("#sign-in").show();
       }
     });
   });
