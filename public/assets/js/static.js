@@ -15,6 +15,7 @@ if (!firebase.apps.length) {
 var auth = firebase.auth();
 var database = firebase.database();
 var user = auth.currentUser;
+var uid = user ? user.uid : null;
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -24,10 +25,22 @@ document.addEventListener('DOMContentLoaded', function() {
     auth.onAuthStateChanged(function(user) {
       if (user) {
         // User is signed in.
+        var uid = auth.currentUser.uid;
+        accountTypeRef = database.ref('/users/' + uid).once('value').then(function(snapshot) {
+          var accountType = snapshot.val().accountType;
+          if (accountType == 'instructor') {
+            $("#teacher-dropdown").show();
+            $("#student-dropdown").hide();
+          } else if (accountType == 'student') {
+            $("#student-dropdown").show();
+            $("#teacher-dropdown").hide();
+          }
+        }).catch(function(readError) {
+          console.log(readError);
+        });
+
         console.log("Logged in!");
         $("#sign-in").hide();
-        $("#teacher-dropdown").show();
-        $("#student-dropdown").show();
         $("#sign-out").show();
       } else {
         // No user is signed in.
