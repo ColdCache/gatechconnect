@@ -38,7 +38,7 @@ $(function() {
 		var confirmPassword = $('#confirm-password').val();
 		var professorRadio = $('#professor-radio').is(':checked');
 		var studentRadio = $('#student-radio').is(':checked');
-		if (username == "" || firstName == "" || lastName == "" || email == "" || password == "" || confirmPassword == "" || professorRadio || studentRadio) {
+		if (username == "" || firstName == "" || lastName == "" || email == "" || password == "" || confirmPassword == "" || (!professorRadio && !studentRadio)) {
 			alert('Please fill in all fields.');
 		} else if (password != confirmPassword) {
 			alert('Passwords do not match.');
