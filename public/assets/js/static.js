@@ -17,7 +17,6 @@ var database = firebase.database();
 var user = auth.currentUser;
 var uid = user ? user.uid : null;
 
-
 document.addEventListener('DOMContentLoaded', function() {
   $('#footer').load('footer.html');
   // Wait until navigation bar loads before changing div visibility
