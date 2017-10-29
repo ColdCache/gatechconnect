@@ -73,39 +73,39 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  function changeGroup() {
-    var currentClass = document.getElementById('classes').value;
-    var currentGroup = document.getElementById('groups').value; // group name
-    var rowNumber = 1;
+  // function changeGroup() {
+  //   var currentClass = document.getElementById('classes').value;
+  //   var currentGroup = document.getElementById('groups').value; // group name
+  //   var rowNumber = 1;
 
-    document.getElementById('grouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
-    var table = document.getElementById('groupedStudents');
+  //   document.getElementById('grouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
+  //   var table = document.getElementById('groupedStudents');
 
-    var teacherGroupsRef = db.ref("users/" + uid + "/groups"); // ref for teacher groups
-    teacherGroupsRef.orderByKey().on('child_added', function(snapshot) { // for each teacher group
-      var groupRef = db.ref("groups/" + snapshot.key + "/name"); // ref for teacher groups name
-      groupRef.on('value', function(groupSnap) {
-        if (groupSnap.val() == currentGroup) { // check for teacher group with current group name
-          console.log("found it: " + groupSnap.val());
-          groupMembersRef.orderByKey().on('child_added', function(memberSnap) { // for each group member
-            var groupMembersRef = db.ref("users/" + memberSnap.key); // ref for user group members
-            groupMembersRef.on('value', function(userSnap) {
-              var row = table.insertRow(rowNumber);
-              var cell1 = row.insertCell(0);
-              var cell2 = row.insertCell(1);
-              cell1.innerHTML = snapshot.val().FirstName;
-              cell2.innerHTML = snapshot.val().LastName;
-              rowNumber++;
-              console.log(userSnap.val().firstName);
-              console.log(userSnap.val().lastName);
-            });
-          });
-        } else {
-          console.log("not it");
-        }
-      });
-    });
-  }
+  //   var teacherGroupsRef = db.ref("users/" + uid + "/groups"); // ref for teacher groups
+  //   teacherGroupsRef.orderByKey().on('child_added', function(snapshot) { // for each teacher group
+  //     var groupRef = db.ref("groups/" + snapshot.key + "/name"); // ref for teacher groups name
+  //     groupRef.on('value', function(groupSnap) {
+  //       if (groupSnap.val() == currentGroup) { // check for teacher group with current group name
+  //         console.log("found it: " + groupSnap.val());
+  //         groupMembersRef.orderByKey().on('child_added', function(memberSnap) { // for each group member
+  //           var groupMembersRef = db.ref("users/" + memberSnap.key); // ref for user group members
+  //           groupMembersRef.on('value', function(userSnap) {
+  //             var row = table.insertRow(rowNumber);
+  //             var cell1 = row.insertCell(0);
+  //             var cell2 = row.insertCell(1);
+  //             cell1.innerHTML = snapshot.val().FirstName;
+  //             cell2.innerHTML = snapshot.val().LastName;
+  //             rowNumber++;
+  //             console.log(userSnap.val().firstName);
+  //             console.log(userSnap.val().lastName);
+  //           });
+  //         });
+  //       } else {
+  //         console.log("not it");
+  //       }
+  //     });
+  //   });
+  // }
 
   function changeRoster() {
     var currentClass = document.getElementById('classes').value;
