@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var ref = db.ref();
   var classSize;
   var currentClass;
+  var uid;
 
   $("tbody.connect-groups").sortable({
     connectWith: ".connect-groups",
@@ -46,18 +47,24 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   firebase.auth().onAuthStateChanged(function(user) {
-    var uid = null;
+    //var uid = null;
     if (user) {
       uid = user.uid ? user.uid : null;
     }
     var dropDown = document.getElementById("classes");
     currentClass = dropDown.value;
+    dropDown.addEventListener("change", changeRoster);
     var teacherClassesRef = db.ref("users/" + uid + "/classes"); // ref for teacher classes
+    //console.log(teacherClassesRef);
     teacherClassesRef.orderByKey().on('child_added', function(snapshot) { // for each teacher class
       var classRef = db.ref("classes/" + snapshot.key + "/className"); // ref for teacher class name
+      //console.log(classRef);
       classRef.on('value', function(classSnap) {
         var z = document.createElement("option");
-        z.setAttribute("value", classSnap.val());
+        z.setAttribute("value", snapshot.key);
+        //console.log(snapshot.key);
+        z.setAttribute("label", classSnap.val());
+        //console.log(classSnap.val());
         var t = document.createTextNode(classSnap.val());
         z.appendChild(t);
         dropDown.appendChild(z);
@@ -99,40 +106,43 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
   }
-/*
+
   function changeRoster() {
     var currentClass = document.getElementById('classes').value;
     var rowNumber = 1;
-  
-    var teacherClassesRef = db.ref("users/" + uid + "/classes");
-    teacherClassesRef.orderByKey().on("child_added", function(snapshot) {
-      var classRef = db.ref("classes/" + snapshot.key + "/className");
-      classRef.on('value', function(classSnap) {
 
-    var classLoc = 'classes/' + currentUid + '/' + currentClass + '/ungrouped';
-  
-    var classRef = newDB.ref(classLoc);
+    console.log(currentClass);
+    var classRef = db.ref("classes/" + currentClass + "/classMembers");
+    var teacherClassesRef = db.ref("users/" + uid + "/classes");
+
     document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
-    classRef.orderByChild('LastName').on('child_added', function(snapshot) {
+    
+    classRef.orderByKey().on('child_added', function(snapshot) {
+      var firstNameRef = db.ref("users/" + snapshot.key + "/firstName");
+      var lastNameRef = db.ref("users/" + snapshot.key + "/lastName");
+
       var table = document.getElementById('ungroupedStudents');
       var row = table.insertRow(rowNumber);
       var cell1 = row.insertCell(0);
       var cell2 = row.insertCell(1);
-      cell1.innerHTML = snapshot.val().FirstName;
-      cell2.innerHTML = snapshot.val().LastName;
+      firstNameRef.on('value', function(firstSnap) {
+        cell1.innerHTML = firstSnap.val();
+      });
+      lastNameRef.on('value', function(lastSnap) {
+        cell2.innerHTML = lastSnap.val();
+      })
       rowNumber++;
     });
-  
-    var groupReference = "classes/" + uid + '/' + currentClass + '/grouped';
-    var groups = newDB.ref(groupReference);
-  
-    var dropDown2 = document.getElementById("groups");
-    while (dropDown2.length > 1) {
-      dropDown2.remove(dropDown2.length -1);
-    }
-  
-    var table2 = document.getElementById('groupedStudents');
     
+    var groups = db.ref('classes/' + currentClass + "/groups");
+
+    var dropDown2 = document.getElementById("groups");
+    while  (dropDown2.length > 1) {
+      dropDown2.remove(dropDown2.length - 1);
+    }
+
+    var table2 = document.getElementById('groupedStudents');
+
     while (table2.rows.length > 1) {
       table2.deleteRow(table2.rows.length - 1);
     }
@@ -140,15 +150,49 @@ document.addEventListener('DOMContentLoaded', function() {
     dropDown2.addEventListener("change", changeGroup);
   
     groups.orderByKey().on("child_added", function(snapshot) {
-      var z = document.createElement("option");
-      z.setAttribute("value", snapshot.key);
-      var t = document.createTextNode(snapshot.key);
-      z.appendChild(t);
-      dropDown2.appendChild(z);
+      var groupNameRef = db.ref("groups/" + snapshot.key + "/name");
+
+      groupNameRef.on('value', function(groupSnap) {
+        var z = document.createElement("option");
+        z.setAttribute("value", snapshot.key);
+        z.setAttribute("label", groupSnap.val());
+        var t = document.createTextNode(groupSnap.val());
+        z.appendChild(t);
+        dropDown2.appendChild(z);
+      });
     });
   
     dropDown2.value = "Initial";
-  }*/
+  }
+
+  function changeGroup() {
+    var currentClass = document.getElementById("classes").value;
+    var currentGroup = document.getElementById("groups").value;
+
+    var rowNumber = 1;
+    var groupRef = db.ref("groups/" + currentGroup + '/members');
+
+    document.getElementById('grouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
+    
+    var table = document.getElementById('groupedStudents');
+    
+    groupRef.orderByKey().on('child_added', function(snapshot) { // for each teacher group
+      var firstNameRef = db.ref("users/" + snapshot.key + "/firstName");
+      var lastNameRef = db.ref("users/" + snapshot.key + "/lastName");
+
+      var row = table.insertRow(rowNumber);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      firstNameRef.on('value', function(firstNameSnap) {
+        cell1.innerHTML = firstNameSnap.val();
+      });
+      lastNameRef.on('value', function(lastNameSnap) {
+        cell2.innerHTML = lastNameSnap.val();
+      });
+      rowNumber++;
+    });
+  }
+  
 
   /* Determines class size based on the current class selected +
    * disables submit button for number of groups if a class is
