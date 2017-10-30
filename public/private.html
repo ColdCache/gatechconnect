@@ -73,14 +73,14 @@
                     Add a Class:
                 </h3>
                 <form action="" id="addClass">
-                    Class Name: <input id="classNameTextBox" type="text"><br>
+                    Class Name: <input id="classNameTextBox" type="text">
                     <input id="className" name="className" type="submit" value="Submit">
                 </form>
             </div>
             <div class="col-md-6">
-                    <h3>
-                        Classes
-                    </h3>
+                <h3>
+                    Classes
+                </h3>
                 <select id="classes">
                     <option value="Initial">Choose Class Roster to display.</option>
                 </select>
@@ -96,19 +96,25 @@
                     </tbody>
                 </table>
             </div>
+            <div>
+                <form action="" id="numGroupsForm">
+                    How many groups?: <input id="numGroupsTextBox" type="text">
+                    <input id="numGroups" name="numGroups" type="submit" value="Submit" disabled>
+                </form>
+            </div>
+
             <div class="col-md-6">
                 <h3>
                     Groups
                 </h3>
-                <table class="student-table">
-                        <tbody class="connect-groups" id="group1">
+                <select id="groups">
+                    <option value="Initial">Choose group to display.</option>
+                </select>
+                <table class="student-table" id = "groupedStudents">
+                        <tbody class="connect-groups" id="grouped-students">
                             <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                            </tr>
-                            <tr>
-                                <td>Random person</td>
-                                <td>randomperson@gatech.edu</td>
+                                <th>First Name</th>
+                                <th>Last Name</th>
                             </tr>
                         </tbody>
                 </table>
