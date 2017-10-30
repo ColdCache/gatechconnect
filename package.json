@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ColdCache/gatechconnect/issues"
   },
-  "homepage": "https://github.com/ColdCache/gatechconnect#readme"
+  "homepage": "https://github.com/ColdCache/gatechconnect#readme",
+  "dependencies": {
+    "firebase": "^4.6.0"
+  }
 }
