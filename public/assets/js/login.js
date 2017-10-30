@@ -26,6 +26,10 @@ document.getElementById('register-submit').addEventListener('click', function() 
 	var password = password_input.value;
 	var confirm_password_input = document.getElementById('confirm-password');
 	var confirm_password = confirm_password_input.value;
+	var first_name_input = document.getElementById('register_first_name');
+	var firstName = first_name_input.value;
+	var last_name_input = document.getElementById('register_last_name');
+	var lastName = last_name_input.value;
 	var instructor_input = document.getElementById('instructor-radio');
 	var student_input = document.getElementById('student-radio');
 	if (instructor_input.checked) {
@@ -44,9 +48,11 @@ document.getElementById('register-submit').addEventListener('click', function() 
 		window.location.replace("index");
 		var userRef = database.ref("users/" + user.uid);
 		userRef.set({
-			username: username,
+			displayName: username,
 			email: email,
-			accountType: accountType
+			accountType: accountType,
+			firstName: register_first_name,
+			lastName: register_last_name
 		});
 	}).catch(function(registerError) {
 		alert(registerError.message);
