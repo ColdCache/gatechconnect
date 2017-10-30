@@ -25,14 +25,19 @@ document.addEventListener('DOMContentLoaded', function() {
       if (user) {
         // User is signed in.
         var uid = auth.currentUser.uid;
-        accountTypeRef = database.ref('/users/' + uid).once('value').then(function(snapshot) {
-          var accountType = snapshot.val().accountType;
-          if (accountType == 'instructor') {
-            $("#teacher-dropdown").show();
-            $("#student-dropdown").hide();
-          } else if (accountType == 'student') {
-            $("#student-dropdown").show();
-            $("#teacher-dropdown").hide();
+        accountTypeRef = database.ref('/users/' + uid);
+        accountTypeRef.once('value').then(function(snapshot) {
+          // this conditional takes care of the state between registering a user
+          // and writing their data to the database
+          if (snapshot.hasChild('accountType')) {
+            var accountType = snapshot.val().accountType;
+            if (accountType == 'instructor') {
+              $("#teacher-dropdown").show();
+              $("#student-dropdown").hide();
+            } else if (accountType == 'student') {
+              $("#student-dropdown").show();
+              $("#teacher-dropdown").hide();
+            }
           }
         }).catch(function(readError) {
           console.log(readError);

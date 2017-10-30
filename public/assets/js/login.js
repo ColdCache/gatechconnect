@@ -32,33 +32,41 @@ document.getElementById('register-submit').addEventListener('click', function() 
 	var lastName = last_name_input.value;
 	var instructor_input = document.getElementById('instructor-radio');
 	var student_input = document.getElementById('student-radio');
+	var accountType = "";
 	if (instructor_input.checked) {
-		var accountType = "instructor";
+		accountType = "instructor";
 	} else if (student_input.checked) {
-		var accountType = "student";
-	} else {
-		var accountType = "none";
+		accountType = "student";
 	}
-
-	// create new user in firebase auth
-	var registerPromise = auth.createUserWithEmailAndPassword(email, confirm_password);
-	registerPromise.then(function(user) {
-		user.sendEmailVerification();
-		alert("An email verification was sent to " + email + ".", 5000);
-		window.location.replace("index");
-		var userRef = database.ref("users/" + user.uid);
-		userRef.set({
-			displayName: username,
-			email: email,
-			accountType: accountType,
-			firstName: register_first_name,
-			lastName: register_last_name
+	if (username == "" || firstName == "" || lastName == "" || email == "" || password == "" || confirm_password == "" || accountType == "") {
+		alert('Please fill in all fields.');
+	} else if (password != confirm_password) {
+		alert('Passwords do not match.');
+	} else if (!passwordRestrictions(password)) {
+		alert('Password must be between 6 and 20 characters, with at least one numeric digit, one uppercase, and one lowercase letter.');
+	} else if (!emailRestrictions(email)) {
+		alert('Email is formatted incorrectly.');
+	} else {
+		// create new user in firebase auth
+		var registerPromise = auth.createUserWithEmailAndPassword(email, confirm_password);
+		var user = auth.currentUser;
+		registerPromise.then(function(user) {
+			user.sendEmailVerification();
+			alert("An email verification was sent to " + email + ".", 5000);
+			var userRef = database.ref("users/" + user.uid);
+			userRef.set({
+				displayName: username,
+				email: email,
+				accountType: accountType,
+				firstName: firstName,
+				lastName: lastName
+			});
+			window.location.replace("index");
+		}).catch(function(registerError) {
+			alert(registerError.message);
 		});
-	}).catch(function(registerError) {
-		alert(registerError.message);
-	});
+	}
 });
-
 
 document.getElementById('login-submit').addEventListener('click', function() {
 	// pull login data from form elements
@@ -76,3 +84,17 @@ document.getElementById('login-submit').addEventListener('click', function() {
 		window.location.replace("index");
 	});
 });
+
+/* Checks that a password is between 6 & 20 characters, contains at least one 
+ * numeric digit, one uppercase, and one lowercase letter.
+ * Returns true if it it's formatted properly, false otherwise. */
+function passwordRestrictions(password) {
+    var passRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;  
+	return passRegExp.test(password);
+}
+
+/* Simple regular expression check for email in the form of example@domain.com */
+function emailRestrictions(email) {
+	var emailRegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	return emailRegExp.test(email);
+}
