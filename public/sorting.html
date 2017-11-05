@@ -8,6 +8,27 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <link rel="shortcut icon" href="assets/ico/favicon.ico">
+        <script src="assets/js/teacher.js"></script>
+        <!-- <link rel="stylesheet" href="assets/js/style.css" type="text/css" media="screen" /> -->
+        <!-- <script type="text/javascript" src="redips-drag-min.js"></script>
+        <script type="text/javascript"> 
+            window.onload = function() {
+                // reference to the REDIPS.drag library
+				var	rd = REDIPS.drag;
+				// initialization
+				rd.init();
+				// set hover color
+				rd.hover.colorTd = '#E7C7B2';
+				// set drop option to 'shift'
+				rd.dropMode = 'shift';
+				// set shift mode to vertical2
+				rd.shift.mode = 'vertical2';
+				// enable shift animation
+				rd.shift.animation = true;
+				// set animation loop pause
+				rd.animation.pause = 20;
+            }
+        </script> -->
 
         <title>Sorting</title>
 
@@ -81,14 +102,37 @@
                     <h3>
                         Ungrouped Students
                     </h3>
+                    <!-- <div id="redips-drag">
+                        <table class="tbl1">
+                            <colgroup>
+                                <col width="10">
+                                <col width="60">
+                                <col width="60">
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th colspan="6" class="redips-mark">Ungrouped Studends</th>
+                                </tr>
+                                <tr class="r1">
+                                    <td class="redips-rowhandler">
+                                        <div class="redips-drag redips-row" style="border-style: solid; cursor: move;"></div>
+                                    </td>
+                                    <td class="cdark">First Name</td>
+                                    <td class="cdark">Last Name</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> -->
                     <table class="student-table" id = "ungroupedStudents">
                         <tbody class="connect-groups" id="ungrouped-students">
                             <tr>
                                 <th>First Name</th>
                                 <th>Last Name</th>
+                                <th style="display:none;">UID</th>
                             </tr>
                         </tbody>
                     </table>
+                    <button type="button" id = "saveRosterButton">Save Roster</button>
                 </div>
                 <div class="col-md-6">
                     <h3>
@@ -102,9 +146,11 @@
                                 <tr>
                                     <th>First Name</th>
                                     <th>Last Name</th>
+                                    <th style="display:none;">UID</th>
                                 </tr>
                             </tbody>
                     </table>
+                    <button type="button" id = "saveGroupButton">Save Group</button>
                 </div>
             </div>
         </div>
@@ -127,5 +173,4 @@
     <script src="assets/js/jquery.isotope.min.js"></script>
     <script src="assets/js/custom.js"></script>
     <script src="assets/js/static.js"></script>
-    <script src="assets/js/teacher.js"></script>
 </html>
