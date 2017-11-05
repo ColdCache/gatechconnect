@@ -1,4 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+  var firstNames = [];
+  var lastNames = [];
+  var saveButton = document.getElementById("saveGroupButton");
+  var saveRosterButton = document.getElementById("saveRosterButton");
+  
+  saveButton.addEventListener("click", saveGroupToDB);
+  saveRosterButton.addEventListener("click", saveRosterToDB);
+
   // FIREBASE CONFIG
   var config = {
     apiKey: "AIzaSyAhKnwZ_l8jwtMQFc7mBh30l96NLyZq03Q",
@@ -68,17 +77,72 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  function saveGroupToDB() {
+    console.log("button clicked.");
+    var currentGroup = document.getElementById("groups").value;
+    if (currentGroup.localeCompare("Initial") === 0) {
+      alert("Pick a group before saving.");
+      console.log("Pick a group before saving.");
+      changeRoster();
+    } else {
+    
+      var rowNumber = 1;
+
+      var classRef = db.ref("classes/" + currentClass + "/classMembers");
+      var groupRef = db.ref("groups/" + currentGroup + '/members');
+          
+      var table = document.getElementById('groupedStudents');
+
+      var members = {};
+      for (var i = 1; i < table.rows.length; i++) {
+        studentId = table.rows[i].cells[2].innerHTML;
+        classRef.child(studentId).remove();
+        members[studentId] = true;
+      }
+      groupRef.set(members);
+      changeGroup();
+    }
+  }
+
+  function saveRosterToDB() {
+    console.log("button clicked.");
+    var currentClass = document.getElementById("classes").value;
+    var currentGroup = document.getElementById("groups").value;
+    if (currentClass.localeCompare("Initial") === 0) {
+      alert("Pick a class before saving.");
+      console.log("Pick a class before saving.");
+      changeGroup();
+    } else {
+      var rowNumber = 1;
+
+      var classRef = db.ref("classes/" + currentClass + "/classMembers");
+      var groupRef = db.ref("groups/" + currentGroup + "/members");
+
+      var table = document.getElementById('ungroupedStudents');
+
+      var roster = {};
+      for (var i = 1; i < table.rows.length; i++) {
+        studentId = table.rows[i].cells[2].innerHTML;
+        groupRef.child(studentId).remove();
+        roster[studentId] = true;
+      }
+      classRef.set(roster);
+      changeRoster2();
+    }
+  }
+
   function changeRoster() {
     var currentClass = document.getElementById('classes').value;
-    var rowNumber = 1;
 
-    console.log(currentClass);
     var classRef = db.ref("classes/" + currentClass + "/classMembers");
     var teacherClassesRef = db.ref("users/" + uid + "/classes");
 
-    document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
+    document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th><th style="display:none;">UID</th>';
     
     classRef.orderByKey().on('child_added', function(snapshot) {
+      var rowNumber = 1;
+
+
       var firstNameRef = db.ref("users/" + snapshot.key + "/firstName");
       var lastNameRef = db.ref("users/" + snapshot.key + "/lastName");
 
@@ -86,12 +150,15 @@ document.addEventListener('DOMContentLoaded', function() {
       var row = table.insertRow(rowNumber);
       var cell1 = row.insertCell(0);
       var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
       firstNameRef.on('value', function(firstSnap) {
         cell1.innerHTML = firstSnap.val();
       });
       lastNameRef.on('value', function(lastSnap) {
         cell2.innerHTML = lastSnap.val();
-      })
+      });
+      cell3.innerHTML = snapshot.key;
+      cell3.style.visibility = "hidden";
       rowNumber++;
     });
     
@@ -104,10 +171,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var table2 = document.getElementById('groupedStudents');
 
-    while (table2.rows.length > 1) {
-      table2.deleteRow(table2.rows.length - 1);
-    }
-  
+    document.getElementById('grouped-students').innerHTML = '<th>First Name</th><th>Last Name</th><th style="display:none;">UID</th>';
+
     dropDown2.addEventListener("change", changeGroup);
   
     groups.orderByKey().on("child_added", function(snapshot) {
@@ -126,32 +191,72 @@ document.addEventListener('DOMContentLoaded', function() {
     dropDown2.value = "Initial";
   }
 
+  function changeRoster2() {
+    var currentClass = document.getElementById('classes').value;
+
+    var classRef = db.ref("classes/" + currentClass + "/classMembers");
+    var teacherClassesRef = db.ref("users/" + uid + "/classes");
+
+    document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th><th style="display:none;">UID</th>';
+    
+    classRef.orderByKey().on('child_added', function(snapshot) {
+      var rowNumber = 1;
+
+
+      var firstNameRef = db.ref("users/" + snapshot.key + "/firstName");
+      var lastNameRef = db.ref("users/" + snapshot.key + "/lastName");
+
+      var table = document.getElementById('ungroupedStudents');
+      var row = table.insertRow(rowNumber);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
+      firstNameRef.on('value', function(firstSnap) {
+        cell1.innerHTML = firstSnap.val();
+      });
+      lastNameRef.on('value', function(lastSnap) {
+        cell2.innerHTML = lastSnap.val();
+      });
+      cell3.innerHTML = snapshot.key;
+      cell3.style.visibility = "hidden";
+      rowNumber++;
+    });
+  }
+
   function changeGroup() {
     var currentClass = document.getElementById("classes").value;
     var currentGroup = document.getElementById("groups").value;
 
-    var rowNumber = 1;
     var groupRef = db.ref("groups/" + currentGroup + '/members');
 
-    document.getElementById('grouped-students').innerHTML = '<th>First Name</th><th>Last Name</th>';
+    document.getElementById('grouped-students').innerHTML = '<th>First Name</th><th>Last Name</th><th style="display:none;">UID</th>';
     
     var table = document.getElementById('groupedStudents');
     
     groupRef.orderByKey().on('child_added', function(snapshot) { // for each teacher group
+      var rowNumber = 1;
       var firstNameRef = db.ref("users/" + snapshot.key + "/firstName");
       var lastNameRef = db.ref("users/" + snapshot.key + "/lastName");
 
       var row = table.insertRow(rowNumber);
       var cell1 = row.insertCell(0);
       var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
+
       firstNameRef.on('value', function(firstNameSnap) {
         cell1.innerHTML = firstNameSnap.val();
+        firstNames.push(firstNameSnap.val());
       });
       lastNameRef.on('value', function(lastNameSnap) {
         cell2.innerHTML = lastNameSnap.val();
+        lastNames.push(lastNameSnap.val());
       });
+      cell3.innerHTML = snapshot.key;
+      cell3.style.visibility = "hidden";
       rowNumber++;
     });
+
+    changeRoster2();
   }
   
 
