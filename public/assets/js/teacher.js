@@ -255,6 +255,8 @@ document.addEventListener('DOMContentLoaded', function() {
       cell3.style.visibility = "hidden";
       rowNumber++;
     });
+
+    changeRoster2();
   }
   
 
