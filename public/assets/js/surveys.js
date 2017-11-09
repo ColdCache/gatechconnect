@@ -50,6 +50,8 @@ $('#addRatingScale').click(function () {
         var questions = document.getElementById('questions');
         var formGroup = document.createElement('div');
         formGroup.setAttribute('class', 'form-group');
+
+        // create question element
         var question = document.createElement('input');
         question.setAttribute('type', 'text');
         question.setAttribute('id', 'question' + questionNum);
@@ -136,6 +138,11 @@ $('#createSurvey').click(function () {
             questions: questionIDs
         });
 
+        instructorRef = firebase.database().ref('users/' + firebase.auth.user.uid + '/surveys');
+        surveys = {};
+        surveys[surveyID] = 'true';
+        instructorRef.update(surveys);
+
         // update course in database
         var courseRef = firebase.database().ref('classes/' + surveyCourse + '/surveys/');
         var course = {};
@@ -154,6 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
     auth.onAuthStateChanged(function (user) {
         if (user) {
             var uid = user.uid;
+            loadSurveys(uid);
             var accountRef = firebase.database().ref().child('users').child(uid);
             accountRef.on('value', function (snap) {
                 accountType = (snap.val().accountType || 'none');
@@ -166,6 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     });
+    
 });
 
 function populateSurveyForm(uid) {
@@ -187,6 +196,7 @@ function populateSurveyForm(uid) {
         });
     });
 
+    // set instructor info from database
     var surveyInstructor = document.getElementById('surveyInstructor');
     surveyInstructor.setAttribute('name', uid);
     instructorRef = firebase.database().ref('users/' + uid);
@@ -195,32 +205,44 @@ function populateSurveyForm(uid) {
     });
 }
 
-function loadSurveys() {
+function loadSurveys(uid) {
     var surveysTable = document.getElementById('surveys');
     var surveysRef = firebase.database().ref('users/' + uid + '/surveys');
 
     // iterate through user's groups
     surveysRef.orderByKey().on('child_added', function (snapshot) {
-        var row = surveysTable.insertRow(groupsNum);
+        var row = surveysTable.insertRow(-1);
         var surveyID = snapshot.key;
 
         // iterate through each of the user's groups
-        var surveyRef = firebase.database().ref().child('surveys').child(surveyID);
-        surveyRef.orderByKey.on('child_added', function (snap) {
-            var surveyName = row.insertCell(0);
-            var surveyType = row.insertCell(1);
-            var instructor = row.insertCell(2);
-            var expirationDate = row.insertCell(3);
+        var surveyRef = firebase.database().ref('surveys/' + surveyID);
+        var surveyName = row.insertCell(0);
+        var surveyType = row.insertCell(1);
+        var instructorName = row.insertCell(2);
+        var expirationDate = row.insertCell(3);
+        var statusCell = row.insertCell(4);
+        var linkCell = row.insertCell(5);
 
-            // iterate through the group's data entries
-            surveyRef.on('value', function (snap) {
-                groupName = (snap.val().name || 'none');
-                course = (snap.val().course || 'none');
-                surveyType = (snap.val().surveyType || 'none');
-                instructor = (snap.val().instructor || 'none');
-                expirationDate = (snap.val().date || 'none');
+        // get data from survey
+        surveyRef.on('value', function (snap) {
+            var name = document.createTextNode(snap.val().name);
+            surveyName.appendChild(name);
+            var type = document.createTextNode(snap.val().type);
+            surveyType.appendChild(type);
+            var instructorID = snap.val().instructor;
+            
+            var instructorRef = firebase.database().ref('users/' + instructorID);
+            instructorRef.on('value', function(snapshot) {
+                var instructor = document.createTextNode(snapshot.val().firstName + ' ' + snapshot.val().lastName);
+                instructorName.appendChild(instructor);
             });
-            groupsNum++;
+            var date = document.createTextNode(snap.val().date);
+            expirationDate.appendChild(date);
         });
+
+        var status = document.createTextNode('status');
+        statusCell.appendChild(status);
+        var link = document.createTextNode('Edit Survey');
+        linkCell.appendChild(link);
     });
 }
