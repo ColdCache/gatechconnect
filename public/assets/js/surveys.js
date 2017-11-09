@@ -33,9 +33,16 @@ $('#addMultChoice').click(function () {
         question.setAttribute('id', 'question' + questionNum);
         question.setAttribute('class', 'form-control');
         question.setAttribute('placeholder', 'Question');
+        var questionType = document.createTextNode('Multiple Choice: out of ' + numAnswers);
+        formGroup.appendChild(questionType);
         formGroup.appendChild(question);
         for (i = 1; i <= numAnswers; i++) {
-            addAnswer(questionNum, formGroup, i);
+            var answer = document.createElement('input');
+            answer.setAttribute('type', 'text');
+            answer.setAttribute('id', questionNum + 'answer' + i);
+            answer.setAttribute('class', 'form-control');
+            answer.setAttribute('placeholder', 'Answer');
+            formGroup.appendChild(answer);
         }
         question.setAttribute('name', numAnswers);
         questions.appendChild(formGroup);
@@ -57,23 +64,13 @@ $('#addRatingScale').click(function () {
         question.setAttribute('id', 'question' + questionNum);
         question.setAttribute('class', 'form-control');
         question.setAttribute('placeholder', 'Question');
+        var questionType = document.createTextNode('Rating Scale Question: out of ' + numAnswers);
+        question.setAttribute('name', '0');
+        formGroup.appendChild(questionType);
         formGroup.appendChild(question);
-        for (i = 1; i <= numAnswers; i++) {
-            addAnswer(questionNum, formGroup, i);
-        }
-        question.setAttribute('name', numAnswers);
         questions.appendChild(formGroup);
     }
 });
-
-function addAnswer(questionNum, formGroup, answerNum) {
-    var answer = document.createElement('input');
-    answer.setAttribute('type', 'text');
-    answer.setAttribute('id', questionNum + 'answer' + answerNum);
-    answer.setAttribute('class', 'form-control');
-    answer.setAttribute('placeholder', 'Answer');
-    formGroup.appendChild(answer);
-}
 
 function hideQuestionTypes() {
     $('#multipleChoice').hide();
@@ -116,6 +113,7 @@ $('#createSurvey').click(function () {
         for (j = 1; j <= questionObj.name; j++) {
             var answerObj = document.getElementById(i + 'answer' + j);
             answers['answer' + j] = answerObj.value;
+            answers['value'] = answerObj.name;
         }
         questions['answers'] = answers;
         questionIDs[questionID] = 'true';
@@ -138,7 +136,7 @@ $('#createSurvey').click(function () {
             questions: questionIDs
         });
 
-        instructorRef = firebase.database().ref('users/' + firebase.auth.user.uid + '/surveys');
+        instructorRef = firebase.database().ref('users/' + firebase.auth.currentUser.uid + '/surveys');
         surveys = {};
         surveys[surveyID] = 'true';
         instructorRef.update(surveys);
