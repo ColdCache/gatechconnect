@@ -22,43 +22,46 @@ $('#addQuestion').click(function () {
 
 $('#addMultChoice').click(function () {
     hideQuestionTypes();
-    questionNum++;
-    var questions = document.getElementById('questions');
-    var formGroup = document.createElement('div');
-    formGroup.setAttribute('class', 'form-group');
-    var question = document.createElement('input');
-    question.setAttribute('type','text');
-    question.setAttribute('id','question' + questionNum);
-    question.setAttribute('class', 'form-control');
-    question.setAttribute('placeholder','Question');
-    formGroup.appendChild(question);
     var numAnswers = document.getElementById('multAnswers').value;
-    for (i = 1; i <= numAnswers; i++) {
-        addAnswer(questionNum, formGroup, i);
+    if (numAnswers != '' && numAnswers != '0') {
+        questionNum++;
+        var questions = document.getElementById('questions');
+        var formGroup = document.createElement('div');
+        formGroup.setAttribute('class', 'form-group');
+        var question = document.createElement('input');
+        question.setAttribute('type', 'text');
+        question.setAttribute('id', 'question' + questionNum);
+        question.setAttribute('class', 'form-control');
+        question.setAttribute('placeholder', 'Question');
+        formGroup.appendChild(question);
+        for (i = 1; i <= numAnswers; i++) {
+            addAnswer(questionNum, formGroup, i);
+        }
+        question.setAttribute('name', numAnswers);
+        questions.appendChild(formGroup);
     }
-    question.setAttribute('name', numAnswers);
-    questions.appendChild(formGroup);
 });
 
 $('#addRatingScale').click(function () {
     hideQuestionTypes();
-    questionNum++;
-    var questions = document.getElementById('questions');
-    var formGroup = document.createElement('div');
-    formGroup.setAttribute('class', 'form-group');
-    var question = document.createElement('input');
-    question.setAttribute('type','text');
-    question.setAttribute('id','question' + questionNum);
-    question.setAttribute('class', 'form-control');
-    question.setAttribute('placeholder','Question');
-    formGroup.appendChild(question);
     var numAnswers = document.getElementById('ratingAnswers').value;
-    for (i = 1; i <= numAnswers; i++) {
-        addAnswer(questionNum, formGroup, i);
+    if (numAnswers != '' && numAnswers != '0') {
+        questionNum++;
+        var questions = document.getElementById('questions');
+        var formGroup = document.createElement('div');
+        formGroup.setAttribute('class', 'form-group');
+        var question = document.createElement('input');
+        question.setAttribute('type', 'text');
+        question.setAttribute('id', 'question' + questionNum);
+        question.setAttribute('class', 'form-control');
+        question.setAttribute('placeholder', 'Question');
+        formGroup.appendChild(question);
+        for (i = 1; i <= numAnswers; i++) {
+            addAnswer(questionNum, formGroup, i);
+        }
+        question.setAttribute('name', numAnswers);
+        questions.appendChild(formGroup);
     }
-    question.setAttribute('name', numAnswers);
-    questions.appendChild(formGroup);
-    
 });
 
 function addAnswer(questionNum, formGroup, answerNum) {
@@ -76,7 +79,8 @@ function hideQuestionTypes() {
     $('#addQuestion').show();
 }
 
-$('#createSurvey').click(function() {
+$('#createSurvey').click(function () {
+    // pull survey data from document
     var surveyName = document.getElementById('surveyName').value;
     var surveyType = 'none';
     var academic = document.getElementById('academic-radio');
@@ -92,10 +96,13 @@ $('#createSurvey').click(function() {
     } else if (other.checked) {
         surveyType = 'other';
     }
-    var surveyInstructor = document.getElementById('surveyInstructor').value;
-    var surveyCourse = document.getElementById('courses').value;
+    var surveyInstructor = document.getElementById('surveyInstructor').name;
+    //var surveyCourse = document.getElementById('courses').value;
+    var surveyCourse = $('#courses').val();
     var surveyDate = document.getElementById('datepicker').value;
     var questionIDs = {};
+
+    // iterate and pull data from each question
     for (i = 1; i <= questionNum; i++) {
         var questionsRef = firebase.database().ref('questions');
         var questionID = questionsRef.push().key;
@@ -112,10 +119,15 @@ $('#createSurvey').click(function() {
         questionIDs[questionID] = 'true';
         questionsRef.child(questionID).update(questions);
     }
+
+    // if survey data successfully pulled
     if (surveyName != '' && surveyType != '' && surveyCourse != '' && surveyDate != '') {
+        // create valid survey object
         var surveysRef = firebase.database().ref('surveys');
         var surveyID = surveysRef.push().key;
         var surveyRef = firebase.database().ref('surveys/' + surveyID);
+
+        // update survey in database
         surveyRef.set({
             name: surveyName,
             type: surveyType,
@@ -123,10 +135,13 @@ $('#createSurvey').click(function() {
             date: surveyDate,
             questions: questionIDs
         });
+
+        // update course in database
         var courseRef = firebase.database().ref('classes/' + surveyCourse + '/surveys/');
         var course = {};
         course[surveyCourse] = 'true';
         courseRef.update(course);
+        location.reload();
     } else {
         console.log('Error accepting survey data, data is not valid.');
     }
@@ -157,26 +172,35 @@ function populateSurveyForm(uid) {
     var coursesSelect = document.getElementById('courses');
     var coursesRef = firebase.database().ref('users/' + uid + '/classes');
 
+    // iterate through each course in course list
     coursesRef.orderByKey().on('child_added', function (snapshot) {
         var courseID = snapshot.key;
         var courseRef = firebase.database().ref('classes/' + courseID);
+
+        // pull course data and create option
         courseRef.on('value', function (snap) {
             var option = document.createElement('option');
-            option.setAttribute('value', snap.val().className);
+            option.setAttribute('value', snap.key);
             var courseText = document.createTextNode(snap.val().className);
             option.appendChild(courseText);
             coursesSelect.appendChild(option);
         });
     });
+
+    var surveyInstructor = document.getElementById('surveyInstructor');
+    surveyInstructor.setAttribute('name', uid);
+    instructorRef = firebase.database().ref('users/' + uid);
+    instructorRef.on('value', function (snap) {
+        surveyInstructor.setAttribute('value', snap.val().firstName + ' ' + snap.val().lastName);
+    });
 }
 
 function loadSurveys() {
     var surveysTable = document.getElementById('surveys');
-    var survey = 1;
-    var surveysRef = firebase.database().ref().child('users').child(uid).child('surveys');
+    var surveysRef = firebase.database().ref('users/' + uid + '/surveys');
 
     // iterate through user's groups
-    groupsRef.orderByKey().on('child_added', function (snapshot) {
+    surveysRef.orderByKey().on('child_added', function (snapshot) {
         var row = surveysTable.insertRow(groupsNum);
         var surveyID = snapshot.key;
 
