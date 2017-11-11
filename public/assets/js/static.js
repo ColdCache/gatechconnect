@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
           console.log(readError);
         });
 
-        console.log("Logged in!");
+        console.log("Logged in! " + user.uid);
         $("#sign-in").hide();
         $("#sign-out").show();
       } else {
