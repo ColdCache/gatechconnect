@@ -37,7 +37,7 @@
     <div id="blue">
         <div class="container">
             <div class="row">
-                <h3>About</h3>
+                <h3>Surveys</h3>
             </div>
             <!-- /row -->
         </div>
@@ -48,13 +48,72 @@
     <div class="container mtb">
         <div class="row">
             <div class="col-log-12">
+                <a href="#" class="btn btn-theme" id="showSurveyForm">Show Survey Form</a>
+                <div class="row">
+                    <div class="col-log-3"></div>
+                    <div class="col-md-6 col-md-offset-3">
+                        <form id="survey-form" action="#" method="post" role="form">
+                            <h2>Create Survey</h2>
+                            <div class="form-group">
+                                <input type="text" name="surveyName" id="surveyName" tabindex="1" class="form-control" placeholder="Survey Name" value=""
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <h4>Survey Type:</h4>
+                                <label for="academic-radio">Academic</label>
+                                <input type="radio" name="survey-type" id="academic-radio" tabindex="1" value="academic">
+                                <label for="personal-radio">&nbsp;&nbsp;Personal</label>
+                                <input type="radio" name="survey-type" id="personal-radio" tabindex="1" value="personal">
+                                <label for="teamwork-radio">&nbsp;&nbsp;Teamwork</label>
+                                <input type="radio" name="survey-type" id="teamwork-radio" tabindex="1" value="teamwork">
+                                <label for="Other-radio">&nbsp;&nbsp;Other</label>
+                                <input type="radio" name="survey-type" id="other-radio" tabindex="1" value="other">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="surveyInstructor" id="surveyInstructor" tabindex="1" class="form-control" placeholder="Instructor's Name"
+                                    value="">
+                            </div>
+                            <div class="form-group">
+                                <select id="courses">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <h4>Expiration Date:
+                                    <input type="text" id="datepicker" required>
+                                </h4>
+                            </div>
+                            <div class="row" id="questions">
+
+                            </div>
+                            <div class="col-sm-3">
+                                <a href="javascript:void(0)" class="btn btn-theme" id="addQuestion">Add Question</a>
+                                <div id="multipleChoice" class="form-group">
+                                    <label for="multAnswers"># of Choices</label>
+                                    <input id="multAnswers" type="number" class="form-control" min="0">
+                                    <a href="javascript:void(0)" class="btn btn-theme" id="addMultChoice">Multiple Choice</a>
+                                </div>
+                                <div id="ratingScale" class="form-group">
+                                        <label for="ratingAnswers"># of Scale</label>
+                                    <input id="ratingAnswers" type="number" class="form-control" min="0">
+                                    <a href="javascript:void(0)" class="btn btn-theme" id="addRatingScale">Rating Scale</a>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-4 col-sm-offset-3">
+                                    <br />
+                                    <a href="javascript:void(0)" class="btn btn-theme" id="createSurvey">Create Survey</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
                 <!-- GROUPS TABLE -->
-                <table id="surveys" class="surveys">
+                <table id="surveys">
                     <thead>
                         <tr>
                             <th>Survey Name</th>
                             <th>Survey Type</th>
-                            <th>Class Name</th>
                             <th>Teacher Name</th>
                             <th>Expiration Date</th>
                             <th>Status</th>
@@ -63,40 +122,6 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>surveyName</td>
-                            <td>personality</td>
-                            <td>className</td>
-                            <td>teacherName</td>
-                            <td>date/time</td>
-                            <td>status</td>
-                            <td>Take Survey</td>
-                        </tr>
-                        <tr>
-                            <td>surveyName</td>
-                            <td>teamwork</td>
-                            <td>className</td>
-                            <td>teacherName</td>
-                            <td>date/time</td>
-                            <td>status</td>
-                            <td>Take Survey</td>
-                        </tr>
-                        <tr>
-                            <td>surveyName</td>
-                            <td>academic</td>
-                            <td>className</td>
-                            <td>teacherName</td>
-                            <td>date/time</td>
-                            <td>status</td>
-                            <td>Take Survey</td>
-                        </tr>
-                        <tr>
-                            <td>surveyName</td>
-                            <td>research</td>
-                            <td>className</td>
-                            <td>teacherName</td>
-                            <td>date/time</td>
-                            <td>status</td>
-                            <td>Take Survey</td>
                         </tr>
                     </tbody>
                 </table>
@@ -116,6 +141,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/retina-1.1.0.js"></script>
     <script src="assets/js/jquery.hoverdir.js"></script>
@@ -124,6 +150,7 @@
     <script src="assets/js/jquery.isotope.min.js"></script>
     <script src="assets/js/custom.js"></script>
     <script src="assets/js/static.js"></script>
+    <script src="assets/js/surveys.js"></script>
 </body>
 
 </html>
