@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function() {
     teacherClassesRef.orderByKey().on('child_added', function(snapshot) { // for each teacher class
       var classRef = db.ref("classes/" + snapshot.key); // ref for teacher class
       classRef.on('value', function(classSnap) {
-        if (classSnap.val().className == currentClass) { // check for matching class by name
+        if (classSnap.key == currentClass) { // check for matching class by id
           var teacherClassesRef = db.ref("users/" + uid + "/classes");
           var classMembersRef = db.ref("classes/" + snapshot.key + "/classMembers");
           classMembersRef.on('value', function(classMemberSnap) {
@@ -280,6 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
     });
+    console.log("class size: " + classSize);
     var numGroupsSubmit = document.getElementById('numGroups');
     if ($(this).val() == 'Initial') {
       numGroupsSubmit.disabled = true;
