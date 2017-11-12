@@ -38,12 +38,13 @@ function sendRequest() {
     userRef.on("value", function(snapShot) {
         snapShot.forEach(function(childSnapShot){
             var user = childSnapShot.val();
-            if (user.email != roster[i].email) {
-                console.log("user is not in the system yet!");
-            }
+
             console.log("email in db: " + JSON.stringify(user));
             // console.log("roster: " + roster[i].email);
             for (var i = 0; i < roster.length; i++) {
+                if (user.email != roster[i].email) {
+                    console.log("user is not in the system yet!");
+                }
                 console.log("student to add: " + roster[i].email);
                 userRef.orderByChild('email').equalTo(roster[i].email).on("value", function(snapshot){
                    snapshot.forEach(function (child) {
@@ -53,8 +54,13 @@ function sendRequest() {
                        classMemberRef.update({
                            [studentKey]: true
                        });
+                       usersClassRef = db.ref("users/" + studentKey + "/classes" );
+                       usersClassRef.update({
+                           [currentClass]: true
+                       })
                    })
                 });
+
             }
 
 
