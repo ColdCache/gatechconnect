@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var firstNames = [];
   var lastNames = [];
+  var classMemberIDList = [];
   var saveButton = document.getElementById("saveGroupButton");
   var saveRosterButton = document.getElementById("saveRosterButton");
   
@@ -158,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
         cell2.innerHTML = lastSnap.val();
       });
       cell3.innerHTML = snapshot.key;
-      cell3.style.visibility = "hidden";
+      cell3.style.display = "none";
       rowNumber++;
     });
     
@@ -202,7 +203,6 @@ document.addEventListener('DOMContentLoaded', function() {
     classRef.orderByKey().on('child_added', function(snapshot) {
       var rowNumber = 1;
 
-
       var firstNameRef = db.ref("users/" + snapshot.key + "/firstName");
       var lastNameRef = db.ref("users/" + snapshot.key + "/lastName");
 
@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
         cell2.innerHTML = lastSnap.val();
       });
       cell3.innerHTML = snapshot.key;
-      cell3.style.visibility = "hidden";
+      cell3.style.display = "none";
       rowNumber++;
     });
   }
@@ -252,30 +252,37 @@ document.addEventListener('DOMContentLoaded', function() {
         lastNames.push(lastNameSnap.val());
       });
       cell3.innerHTML = snapshot.key;
-      cell3.style.visibility = "hidden";
+      cell3.style.display = "none";
       rowNumber++;
     });
-
     changeRoster2();
   }
   
 
   /* Determines class size based on the current class selected +
    * disables submit button for number of groups if a class is
-   * not selected */
+   * not selected
+   * Updates class member id list and last name list */
   $("#classes").change(function() {
     classSize = 0;
+    classMemberIDList = [];
+    lastNames = [];
     currentClass = document.getElementById('classes').value;
     var teacherClassesRef = db.ref("users/" + uid + "/classes");
     teacherClassesRef.orderByKey().on('child_added', function(snapshot) { // for each teacher class
       var classRef = db.ref("classes/" + snapshot.key); // ref for teacher class
       classRef.on('value', function(classSnap) {
-        if (classSnap.val().className == currentClass) { // check for matching class by name
+        if (classSnap.key == currentClass) { // check for matching class by id
           var teacherClassesRef = db.ref("users/" + uid + "/classes");
           var classMembersRef = db.ref("classes/" + snapshot.key + "/classMembers");
           classMembersRef.on('value', function(classMemberSnap) {
             classMemberSnap.forEach(function(classMember) {
               classSize++;
+              classMemberIDList.push(classMember.key);
+              var lastNameRef = db.ref("users/" + classMember.key + "/lastName");
+              lastNameRef.on('value', function(lastNameSnap) {
+                lastNames.push(lastNameSnap.val());
+              });
             });
           });
         }
@@ -289,10 +296,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  /* Determines number of groups + their respective group sizes
+  /* Makes X number of groups & determines their sizes
    * based on teacher input of number of total groups */
   $('#numGroupsForm').submit(function(event) {
     event.preventDefault(); // prevents page refresh on submit
+    // organize class member id list by last name for grouping
+    var sorted = classMemberIDList.sort(compareByLastName);
     var numGroups = $('#numGroupsTextBox').val();
     if (Number.isInteger(Number(numGroups)) && (numGroups > 0)) { // make sure proper text field input
       if (classSize < numGroups) {
@@ -314,11 +323,20 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         }
         var alertNumGroupsWithSizes = "";
+        var memberIndex = 0;
         if (minGroupSizedGroups > 0) {
-          alertNumGroupsWithSizes += minGroupSizedGroups + ' group(s) of size ' + minGroupSize + '.\n';
+          alertNumGroupsWithSizes += minGroupSizedGroups + ' group(s) of size ' + minGroupSize + ' were generated.\n';
+          for (var i = 1; i <= minGroupSizedGroups; i++) {
+            addGroup(i, minGroupSize, memberIndex);
+            memberIndex += minGroupSize;
+          }
         }
         if (maxGroupSizedGroups > 0) {
-          alertNumGroupsWithSizes += maxGroupSizedGroups + ' group(s) of size ' + maxGroupSize + '.';
+          alertNumGroupsWithSizes += maxGroupSizedGroups + ' group(s) of size ' + maxGroupSize + ' were generated.';
+          for (var i = (minGroupSizedGroups + 1); i <= (minGroupSizedGroups + maxGroupSizedGroups); i++) {
+            addGroup(i, maxGroupSize, memberIndex);
+            memberIndex += maxGroupSize;
+          }
         }
         alert(alertNumGroupsWithSizes);
       }
@@ -330,27 +348,45 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   /* Adds group to appropriate sections of FireBase database (groups, users, classes)
-   * WORK IN PROGRESS*/
+   * groupNumber is the current number group (1, 2, 3, etc.)
+   * groupSize is the group member size
+   * classMemberIndex is the index the group members begin from */
   function addGroup(groupNumber, groupSize, classMemberIndex) {
-    var groupName = "Group " + groupNumber;
+    var groupName = "Generated Group " + groupNumber;
     var groupsRef = db.ref("groups");
     // Add a group to groups section of database
     var groupsKey = groupsRef.push({
-      "class" : classID,
-      "members" : { "studentID" : true }, // change to iterate over groupNumber students starting from classMemberIndex
+      "class" : currentClass,
       "name" : groupName,
       "teacher" : uid
     }).key;
+    // iterate over groupNumber students starting from classMemberIndex
+    for (var i = classMemberIndex; i < (classMemberIndex + groupSize); i++) {
+      console.log(groupSize + ": " + classMemberIDList[i]);
+      groupsRef.child(groupsKey + "/members").update({
+        [classMemberIDList[i]] : true
+      });
+      // iterate over students in this group and add under their userid
+      var studentGroupsRef = db.ref("users/" + classMemberIDList[classMemberIndex] + "/groups").update({
+        [groupsKey] : true
+      })
+    }
     // Add group ID under groups for specific class in database
-    var classGroupsRef = db.ref("classes/groups").update({
-      [groupsKey]: true      
+    var classGroupsRef = db.ref("classes/" + currentClass + "/groups").update({
+      [groupsKey] : true      
     });
     /* Add group ID under groups for specific users in database */
     // this adds the group under the teacher's group list
-    var userGroupsRef = db.ref("users/" + uid + "/groups").update({
-      [groupsKey]: true
+    var teacherGroupsRef = db.ref("users/" + uid + "/groups").update({
+      [groupsKey] : true
     })
-    // iterate over students in this group and add under their userid
-    console.log("group added");
+  }
+
+  /* Takes in two class member IDs & compares the class member's last name
+   * Sorts by last name ascending */
+  function compareByLastName(classMemberIDA, classMemberIDB) {
+    if (lastNames[classMemberIDList.indexOf(classMemberIDA)] < lastNames[classMemberIDList.indexOf(classMemberIDB)]) return -1;
+    if (lastNames[classMemberIDList.indexOf(classMemberIDA)] > lastNames[classMemberIDList.indexOf(classMemberIDB)]) return 1;
+    return 0;
   }
 });
