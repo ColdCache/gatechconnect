@@ -261,10 +261,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   /* Determines class size based on the current class selected +
    * disables submit button for number of groups if a class is
-   * not selected */
+   * not selected
+   * Updates class member id list and last name list */
   $("#classes").change(function() {
     classSize = 0;
     classMemberIDList = [];
+    lastNames = [];
     currentClass = document.getElementById('classes').value;
     var teacherClassesRef = db.ref("users/" + uid + "/classes");
     teacherClassesRef.orderByKey().on('child_added', function(snapshot) { // for each teacher class
@@ -277,6 +279,10 @@ document.addEventListener('DOMContentLoaded', function() {
             classMemberSnap.forEach(function(classMember) {
               classSize++;
               classMemberIDList.push(classMember.key);
+              var lastNameRef = db.ref("users/" + classMember.key + "/lastName");
+              lastNameRef.on('value', function(lastNameSnap) {
+                lastNames.push(lastNameSnap.val());
+              });
             });
           });
         }
@@ -296,7 +302,6 @@ document.addEventListener('DOMContentLoaded', function() {
     event.preventDefault(); // prevents page refresh on submit
     // organize class member id list by last name for grouping
     var sorted = classMemberIDList.sort(compareByLastName);
-    console.log(sorted);
     var numGroups = $('#numGroupsTextBox').val();
     if (Number.isInteger(Number(numGroups)) && (numGroups > 0)) { // make sure proper text field input
       if (classSize < numGroups) {
@@ -356,9 +361,10 @@ document.addEventListener('DOMContentLoaded', function() {
       "teacher" : uid
     }).key;
     // iterate over groupNumber students starting from classMemberIndex
-    for (var i = 0; i < groupSize; i++) {
+    for (var i = classMemberIndex; i < (classMemberIndex + groupSize); i++) {
+      console.log(groupSize + ": " + classMemberIDList[i]);
       groupsRef.child(groupsKey + "/members").update({
-        [classMemberIDList[classMemberIndex]] : true
+        [classMemberIDList[i]] : true
       });
       // iterate over students in this group and add under their userid
       var studentGroupsRef = db.ref("users/" + classMemberIDList[classMemberIndex] + "/groups").update({
