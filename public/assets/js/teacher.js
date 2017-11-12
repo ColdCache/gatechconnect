@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
         cell2.innerHTML = lastSnap.val();
       });
       cell3.innerHTML = snapshot.key;
-      cell3.style.visibility = "hidden";
+      cell3.style.display = "none";
       rowNumber++;
     });
     
@@ -202,7 +202,6 @@ document.addEventListener('DOMContentLoaded', function() {
     classRef.orderByKey().on('child_added', function(snapshot) {
       var rowNumber = 1;
 
-
       var firstNameRef = db.ref("users/" + snapshot.key + "/firstName");
       var lastNameRef = db.ref("users/" + snapshot.key + "/lastName");
 
@@ -218,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
         cell2.innerHTML = lastSnap.val();
       });
       cell3.innerHTML = snapshot.key;
-      cell3.style.visibility = "hidden";
+      cell3.style.display = "none";
       rowNumber++;
     });
   }
@@ -252,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
         lastNames.push(lastNameSnap.val());
       });
       cell3.innerHTML = snapshot.key;
-      cell3.style.visibility = "hidden";
+      cell3.style.display = "none";
       rowNumber++;
     });
 
