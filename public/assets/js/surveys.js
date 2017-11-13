@@ -1,5 +1,6 @@
 var showSurvey = false;
 var questionNum = 0;
+var uid = null;
 
 $('#showSurveyForm').click(function () {
     if (showSurvey) {
@@ -136,7 +137,7 @@ $('#createSurvey').click(function () {
             questions: questionIDs
         });
 
-        instructorRef = firebase.database().ref('users/' + firebase.auth.currentUser.uid + '/surveys');
+        instructorRef = firebase.database().ref('users/' + uid + '/surveys');
         surveys = {};
         surveys[surveyID] = 'true';
         instructorRef.update(surveys);
@@ -158,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#datepicker').datepicker();
     auth.onAuthStateChanged(function (user) {
         if (user) {
-            var uid = user.uid;
+            uid = user.uid;
             loadSurveys(uid);
             var accountRef = firebase.database().ref().child('users').child(uid);
             accountRef.on('value', function (snap) {
