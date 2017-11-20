@@ -1,6 +1,7 @@
 var showSurvey = false;
 var questionNum = 0;
 
+// show create survey form for teachers
 $('#showSurveyForm').click(function () {
     if (showSurvey) {
         $('#survey-form').hide();
@@ -14,20 +15,24 @@ $('#showSurveyForm').click(function () {
     }
 });
 
+// add question types on click
 $('#addQuestion').click(function () {
     $('#multipleChoice').show();
     $('#ratingScale').show();
     $('#addQuestion').hide();
 });
 
+// add multiple choice question type
 $('#addMultChoice').click(function () {
     hideQuestionTypes();
     var numAnswers = document.getElementById('multAnswers').value;
     if (numAnswers != '' && numAnswers != '0') {
+        // add multiple choice question option if valid # of entries
         questionNum++;
         var questions = document.getElementById('questions');
         var formGroup = document.createElement('div');
         formGroup.setAttribute('class', 'form-group');
+        // create question element
         var question = document.createElement('input');
         question.setAttribute('type', 'text');
         question.setAttribute('id', 'question' + questionNum);
@@ -36,6 +41,8 @@ $('#addMultChoice').click(function () {
         var questionType = document.createTextNode('Multiple Choice: out of ' + numAnswers);
         formGroup.appendChild(questionType);
         formGroup.appendChild(question);
+
+        // create answer options
         for (i = 1; i <= numAnswers; i++) {
             var answer = document.createElement('input');
             answer.setAttribute('type', 'text');
@@ -86,6 +93,7 @@ $('#createSurvey').click(function () {
     var personal = document.getElementById('personal-radio');
     var teamwork = document.getElementById('teamwork-radio');
     var other = document.getElementById('other-radio');
+    // pull survey type
     if (academic.checked) {
         surveyType = 'academic';
     } else if (personal.checked) {
@@ -135,7 +143,7 @@ $('#createSurvey').click(function () {
             date: surveyDate,
             questions: questionIDs
         });
-
+        // save to survey database
         instructorRef = firebase.database().ref('users/' + firebase.auth.currentUser.uid + '/surveys');
         surveys = {};
         surveys[surveyID] = 'true';
@@ -157,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#survey-form').hide();
     $('#datepicker').datepicker();
     auth.onAuthStateChanged(function (user) {
+        // load user data based on user's session data
         if (user) {
             var uid = user.uid;
             var accountRef = firebase.database().ref().child('users').child(uid);
@@ -185,7 +194,7 @@ function populateSurveyForm(uid) {
         var courseID = snapshot.key;
         var courseRef = firebase.database().ref('classes/' + courseID);
 
-        // pull course data and create option
+        // pull course data and fill courses dropdown with options
         courseRef.on('value', function (snap) {
             var option = document.createElement('option');
             option.setAttribute('value', snap.key);
@@ -204,10 +213,12 @@ function populateSurveyForm(uid) {
     });
 }
 
+// load student's dashboard for surveys
 function loadStudentSurveys(uid) {
     var surveysTable = document.getElementById('surveys');
     var usersClasses = firebase.database().ref('users/' + uid + '/classes');
 
+    // check user's classes for surveys
     usersClasses.orderByKey().on('child_added', function(snapshot) {
         var classID = snapshot.key;
 
@@ -216,6 +227,7 @@ function loadStudentSurveys(uid) {
             var surveyID = snap.key;
             var surveyRef = firebase.database().ref('surveys/' + surveyID);
             
+            // pull each survey's data from surveys database
             surveyRef.on('value', function(survsnap) {
                 var row = surveysTable.insertRow(-1);
                 var surveyName = row.insertCell(0);
@@ -226,7 +238,7 @@ function loadStudentSurveys(uid) {
                 surveyType.appendChild(type);
                 var teacherID = survsnap.val().instructor;
                 var instructorRef = firebase.database().ref('users/' + teacherID);
-                
+
                 instructorRef.on('value', function(insSnap) {
                     var instructorName = row.insertCell(2);
                     var instructor = document.createTextNode(insSnap.val().firstName + ' ' + insSnap.val().lastName);
@@ -241,7 +253,7 @@ function loadStudentSurveys(uid) {
     });
 }
 
-
+// load instructor's dashboard for surveys
 function loadInstructorSurveys(uid) {
     var surveysTable = document.getElementById('surveys');
     var surveysRef = firebase.database().ref('users/' + uid + '/surveys');
