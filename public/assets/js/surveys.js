@@ -1,17 +1,32 @@
 var showSurvey = false;
+var takeSurvey = false;
 var questionNum = 0;
 
 // show create survey form for teachers
 $('#showSurveyForm').click(function () {
     if (showSurvey) {
-        $('#survey-form').hide();
+        $('#create-survey').hide();
         $('#showSurveyForm').text('Show Survey Form');
         showSurvey = false;
     } else {
-        $('#survey-form').show();
+        $('#create-survey').show();
         $('#showSurveyForm').text('Hide Survey Form');
         hideQuestionTypes();
         showSurvey = true;
+    }
+});
+
+// hide/show functionality for take survey for students
+$('#takeSurvey').click(function () {
+    if (takeSurvey) {
+        $('#take-survey').hide();
+        $('#takeSurvey').text('Show Survey Form');
+        takeSurvey = false;
+    } else {
+        $('#take-survey').show();
+        $('#takeSurvey').text('Hide Survey Form');
+        hideQuestionTypes();
+        takeSurvey = true;
     }
 });
 
@@ -85,6 +100,16 @@ function hideQuestionTypes() {
     $('#addQuestion').show();
 }
 
+$('#submitSurvey').click(function() {
+    // pull survey data from document
+
+    // save data to object
+
+    // save survey response to database
+
+    // update user's surveys list
+});
+
 $('#createSurvey').click(function () {
     // pull survey data from document
     var surveyName = document.getElementById('surveyName').value;
@@ -135,7 +160,7 @@ $('#createSurvey').click(function () {
         var surveyID = surveysRef.push().key;
         var surveyRef = firebase.database().ref('surveys/' + surveyID);
 
-        // update survey in database
+        // save survey to survey database
         surveyRef.set({
             name: surveyName,
             type: surveyType,
@@ -143,17 +168,28 @@ $('#createSurvey').click(function () {
             date: surveyDate,
             questions: questionIDs
         });
-        // save to survey database
+        // update instructor's surveys list
         instructorRef = firebase.database().ref('users/' + firebase.auth.currentUser.uid + '/surveys');
         surveys = {};
         surveys[surveyID] = 'true';
         instructorRef.update(surveys);
 
-        // update course in database
+        // update course's surveys list in database
         var courseRef = firebase.database().ref('classes/' + surveyCourse + '/surveys/');
         var course = {};
         course[surveyCourse] = 'true';
         courseRef.update(course);
+        
+        // update each class member's surveys list with new survey
+        var classMembers = firebase.database().ref('classes/' + surveyCourse + '/classMembers');
+        classMembers.orderByKey().on('child_added', function(student) {
+            var studentID = student.val().key;
+            var responseRef = firebase.database().ref('users/' + studentID + '/surveys');
+            var responses = {};
+            responses[surveyID] = 'false';
+            responseRef.update(responses);
+        });
+        
         location.reload();
     } else {
         console.log('Error accepting survey data, data is not valid.');
@@ -162,7 +198,8 @@ $('#createSurvey').click(function () {
 
 document.addEventListener('DOMContentLoaded', function () {
     var accountType = 'none';
-    $('#survey-form').hide();
+    $('#create-survey').hide();
+    $('#take-survey').hide();
     $('#datepicker').datepicker();
     auth.onAuthStateChanged(function (user) {
         // load user data based on user's session data
@@ -177,6 +214,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     loadInstructorSurveys(uid);
                 } else if (accountType == 'student') {
                     $("#showSurveyForm").hide();
+                    $("#takeSurvey").show();
                     loadStudentSurveys(uid);
                 }
             });
