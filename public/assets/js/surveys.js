@@ -321,19 +321,25 @@ function updateTakeSurvey(surveyID) {
             var instructorName = instructor.val().firstName + ' ' + instructor.val().lastName;
             surveyDescription.innerHTML = 'Type: ' + type + '<br /> Date: ' + date + '<br />Instructor: ' + instructorName;
         });
-
+        var numQuestions = 0;
         var questionsRef = firebase.database().ref('surveys/' + surveyID + '/questions');
 
         // pull each question's data from queston database
         questionsRef.orderByKey().on('child_added', function(questions) {
             var questionDiv = document.createElement('div');
+            questionDiv.setAttribute('class', 'form-group');
             var questionID = questions.key;
             var questionRef = firebase.database().ref('questions/' + questionID);
             questionRef.on('value', function(question) {
-                var num = question.val().num;
+                numQuestions++;
+                var questionHeader = document.createElement('h4');
                 var questionText = question.val().questionText;
+                questionHeader.innerHTML = numQuestions + '. ' + questionText;
+                questionDiv.appendChild(questionHeader);
+                var num = question.val().num;
                 var answerRef = firebase.database().ref('questions/' + questionID + '/answers');
             });
+            surveyForm.appendChild(questionDiv);
         });
     });
 }
