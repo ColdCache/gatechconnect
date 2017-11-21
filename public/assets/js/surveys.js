@@ -237,7 +237,7 @@ $(document).on('click', 'a.viewResponse', function () {
     var surveyQuestionsRef = firebase.database().ref('surveys/' + selectedSurvey + '/questions');
     var numQuestions = 0;
     surveyQuestionsRef.orderByKey().on('child_added', function (question) {
-        numQuestions++;
+        
         var questionID = question.key;
         var questionRef = firebase.database().ref('questions/' + questionID);
         questionRef.on('value', function (questionData) {
@@ -246,9 +246,16 @@ $(document).on('click', 'a.viewResponse', function () {
             questionDiv.setAttribute('class', 'form-group');
             var responseRef = firebase.database().ref('responses/' + firebase.auth().currentUser.uid + '/' + questionID);
             responseRef.on('value', function (response) {
+                numQuestions++;
                 var answer = response.val();
-                var response = document.createTextNode(numQuestions + '. ' + question + '    ' + answer);
-                questionDiv.appendChild(response);
+                var questionHeader = document.createElement('h4');
+                var response = document.createTextNode('Question ' + numQuestions + '. ' + question);
+                questionHeader.appendChild(response);
+                var answerHeader = document.createElement('h4');
+                var responseAnswer = document.createTextNode('Answer: ' + answer);
+                answerHeader.appendChild(responseAnswer);
+                questionDiv.appendChild(questionHeader);
+                questionDiv.appendChild(answerHeader);
             });
             surveyForm.appendChild(questionDiv);
         });
