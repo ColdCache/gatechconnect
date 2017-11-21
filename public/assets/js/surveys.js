@@ -224,7 +224,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     });
-    
 });
 
 function populateSurveyForm(uid) {
@@ -301,11 +300,50 @@ function loadStudentSurveys(uid) {
     });
 }
 
+// update take survey form with student selected survey
+function updateTakeSurvey(surveyID) {
+    var surveyRef = firebase.database().ref('surveys/' + surveyID);
+    var surveyTitle = document.getElementById('surveyTitle');
+    var surveyDescription = document.getElementById('surveyDescription');
+    var surveyForm = document.getElementById('questions');
+
+    // pull survey and other relevant data from database
+    surveyRef.on('value', function(survey) {
+        var name = survey.val().name;
+        surveyTitle.innerHTML = name;
+        var type = survey.val().type;
+        var instructorID = survey.val().instructor;
+        var date = survey.val().date;
+
+        // pull instructor data for survey
+        var instructorRef = firebase.database().ref('users/' + instructorID);
+        instructorRef.on('value', function(instructor) {
+            var instructorName = instructor.val().firstName + ' ' + instructor.val().lastName;
+            surveyDescription.innerHTML = 'Type: ' + type + '<br /> Date: ' + date + '<br />Instructor: ' + instructorName;
+        });
+
+        var questionsRef = firebase.database().ref('surveys/' + surveyID + '/questions');
+
+        // pull each question's data from queston database
+        questionsRef.orderByKey().on('child_added', function(questions) {
+            var questionDiv = document.createElement('div');
+            var questionID = questions.key;
+            var questionRef = firebase.database().ref('questions/' + questionID);
+            questionRef.on('value', function(question) {
+                var num = question.val().num;
+                var questionText = question.val().questionText;
+                var answerRef = firebase.database().ref('questions/' + questionID + '/answers');
+            });
+        });
+    });
+}
+
+// get survey id from table on survey selection
 $(document).on('click', 'a.surveySelect', function() {
     var link = $(this).closest('a');
     var surveyID = link.attr('id');
     selectedSurvey = surveyID;
-    console.log(surveyID);
+    updateTakeSurvey(surveyID);
     return false;
 });
 
