@@ -256,38 +256,28 @@ function loadStudentSurveys(uid) {
     var surveysTable = document.getElementById('surveys');
     var usersClasses = firebase.database().ref('users/' + uid + '/classes');
 
-    // check user's classes for surveys
-    usersClasses.orderByKey().on('child_added', function(snapshot) {
-        var classID = snapshot.key;
+    
 
-        var classSurveyRef = firebase.database().ref('classes/' + classID + '/surveys');
-        classSurveyRef.orderByKey().on('child_added', function(snap) {
-            var surveyID = snap.key;
-            var surveyRef = firebase.database().ref('surveys/' + surveyID);
-            
-            // pull each survey's data from surveys database
-            surveyRef.on('value', function(survsnap) {
-                var row = surveysTable.insertRow(-1);
-                var surveyName = row.insertCell(0);
-                var name = document.createTextNode(survsnap.val().name);
-                surveyName.appendChild(name);
-                var surveyType = row.insertCell(1);
-                var type = document.createTextNode(survsnap.val().type);
-                surveyType.appendChild(type);
-                var teacherID = survsnap.val().instructor;
-                var instructorRef = firebase.database().ref('users/' + teacherID);
+    // pull each survey's data from surveys database
+    surveyRef.on('value', function(survsnap) {
+        var row = surveysTable.insertRow(-1);
+        var surveyName = row.insertCell(0);
+        var name = document.createTextNode(survsnap.val().name);
+        surveyName.appendChild(name);
+        var surveyType = row.insertCell(1);
+        var type = document.createTextNode(survsnap.val().type);
+        surveyType.appendChild(type);
+        var teacherID = survsnap.val().instructor;
+        var instructorRef = firebase.database().ref('users/' + teacherID);
 
-                instructorRef.on('value', function(insSnap) {
-                    var instructorName = row.insertCell(2);
-                    var instructor = document.createTextNode(insSnap.val().firstName + ' ' + insSnap.val().lastName);
-                    instructorName.appendChild(instructor);
-                    var expirationDate = row.insertCell(3);
-                    var date = document.createTextNode(survsnap.val().date);
-                    expirationDate.appendChild(date);
-                });
-            });
+        instructorRef.on('value', function(insSnap) {
+            var instructorName = row.insertCell(2);
+            var instructor = document.createTextNode(insSnap.val().firstName + ' ' + insSnap.val().lastName);
+            instructorName.appendChild(instructor);
+            var expirationDate = row.insertCell(3);
+            var date = document.createTextNode(survsnap.val().date);
+            expirationDate.appendChild(date);
         });
-        
     });
 }
 
