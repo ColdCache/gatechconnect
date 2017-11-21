@@ -53,7 +53,7 @@ $('#addMultChoice').click(function () {
         question.setAttribute('type', 'text');
         question.setAttribute('id', 'question' + questionNum);
         question.setAttribute('class', 'form-control');
-        question.setAttribute('placeholder', 'Question');
+        question.setAttribute('placeholder', 'Multiple Choice');
         var questionType = document.createTextNode('Multiple Choice: out of ' + numAnswers);
         formGroup.appendChild(questionType);
         formGroup.appendChild(question);
@@ -86,7 +86,7 @@ $('#addRatingScale').click(function () {
         question.setAttribute('type', 'text');
         question.setAttribute('id', 'question' + questionNum);
         question.setAttribute('class', 'form-control');
-        question.setAttribute('placeholder', 'Question');
+        question.setAttribute('placeholder', 'Rating Scale');
         var questionType = document.createTextNode('Rating Scale Question: out of ' + numAnswers);
         question.setAttribute('name', '0');
         formGroup.appendChild(questionType);
@@ -142,6 +142,7 @@ $('#createSurvey').click(function () {
         var questionObj = document.getElementById('question' + i);
         var questions = {};
         questions['num'] = questionObj.name;
+        questions['type'] = questionObj.placeholder;
         questions['questionText'] = questionObj.value;
         var answers = {};
         for (j = 1; j <= questionObj.name; j++) {
@@ -324,20 +325,54 @@ function updateTakeSurvey(surveyID) {
         var numQuestions = 0;
         var questionsRef = firebase.database().ref('surveys/' + surveyID + '/questions');
 
-        // pull each question's data from queston database
+        // pull questions list from survey
         questionsRef.orderByKey().on('child_added', function(questions) {
             var questionDiv = document.createElement('div');
             questionDiv.setAttribute('class', 'form-group');
             var questionID = questions.key;
             var questionRef = firebase.database().ref('questions/' + questionID);
+
+            // pull each question's data from queston database
             questionRef.on('value', function(question) {
                 numQuestions++;
                 var questionHeader = document.createElement('h4');
                 var questionText = question.val().questionText;
                 questionHeader.innerHTML = numQuestions + '. ' + questionText;
                 questionDiv.appendChild(questionHeader);
-                var num = question.val().num;
+
+                var questionType = question.val().type;
+                var numAnswers = question.val().num;
                 var answerRef = firebase.database().ref('questions/' + questionID + '/answers');
+                if (questionType == 'Multiple Choice') {
+                    answerRef.orderByKey().on('child_added', function(answer) {
+                        var answerRadio = document.createElement('input');
+                        answerRadio.setAttribute('type', 'radio');
+                        answerRadio.setAttribute('name', questionID);
+                        var answerLabel = document.createElement('label');
+                        answerLabel.setAttribute('for', questionID);
+                        answerLabel.innerHTML = answer.val() + '&nbsp;&nbsp;';
+                        answerRadio.setAttribute('id', answer.val());
+                        answerRadio.setAttribute('value', answer.val());
+                        questionDiv.appendChild(answerRadio);
+                        questionDiv.appendChild(answerLabel);
+                    });
+                } else if (questionType == 'Rating Scale') {
+                    console.log(numAnswers);
+                    for (i = 1; i <= numAnswers; i++) {
+                        var answerRadio = document.createElement('input');
+                        answerRadio.setAttribute('type', 'radio');
+                        answerRadio.setAttribute('name', questionID);
+                        answerRadio.setAttribute('id', i);
+                        var answerLabel = document.createElement('label');
+                        answerLabel.setAttribute('for', i);
+                        answerLabel.innerHTML = i + '&nbsp;&nbsp;';
+                        answerRadio.setAttribute('value', i);
+                        questionDiv.appendChild(answerRadio);
+                        questionDiv.appendChild(answerLabel);
+                    }
+                }
+                
+                
             });
             surveyForm.appendChild(questionDiv);
         });
