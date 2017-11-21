@@ -309,10 +309,18 @@ function loadStudentSurveys(uid) {
             
             var linkCell = row.insertCell(-1);
             var link = document.createElement('a');
-            var linkText = document.createTextNode('Select');
+            if (survey.val() == 'true') {
+                var text = 'View';
+                var linkClass = 'viewResponse';
+                
+            } else if (survey.val() == 'false') {
+                var text = 'Select';
+                var linkClass = 'surveySelect';
+            }
+            var linkText = document.createTextNode(text);
+            link.setAttribute('class', linkClass);
             link.appendChild(linkText);
             link.setAttribute('id', surveyID);
-            link.setAttribute('class', 'surveySelect');
             link.setAttribute('href', 'javascript: void(0)');
             linkCell.appendChild(link);
         });
