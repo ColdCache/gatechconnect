@@ -88,7 +88,7 @@ $('#addRatingScale').click(function () {
         question.setAttribute('class', 'form-control');
         question.setAttribute('placeholder', 'Rating Scale');
         var questionType = document.createTextNode('Rating Scale Question: out of ' + numAnswers);
-        question.setAttribute('name', '0');
+        question.setAttribute('name', numAnswers);
         formGroup.appendChild(questionType);
         formGroup.appendChild(question);
         questions.appendChild(formGroup);
@@ -102,13 +102,32 @@ function hideQuestionTypes() {
 }
 
 $('#submitSurvey').click(function() {
-    // pull survey data from document
+    var uid = firebase.auth().currentUser.uid;
+    if (selectedSurvey != null && uid != null) {
+        // pull survey data from document
+        var surveyForm = document.getElementById('takeQuestions');
+        var questionsRef = firebase.database().ref('surveys/' + selectedSurvey + '/questions');
+        var response = {};
+        questionsRef.orderByKey().on('child_added', function(question) {
+            var questionID = question.key;
+            var question = document.getElementById(questionID);
+            var answer = question.value;
+            response[questionID] = answer;
+        });
 
-    // save data to object
+        // save survey response to database
+        var responsesRef = firebase.database().ref('responses/' + uid);
+        responsesRef.update(response);
 
-    // save survey response to database
-
-    // update user's surveys list
+        // update user's surveys list
+        var surveys = {};
+        surveys[selectedSurvey] = 'true';
+        var userSurveyRef = firebase.database().ref('users/' + uid + '/surveys').update(surveys);
+        document.reload();
+    } else {
+        alert('You cannot submit a survey before first choosing a survey.');
+        console.log('Student attempted to submit invalid/missing survey.');
+    }
 });
 
 $('#createSurvey').click(function () {
@@ -137,7 +156,7 @@ $('#createSurvey').click(function () {
 
     // iterate and pull data from each question
     for (i = 1; i <= questionNum; i++) {
-        var questionsRef = firebase.database().ref('questions');
+        var questionsRef = firebase.database().ref('takeQuestions');
         var questionID = questionsRef.push().key;
         var questionObj = document.getElementById('question' + i);
         var questions = {};
@@ -171,7 +190,7 @@ $('#createSurvey').click(function () {
             questions: questionIDs
         });
         // update instructor's surveys list
-        instructorRef = firebase.database().ref('users/' + firebase.auth.currentUser.uid + '/surveys');
+        instructorRef = firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/surveys');
         surveys = {};
         surveys[surveyID] = 'true';
         instructorRef.update(surveys);
@@ -263,7 +282,6 @@ function loadStudentSurveys(uid) {
     usersSurveys.orderByKey().on('child_added', function(survey) {
         var surveyID = survey.key;
         var surveyRef = firebase.database().ref('surveys/' + surveyID);
-
         // pull each survey's data from surveys database
         surveyRef.on('value', function(survsnap) {
             var row = surveysTable.insertRow(-1);
@@ -306,7 +324,7 @@ function updateTakeSurvey(surveyID) {
     var surveyRef = firebase.database().ref('surveys/' + surveyID);
     var surveyTitle = document.getElementById('surveyTitle');
     var surveyDescription = document.getElementById('surveyDescription');
-    var surveyForm = document.getElementById('questions');
+    var surveyForm = document.getElementById('takeQuestions');
 
     // pull survey and other relevant data from database
     surveyRef.on('value', function(survey) {
@@ -347,22 +365,21 @@ function updateTakeSurvey(surveyID) {
                     answerRef.orderByKey().on('child_added', function(answer) {
                         var answerRadio = document.createElement('input');
                         answerRadio.setAttribute('type', 'radio');
-                        answerRadio.setAttribute('name', questionID);
+                        answerRadio.setAttribute('id', questionID);
                         var answerLabel = document.createElement('label');
                         answerLabel.setAttribute('for', questionID);
                         answerLabel.innerHTML = answer.val() + '&nbsp;&nbsp;';
-                        answerRadio.setAttribute('id', answer.val());
+                        answerRadio.setAttribute('name', questionID);
                         answerRadio.setAttribute('value', answer.val());
                         questionDiv.appendChild(answerRadio);
                         questionDiv.appendChild(answerLabel);
                     });
                 } else if (questionType == 'Rating Scale') {
-                    console.log(numAnswers);
                     for (i = 1; i <= numAnswers; i++) {
                         var answerRadio = document.createElement('input');
                         answerRadio.setAttribute('type', 'radio');
+                        answerRadio.setAttribute('id', questionID);
                         answerRadio.setAttribute('name', questionID);
-                        answerRadio.setAttribute('id', i);
                         var answerLabel = document.createElement('label');
                         answerLabel.setAttribute('for', i);
                         answerLabel.innerHTML = i + '&nbsp;&nbsp;';
@@ -371,8 +388,6 @@ function updateTakeSurvey(surveyID) {
                         questionDiv.appendChild(answerLabel);
                     }
                 }
-                
-                
             });
             surveyForm.appendChild(questionDiv);
         });
