@@ -101,14 +101,17 @@ function hideQuestionTypes() {
     $('#addQuestion').show();
 }
 
-$('#submitSurvey').click(function() {
+$('#submitSurvey').click(function () {
     var uid = firebase.auth().currentUser.uid;
-    if (selectedSurvey != null && uid != null) {
+    if (selectedSurvey === null || uid === null) {
+        alert('You cannot submit a survey before first choosing a survey.');
+        console.log('Student attempted to submit invalid/missing survey.');
+    } else {
         // pull survey data from document
         var surveyForm = document.getElementById('takeQuestions');
         var questionsRef = firebase.database().ref('surveys/' + selectedSurvey + '/questions');
         var response = {};
-        questionsRef.orderByKey().on('child_added', function(question) {
+        questionsRef.orderByKey().on('child_added', function (question) {
             var questionID = question.key;
             var question = document.getElementById(questionID);
             var answer = question.value;
@@ -124,9 +127,6 @@ $('#submitSurvey').click(function() {
         surveys[selectedSurvey] = 'true';
         var userSurveyRef = firebase.database().ref('users/' + uid + '/surveys').update(surveys);
         document.reload();
-    } else {
-        alert('You cannot submit a survey before first choosing a survey.');
-        console.log('Student attempted to submit invalid/missing survey.');
     }
 });
 
@@ -200,21 +200,60 @@ $('#createSurvey').click(function () {
         var course = {};
         course[surveyCourse] = 'true';
         courseRef.update(course);
-        
+
         // update each class member's surveys list with new survey
         var classMembers = firebase.database().ref('classes/' + surveyCourse + '/classMembers');
-        classMembers.orderByKey().on('child_added', function(student) {
+        classMembers.orderByKey().on('child_added', function (student) {
             var studentID = student.val().key;
             var responseRef = firebase.database().ref('users/' + studentID + '/surveys');
             var responses = {};
             responses[surveyID] = 'false';
             responseRef.update(responses);
         });
-        
+
         location.reload();
     } else {
         console.log('Error accepting survey data, data is not valid.');
     }
+});
+
+// get survey id from table on survey selection
+$(document).on('click', 'a.viewResponse', function () {
+    var link = $(this).closest('a');
+    var surveyID = link.attr('id');
+    selectedSurvey = surveyID;
+    $('#submitRow').hide();
+    var surveyTitle = document.getElementById('surveyTitle');
+    var surveyDescription = document.getElementById('surveyDescription');
+    $('#takeQuestions').empty();
+    var surveyForm = document.getElementById('takeQuestions');
+
+    var surveyRef = firebase.database().ref('surveys/' + selectedSurvey);
+    surveyRef.on('value', function (survey) {
+        surveyTitle.innerHTML = survey.val().name + ' Response';
+        surveyDescription.innerHTML = survey.val().date;
+    });
+
+    var surveyQuestionsRef = firebase.database().ref('surveys/' + selectedSurvey + '/questions');
+    var numQuestions = 0;
+    surveyQuestionsRef.orderByKey().on('child_added', function (question) {
+        numQuestions++;
+        var questionID = question.key;
+        var questionRef = firebase.database().ref('questions/' + questionID);
+        questionRef.on('value', function (questionData) {
+            var question = questionData.val().questionText;
+            var questionDiv = document.createElement('div');
+            questionDiv.setAttribute('class', 'form-group');
+            var responseRef = firebase.database().ref('responses/' + firebase.auth().currentUser.uid + '/' + questionID);
+            responseRef.on('value', function (response) {
+                var answer = response.val();
+                var response = document.createTextNode(numQuestions + '. ' + question + '    ' + answer);
+                questionDiv.appendChild(response);
+            });
+            surveyForm.appendChild(questionDiv);
+        });
+    });
+    return false;
 });
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -236,6 +275,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else if (accountType == 'student') {
                     $("#showSurveyForm").hide();
                     $("#takeSurvey").show();
+                    $('#submitRow').hide();
                     if (studentSurvey == null) {
                         $('#fillerText').show();
                     }
@@ -279,11 +319,11 @@ function loadStudentSurveys(uid) {
     var surveysTable = document.getElementById('surveys');
     var usersSurveys = firebase.database().ref('users/' + uid + '/surveys');
 
-    usersSurveys.orderByKey().on('child_added', function(survey) {
+    usersSurveys.orderByKey().on('child_added', function (survey) {
         var surveyID = survey.key;
         var surveyRef = firebase.database().ref('surveys/' + surveyID);
         // pull each survey's data from surveys database
-        surveyRef.on('value', function(survsnap) {
+        surveyRef.on('value', function (survsnap) {
             var row = surveysTable.insertRow(-1);
             var surveyName = row.insertCell(0);
             var name = document.createTextNode(survsnap.val().name);
@@ -294,7 +334,7 @@ function loadStudentSurveys(uid) {
             var teacherID = survsnap.val().instructor;
             var instructorRef = firebase.database().ref('users/' + teacherID);
 
-            instructorRef.on('value', function(insSnap) {
+            instructorRef.on('value', function (insSnap) {
                 var instructorName = row.insertCell(2);
                 var instructor = document.createTextNode(insSnap.val().firstName + ' ' + insSnap.val().lastName);
                 instructorName.appendChild(instructor);
@@ -306,13 +346,13 @@ function loadStudentSurveys(uid) {
             var statusCell = row.insertCell(-1);
             var status = document.createTextNode(survey.val());
             statusCell.appendChild(status);
-            
+
             var linkCell = row.insertCell(-1);
             var link = document.createElement('a');
             if (survey.val() == 'true') {
                 var text = 'View';
                 var linkClass = 'viewResponse';
-                
+
             } else if (survey.val() == 'false') {
                 var text = 'Select';
                 var linkClass = 'surveySelect';
@@ -332,10 +372,11 @@ function updateTakeSurvey(surveyID) {
     var surveyRef = firebase.database().ref('surveys/' + surveyID);
     var surveyTitle = document.getElementById('surveyTitle');
     var surveyDescription = document.getElementById('surveyDescription');
+    $('#takeQuestions').empty();
     var surveyForm = document.getElementById('takeQuestions');
 
     // pull survey and other relevant data from database
-    surveyRef.on('value', function(survey) {
+    surveyRef.on('value', function (survey) {
         var name = survey.val().name;
         surveyTitle.innerHTML = name;
         var type = survey.val().type;
@@ -344,7 +385,7 @@ function updateTakeSurvey(surveyID) {
 
         // pull instructor data for survey
         var instructorRef = firebase.database().ref('users/' + instructorID);
-        instructorRef.on('value', function(instructor) {
+        instructorRef.on('value', function (instructor) {
             var instructorName = instructor.val().firstName + ' ' + instructor.val().lastName;
             surveyDescription.innerHTML = 'Type: ' + type + '<br /> Date: ' + date + '<br />Instructor: ' + instructorName;
         });
@@ -352,14 +393,14 @@ function updateTakeSurvey(surveyID) {
         var questionsRef = firebase.database().ref('surveys/' + surveyID + '/questions');
 
         // pull questions list from survey
-        questionsRef.orderByKey().on('child_added', function(questions) {
+        questionsRef.orderByKey().on('child_added', function (questions) {
             var questionDiv = document.createElement('div');
             questionDiv.setAttribute('class', 'form-group');
             var questionID = questions.key;
             var questionRef = firebase.database().ref('questions/' + questionID);
 
             // pull each question's data from queston database
-            questionRef.on('value', function(question) {
+            questionRef.on('value', function (question) {
                 numQuestions++;
                 var questionHeader = document.createElement('h4');
                 var questionText = question.val().questionText;
@@ -370,7 +411,7 @@ function updateTakeSurvey(surveyID) {
                 var numAnswers = question.val().num;
                 var answerRef = firebase.database().ref('questions/' + questionID + '/answers');
                 if (questionType == 'Multiple Choice') {
-                    answerRef.orderByKey().on('child_added', function(answer) {
+                    answerRef.orderByKey().on('child_added', function (answer) {
                         var answerRadio = document.createElement('input');
                         answerRadio.setAttribute('type', 'radio');
                         answerRadio.setAttribute('id', questionID);
@@ -403,10 +444,11 @@ function updateTakeSurvey(surveyID) {
 }
 
 // get survey id from table on survey selection
-$(document).on('click', 'a.surveySelect', function() {
+$(document).on('click', 'a.surveySelect', function () {
     var link = $(this).closest('a');
     var surveyID = link.attr('id');
     selectedSurvey = surveyID;
+    $('#submitRow').show();
     updateTakeSurvey(surveyID);
     return false;
 });
@@ -437,9 +479,9 @@ function loadInstructorSurveys(uid) {
             var type = document.createTextNode(snap.val().type);
             surveyType.appendChild(type);
             var instructorID = snap.val().instructor;
-            
+
             var instructorRef = firebase.database().ref('users/' + instructorID);
-            instructorRef.on('value', function(snapshot) {
+            instructorRef.on('value', function (snapshot) {
                 var instructor = document.createTextNode(snapshot.val().firstName + ' ' + snapshot.val().lastName);
                 instructorName.appendChild(instructor);
             });
