@@ -369,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // iterate over students in this group and add under their userid
       var studentGroupsRef = db.ref("users/" + classMemberIDList[classMemberIndex] + "/groups").update({
         [groupsKey] : true
-      })
+      });
     }
     // Add group ID under groups for specific class in database
     var classGroupsRef = db.ref("classes/" + currentClass + "/groups").update({
@@ -379,7 +379,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // this adds the group under the teacher's group list
     var teacherGroupsRef = db.ref("users/" + uid + "/groups").update({
       [groupsKey] : true
-    })
+    });
   }
 
   /* Takes in two class member IDs & compares the class member's last name
