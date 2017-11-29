@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
         dropDown2.appendChild(z);
       });
     });
-  
+
     dropDown2.value = "Initial";
   }
 

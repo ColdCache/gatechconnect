@@ -63,7 +63,7 @@
                 </div><!-- /row -->
             </div> <!-- /container -->
         </div><!-- /blue -->
-            
+
         <!--Main Page -->
         <div class="container">
             <div class="row">
@@ -94,6 +94,32 @@
                     <select id="classes">
                         <option value="Initial">Choose Class Roster to display.</option>
                     </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>
+                        Add Students
+                    </h3>
+                    <table class="table" id="Emails">
+                        <thead>
+                        <tr>
+                            <th>Email</th>
+                            <!--<th>Remove</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                    <div class="btn btn-theme" onclick="addRow()">
+                        Add Row
+                    </div>
+
+                    <div class="btn btn-theme" onclick="sendRequest()">
+                        Send
+                    </div>
                 </div>
             </div>
 
@@ -173,4 +199,5 @@
     <script src="assets/js/jquery.isotope.min.js"></script>
     <script src="assets/js/custom.js"></script>
     <script src="assets/js/static.js"></script>
+    <script src="assets/js/invitation.js"></script>
 </html>
