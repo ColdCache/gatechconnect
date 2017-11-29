@@ -3,10 +3,9 @@ document.addEventListener('DOMContentLoaded', function() {
   var firstNames = [];
   var lastNames = [];
   var classMemberIDList = [];
-  var saveButton = document.getElementById("saveGroupButton");
+
   var saveRosterButton = document.getElementById("saveRosterButton");
   
-  saveButton.addEventListener("click", saveGroupToDB);
   saveRosterButton.addEventListener("click", saveRosterToDB);
 
   // FIREBASE CONFIG
@@ -45,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var classesRef = ref.child("classes");
     var classKey = classesRef.push({
       "classMembers" : { "studentID" : true },
-	  "ungrouped" : { "studentID" : true },
       "className" : titleToSend,
       "groups" : { "groupID" : true },
       "teacher" : uid
@@ -55,6 +53,15 @@ document.addEventListener('DOMContentLoaded', function() {
     teacherClassesRef.update({
       [classKey]: "true"
     });
+  });
+  
+  /* Makes X number of groups & determines their sizes
+   * based on teacher input of number of total groups */
+  $('#numGroupsForm').submit(function(event) {
+	$(this).find("numGroups").prop('disabled', true);
+    var studentEmail = $('#numGroupsTextBox').val();
+	console.log(studentEmail);
+	alert(studentEmail);
   });
 
   firebase.auth().onAuthStateChanged(function(user) {
@@ -79,33 +86,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  function saveGroupToDB() {
-    console.log("button clicked.");
-    var currentGroup = document.getElementById("groups").value;
-    if (currentGroup.localeCompare("Initial") === 0) {
-      alert("Pick a group before saving.");
-      console.log("Pick a group before saving.");
-      changeRoster();
-    } else {
-    
-      var rowNumber = 1;
-
-      var ungroupedRef = db.ref("classes/" + currentClass + "/ungrouped");
-      var groupRef = db.ref("groups/" + currentGroup + '/members');
-          
-      var table = document.getElementById('groupedStudents');
-
-      var members = {};
-      for (var i = 1; i < table.rows.length; i++) {
-        studentId = table.rows[i].cells[2].innerHTML;
-        ungroupedRef.child(studentId).remove();
-        members[studentId] = true;
-      }
-      groupRef.set(members);
-      changeGroup();
-    }
-  }
-
   function saveRosterToDB() {
     console.log("button clicked.");
     var currentClass = document.getElementById("classes").value;
@@ -117,10 +97,10 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
       var rowNumber = 1;
 
-      var ungroupedRef = db.ref("classes/" + currentClass + "/ungrouped");
+      var classRef = db.ref("classes/" + currentClass + "/classMembers");
       var groupRef = db.ref("groups/" + currentGroup + "/members");
 
-      var table = document.getElementById('ungroupedStudents');
+      var table = document.getElementById('classRoster');
 
       var roster = {};
       for (var i = 1; i < table.rows.length; i++) {
@@ -128,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
         groupRef.child(studentId).remove();
         roster[studentId] = true;
       }
-      ungroupedRef.set(roster);
+      classRef.set(roster);
       changeRoster2();
     }
   }
@@ -136,19 +116,19 @@ document.addEventListener('DOMContentLoaded', function() {
   function changeRoster() {
     var currentClass = document.getElementById('classes').value;
 
-    var ungroupedRef = db.ref("classes/" + currentClass + "/ungrouped");
+    var classRef = db.ref("classes/" + currentClass + "/classMembers");
     var teacherClassesRef = db.ref("users/" + uid + "/classes");
 
-    document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th><th style="display:none;">UID</th>';
+    document.getElementById('class-roster').innerHTML = '<th>First Name</th><th>Last Name</th><th style="display:none;">UID</th>';
     
-    ungroupedRef.orderByKey().on('child_added', function(snapshot) {
+    classRef.orderByKey().on('child_added', function(snapshot) {
       var rowNumber = 1;
 
 
       var firstNameRef = db.ref("users/" + snapshot.key + "/firstName");
       var lastNameRef = db.ref("users/" + snapshot.key + "/lastName");
 
-      var table = document.getElementById('ungroupedStudents');
+      var table = document.getElementById('classRoster');
       var row = table.insertRow(rowNumber);
       var cell1 = row.insertCell(0);
       var cell2 = row.insertCell(1);
@@ -196,18 +176,18 @@ document.addEventListener('DOMContentLoaded', function() {
   function changeRoster2() {
     var currentClass = document.getElementById('classes').value;
 
-    var ungroupedRef = db.ref("classes/" + currentClass + "/ungrouped");
+    var classRef = db.ref("classes/" + currentClass + "/classMembers");
     var teacherClassesRef = db.ref("users/" + uid + "/classes");
 
-    document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th><th style="display:none;">UID</th>';
+    document.getElementById('class-roster').innerHTML = '<th>First Name</th><th>Last Name</th><th style="display:none;">UID</th>';
     
-    ungroupedRef.orderByKey().on('child_added', function(snapshot) {
+    classRef.orderByKey().on('child_added', function(snapshot) {
       var rowNumber = 1;
 
       var firstNameRef = db.ref("users/" + snapshot.key + "/firstName");
       var lastNameRef = db.ref("users/" + snapshot.key + "/lastName");
 
-      var table = document.getElementById('ungroupedStudents');
+      var table = document.getElementById('classRoster');
       var row = table.insertRow(rowNumber);
       var cell1 = row.insertCell(0);
       var cell2 = row.insertCell(1);
@@ -223,42 +203,6 @@ document.addEventListener('DOMContentLoaded', function() {
       rowNumber++;
     });
   }
-
-  function changeGroup() {
-    var currentClass = document.getElementById("classes").value;
-    var currentGroup = document.getElementById("groups").value;
-
-    var groupRef = db.ref("groups/" + currentGroup + '/members');
-
-    document.getElementById('grouped-students').innerHTML = '<th>First Name</th><th>Last Name</th><th style="display:none;">UID</th>';
-    
-    var table = document.getElementById('groupedStudents');
-    
-    groupRef.orderByKey().on('child_added', function(snapshot) { // for each teacher group
-      var rowNumber = 1;
-      var firstNameRef = db.ref("users/" + snapshot.key + "/firstName");
-      var lastNameRef = db.ref("users/" + snapshot.key + "/lastName");
-
-      var row = table.insertRow(rowNumber);
-      var cell1 = row.insertCell(0);
-      var cell2 = row.insertCell(1);
-      var cell3 = row.insertCell(2);
-
-      firstNameRef.on('value', function(firstNameSnap) {
-        cell1.innerHTML = firstNameSnap.val();
-        firstNames.push(firstNameSnap.val());
-      });
-      lastNameRef.on('value', function(lastNameSnap) {
-        cell2.innerHTML = lastNameSnap.val();
-        lastNames.push(lastNameSnap.val());
-      });
-      cell3.innerHTML = snapshot.key;
-      cell3.style.display = "none";
-      rowNumber++;
-    });
-    changeRoster2();
-  }
-  
 
   /* Determines class size based on the current class selected +
    * disables submit button for number of groups if a class is
@@ -296,92 +240,6 @@ document.addEventListener('DOMContentLoaded', function() {
       numGroupsSubmit.disabled = false;
     }
   });
-
-  /* Makes X number of groups & determines their sizes
-   * based on teacher input of number of total groups */
-  $('#numGroupsForm').submit(function(event) {
-    event.preventDefault(); // prevents page refresh on submit
-    // organize class member id list by last name for grouping
-    var sorted = classMemberIDList.sort(compareByLastName);
-    var numGroups = $('#numGroupsTextBox').val();
-    if (Number.isInteger(Number(numGroups)) && (numGroups > 0)) { // make sure proper text field input
-      if (classSize < numGroups) {
-        alert('The number of groups (' + numGroups + ') cannot be larger than the number of students (' + classSize + ') in the class.');
-      } else {
-        var minGroupSizedGroups = 0;
-        var maxGroupSizedGroups = 0;
-        var minGroupSize =  0;
-        var maxGroupSize = 0;
-        var fractionMaxSizedGroups = 0.0;
-        minGroupSize = Math.floor(classSize / numGroups);
-        maxGroupSize = minGroupSize + 1;
-        fractionMaxSizedGroups = classSize / numGroups - minGroupSize;
-        for (var i = 0; i < numGroups; i++) {
-          if ((Math.abs(Number(i / numGroups) - fractionMaxSizedGroups)) <= 0.001) { // margin of error for decimals
-            maxGroupSizedGroups = i;
-            minGroupSizedGroups = numGroups - maxGroupSizedGroups;
-            break;
-          }
-        }
-        var alertNumGroupsWithSizes = "";
-        var memberIndex = 0;
-        if (minGroupSizedGroups > 0) {
-          alertNumGroupsWithSizes += minGroupSizedGroups + ' group(s) of size ' + minGroupSize + ' were generated.\n';
-          for (var i = 1; i <= minGroupSizedGroups; i++) {
-            addGroup(i, minGroupSize, memberIndex);
-            memberIndex += minGroupSize;
-          }
-        }
-        if (maxGroupSizedGroups > 0) {
-          alertNumGroupsWithSizes += maxGroupSizedGroups + ' group(s) of size ' + maxGroupSize + ' were generated.';
-          for (var i = (minGroupSizedGroups + 1); i <= (minGroupSizedGroups + maxGroupSizedGroups); i++) {
-            addGroup(i, maxGroupSize, memberIndex);
-            memberIndex += maxGroupSize;
-          }
-        }
-        alert(alertNumGroupsWithSizes);
-      }
-    } else if (!Number.isInteger(Number(numGroups))) {
-      alert('Please enter a valid integer.');
-    } else {
-      alert('Please enter a group size greater than 0.');
-    }
-  });
-
-  /* Adds group to appropriate sections of FireBase database (groups, users, classes)
-   * groupNumber is the current number group (1, 2, 3, etc.)
-   * groupSize is the group member size
-   * classMemberIndex is the index the group members begin from */
-  function addGroup(groupNumber, groupSize, classMemberIndex) {
-    var groupName = "Generated Group " + groupNumber;
-    var groupsRef = db.ref("groups");
-    // Add a group to groups section of database
-    var groupsKey = groupsRef.push({
-      "class" : currentClass,
-      "name" : groupName,
-      "teacher" : uid
-    }).key;
-    // iterate over groupNumber students starting from classMemberIndex
-    for (var i = classMemberIndex; i < (classMemberIndex + groupSize); i++) {
-      console.log(groupSize + ": " + classMemberIDList[i]);
-      groupsRef.child(groupsKey + "/members").update({
-        [classMemberIDList[i]] : true
-      });
-      // iterate over students in this group and add under their userid
-      var studentGroupsRef = db.ref("users/" + classMemberIDList[classMemberIndex] + "/groups").update({
-        [groupsKey] : true
-      })
-    }
-    // Add group ID under groups for specific class in database
-    var classGroupsRef = db.ref("classes/" + currentClass + "/groups").update({
-      [groupsKey] : true      
-    });
-    /* Add group ID under groups for specific users in database */
-    // this adds the group under the teacher's group list
-    var teacherGroupsRef = db.ref("users/" + uid + "/groups").update({
-      [groupsKey] : true
-    })
-  }
 
   /* Takes in two class member IDs & compares the class member's last name
    * Sorts by last name ascending */

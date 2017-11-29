@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="shortcut icon" href="assets/ico/favicon.ico">
+        <script src="assets/js/roster.js"></script>
+
+        <title>Roster</title>
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <title>Georgia Tech Connect</title>
+
+        <!-- Custom styles for this template -->
+        <link href="assets/css/style.css" rel="stylesheet">
+        <link href="assets/css/teacher.css" rel="stylesheet" type="text/css" />
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Figure out how to use this later: <script src="assets/js/modernizr.js"></script> -->
+    </head>
+
+    <body>
+        <!-- Fixed navbar -->
+        <div id="navbar"></div>
+
+        <!-- *****************************************************************************************************************
+         BLUE WRAP
+         ***************************************************************************************************************** -->
+        <div id="blue">
+            <div class="container">
+                <div class="row">
+                    <h3>Roster</h3>
+                </div><!-- /row -->
+            </div> <!-- /container -->
+        </div><!-- /blue -->
+            
+        <!--Main Page -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>
+                        Add a Class:
+                    </h3>
+                    <form action="" id="addClass">
+                        Class Name: <input id="classNameTextBox" type="text">
+                        <input id="className" name="className" type="submit" value="Submit">
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <h3>
+                        Add Student By E-Mail
+                    </h3>
+					<form>
+						Student Email:<br>
+						<input type="text" name="firstname"><br>
+					</form>
+                    <button type="button" id = "addStudent">Add Student</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>
+                        Classes
+                    </h3>
+                    <select id="classes">
+                        <option value="Initial">Choose Class Roster to display.</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb">
+                <div class="col-md-6">
+                    <h3>
+                        Class Roster
+                    </h3>
+                    <!-- <div id="redips-drag">
+                        <table class="tbl1">
+                            <colgroup>
+                                <col width="10">
+                                <col width="60">
+                                <col width="60">
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th colspan="6" class="redips-mark">Ungrouped Studends</th>
+                                </tr>
+                                <tr class="r1">
+                                    <td class="redips-rowhandler">
+                                        <div class="redips-drag redips-row" style="border-style: solid; cursor: move;"></div>
+                                    </td>
+                                    <td class="cdark">First Name</td>
+                                    <td class="cdark">Last Name</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> -->
+                    <table class="student-table" id = "classRoster">
+                        <tbody class="connect-groups" id="class-roster">
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th style="display:none;">UID</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" id = "saveRosterButton">Save Roster</button>
+                </div>
+            </div>
+        </div>
+            
+        <!-- *****************************************************************************************************************
+        FOOTER
+        ***************************************************************************************************************** -->
+        <div id="footer"></div>
+    </body>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase-database.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="assets/js/retina-1.1.0.js"></script>
+    <script src="assets/js/jquery.hoverdir.js"></script>
+    <script src="assets/js/jquery.hoverex.min.js"></script>
+    <script src="assets/js/jquery.prettyPhoto.js"></script>
+    <script src="assets/js/jquery.isotope.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/static.js"></script>
+</html>
