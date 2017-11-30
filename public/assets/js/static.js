@@ -18,9 +18,9 @@ var user = auth.currentUser;
 var uid = user ? user.uid : null;
 
 document.addEventListener('DOMContentLoaded', function() {
-  $('#footer').load('footer.html');
+  $('#footer').load('/footer.html');
   // Wait until navigation bar loads before changing div visibility
-  $('#navbar').load('navbar.html', function() {
+  $('#navbar').load('/navbar.html', function() {
     auth.onAuthStateChanged(function(user) {
       if (user) {
         // User is signed in.
