@@ -5,8 +5,8 @@
   "hosting": {
     "public": "public",
     "rewrites": [ {
-      "source": "/join-class/-*",
-      "destination": "/join-class.html"
+      "source": "/join-class/*",
+      "destination": "/index.html"
     } ],  
     "cleanUrls": true,
     "ignore": [

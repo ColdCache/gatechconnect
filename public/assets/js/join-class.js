@@ -20,51 +20,74 @@ document.addEventListener('DOMContentLoaded', function() {
     var classSize;
     var currentClass;
     var uid;
-
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            uid = user.uid ? user.uid : null;
-        }
-    });
+    var accountType;
+    var url = window.location.pathname.split("/");
+    var classID = url[2];
+    var canJoinClass;
+    var classRef = db.ref("classes");
+    var classMemberRef = db.ref("classes/" + classID + "/classMembers");
 
     checkJoinClassURL();
 
-    function checkJoinClassURL() {
-        var joinAttempt = document.getElementById('join-class-attempt');
-        var url = window.location.pathname.split("/");
-        var classID = url[2];
-        var classRef = db.ref("classes");
-        var classMemberRef = db.ref("classes/" + classID + "/classMembers");
-        var canJoinClass = false;
+    // Checks the users account type, since only students can sign up for a class
+    function checkAccountType(_callback) {
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                uid = user.uid ? user.uid : null;
+                accountTypeRef = db.ref('/users/' + uid);
+                accountTypeRef.once('value').then(function(snapshot) {
+                    accountType = snapshot.val().accountType;
+                    // Use a callback to wait for an account type to be found asynchronously
+                    _callback();
+                });
+            }
+        });
+    }
+
+    function validClassAndStudent(_callback) {        
+        canJoinClass = true;
+
         if (classID != undefined) {
-            classRef.on('child_added', function(classSnap) {
-                // Check if valid class in Firebase
-                if (classSnap.key == classID) {
-                    // Check if the user is already in the class
-                    canJoinClass = true;
-                    classMemberRef.on('child_added', function(classMemberSnap) {
-                        if (classMemberSnap.key == uid) {
-                            canJoinClass = false;
-                        }
-                    });
-                }
+            if ((accountType == undefined) || (accountType == 'instructor')) {
+                alert("Invalid account type. Only students may join a class.");
+            } else {
+                classRef.on('child_added', function(classSnap) {
+                    // Check if valid class in Firebase
+                    if (classSnap.key == classID) {
+                        // Check if the user is already in the class
+                        classMemberRef.on('child_added', function(classMemberSnap) {
+                            if (canJoinClass && (classMemberSnap.key == uid)) {
+                                canJoinClass = false;
+                            }
+                        });
+                        _callback();
+                    }
+                });
+            }
+        }
+    }
+
+    function checkJoinClassURL() {
+        checkAccountType(function() {
+            validClassAndStudent(function() {
+                var msg = "Error in joining class with ID " + classID + ".";
                 if (canJoinClass) {
-                    console.log(canJoinClass);
                     // Add user ID under class members for specific class in DB
-                    classMemberRef.update({
+                    classRef.child(classID + "/classMembers").update({
+                        [uid] : true
+                    });
+                    // Add user ID under ungrouped students for this class in DB
+                    classRef.child(classID + "/ungrouped").update({
                         [uid] : true
                     });
                     // Add class ID under classes for specific user in DB
                     db.ref("users/" + uid + "/classes").update({
                         [classID] : true
                     });
-                    joinAttempt.innerHTML = "Successfully joined class " + classID + ".";
-                } else {
-                    joinAttempt.innerHTML = "Error in joining class " + classID + ".";
+                    msg = "Successfully joined class with ID " + classID + ".";
                 }
+                alert(msg);
             });
-        } else {
-            console.log("Class ID is undefined");
-        }
+        });
     }
 });
