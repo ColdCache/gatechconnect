@@ -2,6 +2,7 @@ var showSurvey = false;
 var takeSurvey = true;
 var studentSurvey = null;
 var questionNum = 0;
+var uid = null;
 
 // show create survey form for teachers
 $('#showSurveyForm').click(function () {
@@ -199,8 +200,7 @@ $('#createSurvey').click(function () {
             date: surveyDate,
             questions: questionIDs
         });
-        // update instructor's surveys list
-        instructorRef = firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/surveys');
+        instructorRef = firebase.database().ref('users/' + uid + '/surveys');
         surveys = {};
         surveys[surveyID] = 'true';
         instructorRef.update(surveys);
@@ -281,7 +281,8 @@ document.addEventListener('DOMContentLoaded', function () {
     auth.onAuthStateChanged(function (user) {
         // load user data based on user's session data
         if (user) {
-            var uid = user.uid;
+            uid = user.uid;
+            loadSurveys(uid);
             var accountRef = firebase.database().ref().child('users').child(uid);
             accountRef.on('value', function (snap) {
                 accountType = (snap.val().accountType || 'none');
