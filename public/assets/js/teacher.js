@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var classesRef = ref.child("classes");
     var classKey = classesRef.push({
       "classMembers" : { "studentID" : true },
+	  "ungrouped" : { "studentID" : true },
       "className" : titleToSend,
       "groups" : { "groupID" : true },
       "teacher" : uid
@@ -89,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
       var rowNumber = 1;
 
-      var classRef = db.ref("classes/" + currentClass + "/classMembers");
+      var ungroupedRef = db.ref("classes/" + currentClass + "/ungrouped");
       var groupRef = db.ref("groups/" + currentGroup + '/members');
           
       var table = document.getElementById('groupedStudents');
@@ -97,10 +98,16 @@ document.addEventListener('DOMContentLoaded', function() {
       var members = {};
       for (var i = 1; i < table.rows.length; i++) {
         studentId = table.rows[i].cells[2].innerHTML;
-        classRef.child(studentId).remove();
+        ungroupedRef.child(studentId).remove();
         members[studentId] = true;
+		
+		userGroupRef = db.ref("users/" + studentId + "/groups");
+		userGroupRef.update({
+		    [currentGroup] : true
+		});
       }
       groupRef.set(members);
+
       changeGroup();
     }
   }
@@ -116,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
       var rowNumber = 1;
 
-      var classRef = db.ref("classes/" + currentClass + "/classMembers");
+      var ungroupedRef = db.ref("classes/" + currentClass + "/ungrouped");
       var groupRef = db.ref("groups/" + currentGroup + "/members");
 
       var table = document.getElementById('ungroupedStudents');
@@ -126,8 +133,11 @@ document.addEventListener('DOMContentLoaded', function() {
         studentId = table.rows[i].cells[2].innerHTML;
         groupRef.child(studentId).remove();
         roster[studentId] = true;
+		
+		userGroupRef = db.ref("users/" + studentId + "/groups");
+		userGroupRef.child(currentGroup).remove();
       }
-      classRef.set(roster);
+      ungroupedRef.set(roster);
       changeRoster2();
     }
   }
@@ -135,12 +145,12 @@ document.addEventListener('DOMContentLoaded', function() {
   function changeRoster() {
     var currentClass = document.getElementById('classes').value;
 
-    var classRef = db.ref("classes/" + currentClass + "/classMembers");
+    var ungroupedRef = db.ref("classes/" + currentClass + "/ungrouped");
     var teacherClassesRef = db.ref("users/" + uid + "/classes");
 
     document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th><th style="display:none;">UID</th>';
     
-    classRef.orderByKey().on('child_added', function(snapshot) {
+    ungroupedRef.orderByKey().on('child_added', function(snapshot) {
       var rowNumber = 1;
 
 
@@ -195,12 +205,12 @@ document.addEventListener('DOMContentLoaded', function() {
   function changeRoster2() {
     var currentClass = document.getElementById('classes').value;
 
-    var classRef = db.ref("classes/" + currentClass + "/classMembers");
+    var ungroupedRef = db.ref("classes/" + currentClass + "/ungrouped");
     var teacherClassesRef = db.ref("users/" + uid + "/classes");
 
     document.getElementById('ungrouped-students').innerHTML = '<th>First Name</th><th>Last Name</th><th style="display:none;">UID</th>';
     
-    classRef.orderByKey().on('child_added', function(snapshot) {
+    ungroupedRef.orderByKey().on('child_added', function(snapshot) {
       var rowNumber = 1;
 
       var firstNameRef = db.ref("users/" + snapshot.key + "/firstName");
@@ -369,7 +379,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // iterate over students in this group and add under their userid
       var studentGroupsRef = db.ref("users/" + classMemberIDList[classMemberIndex] + "/groups").update({
         [groupsKey] : true
-      })
+      });
     }
     // Add group ID under groups for specific class in database
     var classGroupsRef = db.ref("classes/" + currentClass + "/groups").update({
@@ -379,7 +389,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // this adds the group under the teacher's group list
     var teacherGroupsRef = db.ref("users/" + uid + "/groups").update({
       [groupsKey] : true
-    })
+    });
   }
 
   /* Takes in two class member IDs & compares the class member's last name
