@@ -49,10 +49,27 @@
         <div class="row">
             <div class="col-log-12">
                 <a href="#" class="btn btn-theme" id="showSurveyForm">Show Survey Form</a>
+                <a href="#" class="btn btn-theme" id="takeSurvey">Hide Survey</a>
                 <div class="row">
                     <div class="col-log-3"></div>
                     <div class="col-md-6 col-md-offset-3">
-                        <form id="survey-form" action="#" method="post" role="form">
+                        <form id="take-survey" action="#" method="POST" role="form">
+                            <h2 id="surveyTitle">Take Survey</h2>
+                            <div class="form-group">
+                                <h4 id="surveyDescription">You must first select a survey in order to view the survey form.</h4>
+                            </div>
+                            <div class="row" id="takeQuestions">
+
+                            </div>
+                            <div class="form-group row" id="submitRow">
+                                <div class="col-sm-4 col-sm-offset-3">
+                                    <br />
+                                    <a href="javascript:void(0)" class="btn btn-theme" id="submitSurvey">Submit Survey</a>
+                                </div>
+                            </div>
+                        </form>
+                        <br />
+                        <form id="create-survey" action="#" method="post" role="form">
                             <h2>Create Survey</h2>
                             <div class="form-group">
                                 <input type="text" name="surveyName" id="surveyName" tabindex="1" class="form-control" placeholder="Survey Name" value=""
@@ -85,22 +102,23 @@
                             <div class="row" id="questions">
 
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-8">
                                 <a href="javascript:void(0)" class="btn btn-theme" id="addQuestion">Add Question</a>
-                                <div id="multipleChoice" class="form-group">
-                                    <label for="multAnswers"># of Choices</label>
+                                <h4 id="questionHelp">Input the number of answers and select a question type.</h4>
+                                <div id="multipleChoice" class="form-group col-md-6">
+                                    <label for="multAnswers"># of Answer Choices</label>
                                     <input id="multAnswers" type="number" class="form-control" min="0">
-                                    <a href="javascript:void(0)" class="btn btn-theme" id="addMultChoice">Multiple Choice</a>
+                                    <a href="javascript:void(0)" class="btn btn-theme" id="addMultChoice">Add Multiple Choice</a>
                                 </div>
-                                <div id="ratingScale" class="form-group">
-                                        <label for="ratingAnswers"># of Scale</label>
+                                <div id="ratingScale" class="form-group col-md-6">
+                                    <label for="ratingAnswers"># of Rating Scale</label>
                                     <input id="ratingAnswers" type="number" class="form-control" min="0">
-                                    <a href="javascript:void(0)" class="btn btn-theme" id="addRatingScale">Rating Scale</a>
+                                    <a href="javascript:void(0)" class="btn btn-theme" id="addRatingScale">Add Rating Scale</a>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-sm-4 col-sm-offset-3">
-                                    <br />
+                            <br />
+                            <div class="row">
+                                <div class="form-group">
                                     <a href="javascript:void(0)" class="btn btn-theme" id="createSurvey">Create Survey</a>
                                 </div>
                             </div>
@@ -116,8 +134,8 @@
                             <th>Survey Type</th>
                             <th>Teacher Name</th>
                             <th>Expiration Date</th>
-                            <th>Status</th>
-                            <th>Link</th>
+                            <th id="status">Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
