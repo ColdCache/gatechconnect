@@ -1,11 +1,8 @@
-
 var db = firebase.database();
 var ref = db.ref();
 var classSize;
 var currentClass;
 var uid;
-
-
 
 function addRow() {
     $("#Emails tbody").append("<tr><td><input type='email' required /></td><td>" + "</td><td onclick='removeRow(this)'>remove x</td></tr>");
@@ -85,12 +82,16 @@ function sendRequest() {
 					}).then(function() {
 						if (!matchFound) {
 							// an entered email is not found
-							alert(roster[foo].email + " is not in database.");
+							var msg = roster[foo].email + " is not a registered email. Would you like to send them a class link via email?";
+							var sendEmail = confirm(msg);
+							if (sendEmail) {
+								sendJoinClassLink(roster[foo].email);
+							}
 						}
 					});
 				// alert user that they entered a non valid email
 				} else {
-					alert(roster[i].email + " is not valid email");
+					alert(roster[i].email + " is not a valid email");
 				}
 			}(i));
 		}
@@ -265,4 +266,3 @@ function upload2(eve) {
 		};
 	}
 }
-
