@@ -119,28 +119,33 @@ document.addEventListener('DOMContentLoaded', function() {
     var classRef = db.ref("classes/" + currentClass + "/classMembers");
     var teacherClassesRef = db.ref("users/" + uid + "/classes");
 
-    document.getElementById('class-roster').innerHTML = '<th>First Name</th><th>Last Name</th><th style="display:none;">UID</th>';
+    document.getElementById('class-roster').innerHTML = '<th>First Name</th><th>Last Name</th><th>E-Mail</th><th style="display:none;">UID</th>';
     
     classRef.orderByKey().on('child_added', function(snapshot) {
       var rowNumber = 1;
-
+	
 
       var firstNameRef = db.ref("users/" + snapshot.key + "/firstName");
       var lastNameRef = db.ref("users/" + snapshot.key + "/lastName");
+	  var emailRef = db.ref("users/" + snapshot.key + "/email");
 
       var table = document.getElementById('classRoster');
       var row = table.insertRow(rowNumber);
       var cell1 = row.insertCell(0);
       var cell2 = row.insertCell(1);
       var cell3 = row.insertCell(2);
+	  var cell4 = row.insertCell(3);
       firstNameRef.on('value', function(firstSnap) {
         cell1.innerHTML = firstSnap.val();
       });
       lastNameRef.on('value', function(lastSnap) {
         cell2.innerHTML = lastSnap.val();
       });
-      cell3.innerHTML = snapshot.key;
-      cell3.style.display = "none";
+	  emailRef.on('value', function(snap) {
+		cell3.innerHTML = snap.val(); 
+	  });
+      cell4.innerHTML = snapshot.key;
+      cell4.style.display = "none";
       rowNumber++;
     });
   }
@@ -158,20 +163,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
       var firstNameRef = db.ref("users/" + snapshot.key + "/firstName");
       var lastNameRef = db.ref("users/" + snapshot.key + "/lastName");
+	  var emailRef = db.ref("users/" + snapshot.key + "/email");
 
       var table = document.getElementById('classRoster');
       var row = table.insertRow(rowNumber);
       var cell1 = row.insertCell(0);
       var cell2 = row.insertCell(1);
       var cell3 = row.insertCell(2);
+	  var cell4 = row.insertCell(3);
       firstNameRef.on('value', function(firstSnap) {
         cell1.innerHTML = firstSnap.val();
       });
       lastNameRef.on('value', function(lastSnap) {
         cell2.innerHTML = lastSnap.val();
       });
-      cell3.innerHTML = snapshot.key;
-      cell3.style.display = "none";
+	  emailRef.on('value', function(snap) {
+		cell3.innerHTML = snap.val(); 
+	  });
+      cell4.innerHTML = snapshot.key;
+      cell4.style.display = "none";
       rowNumber++;
     });
   }
