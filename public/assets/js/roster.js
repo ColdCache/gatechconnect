@@ -143,34 +143,6 @@ document.addEventListener('DOMContentLoaded', function() {
       cell3.style.display = "none";
       rowNumber++;
     });
-    
-    var groups = db.ref('classes/' + currentClass + "/groups");
-
-    var dropDown2 = document.getElementById("groups");
-    while  (dropDown2.length > 1) {
-      dropDown2.remove(dropDown2.length - 1);
-    }
-
-    var table2 = document.getElementById('groupedStudents');
-
-    document.getElementById('grouped-students').innerHTML = '<th>First Name</th><th>Last Name</th><th style="display:none;">UID</th>';
-
-    dropDown2.addEventListener("change", changeGroup);
-  
-    groups.orderByKey().on("child_added", function(snapshot) {
-      var groupNameRef = db.ref("groups/" + snapshot.key + "/name");
-
-      groupNameRef.on('value', function(groupSnap) {
-        var z = document.createElement("option");
-        z.setAttribute("value", snapshot.key);
-        z.setAttribute("label", groupSnap.val());
-        var t = document.createTextNode(groupSnap.val());
-        z.appendChild(t);
-        dropDown2.appendChild(z);
-      });
-    });
-  
-    dropDown2.value = "Initial";
   }
 
   function changeRoster2() {

@@ -100,8 +100,14 @@ document.addEventListener('DOMContentLoaded', function() {
         studentId = table.rows[i].cells[2].innerHTML;
         ungroupedRef.child(studentId).remove();
         members[studentId] = true;
+		
+		userGroupRef = db.ref("users/" + studentId + "/groups");
+		userGroupRef.update({
+		    [currentGroup] : true
+		});
       }
       groupRef.set(members);
+
       changeGroup();
     }
   }
@@ -127,6 +133,9 @@ document.addEventListener('DOMContentLoaded', function() {
         studentId = table.rows[i].cells[2].innerHTML;
         groupRef.child(studentId).remove();
         roster[studentId] = true;
+		
+		userGroupRef = db.ref("users/" + studentId + "/groups");
+		userGroupRef.child(currentGroup).remove();
       }
       ungroupedRef.set(roster);
       changeRoster2();
