@@ -33,6 +33,7 @@ $('#takeSurvey').click(function () {
 
 // add question types on click
 $('#addQuestion').click(function () {
+    $('#questionHelp').show();
     $('#multipleChoice').show();
     $('#ratingScale').show();
     $('#addQuestion').hide();
@@ -99,6 +100,7 @@ function hideQuestionTypes() {
     $('#multipleChoice').hide();
     $('#ratingScale').hide();
     $('#addQuestion').show();
+    $('#questionHelp').hide();
 }
 
 $('#submitSurvey').click(function () {
