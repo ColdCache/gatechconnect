@@ -1,5 +1,5 @@
 var showSurvey = false;
-var takeSurvey = false;
+var takeSurvey = true;
 var studentSurvey = null;
 var questionNum = 0;
 
@@ -156,18 +156,21 @@ $('#createSurvey').click(function () {
 
     // iterate and pull data from each question
     for (i = 1; i <= questionNum; i++) {
-        var questionsRef = firebase.database().ref('takeQuestions');
+        var questionsRef = firebase.database().ref('questions');
         var questionID = questionsRef.push().key;
         var questionObj = document.getElementById('question' + i);
         var questions = {};
+        var questionType = questionObj.placeholder;
         questions['num'] = questionObj.name;
-        questions['type'] = questionObj.placeholder;
+        questions['type'] = questionType;
         questions['questionText'] = questionObj.value;
         var answers = {};
-        for (j = 1; j <= questionObj.name; j++) {
-            var answerObj = document.getElementById(i + 'answer' + j);
-            answers['answer' + j] = answerObj.value;
-            answers['value'] = answerObj.name;
+        if (questionType == 'Multiple Choice') {
+            for (j = 1; j <= questionObj.name; j++) {
+                var answerObj = document.getElementById(i + 'answer' + j);
+                answers['answer' + j] = answerObj.value;
+                answers['value'] = answerObj.name;
+            }
         }
         questions['answers'] = answers;
         questionIDs[questionID] = 'true';
@@ -277,11 +280,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 accountType = (snap.val().accountType || 'none');
                 if (accountType == 'instructor') {
                     $("#showSurveyForm").show();
+                    $('#take-survey').hide();
+                    $('#takeSurvey').hide();
                     populateSurveyForm(uid);
                     loadInstructorSurveys(uid);
                 } else if (accountType == 'student') {
                     $("#showSurveyForm").hide();
                     $("#takeSurvey").show();
+                    $('#take-survey').show();
                     $('#submitRow').hide();
                     if (studentSurvey == null) {
                         $('#fillerText').show();
