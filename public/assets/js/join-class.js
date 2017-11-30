@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (classID != undefined) {
             if ((accountType == undefined) || (accountType == 'instructor')) {
-                alert("Invalid account type. Only students may join a class.");
+                alert("Invalid account type. Only registered students may join a class.");
             } else {
                 classRef.on('child_added', function(classSnap) {
                     // Check if valid class in Firebase
