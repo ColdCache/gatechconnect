@@ -169,7 +169,7 @@ $('#createSurvey').click(function () {
             for (j = 1; j <= questionObj.name; j++) {
                 var answerObj = document.getElementById(i + 'answer' + j);
                 answers['answer' + j] = answerObj.value;
-                answers['value'] = answerObj.name;
+                //answers['value'] = answerObj.name;
             }
         }
         questions['answers'] = answers;
@@ -188,6 +188,7 @@ $('#createSurvey').click(function () {
         surveyRef.set({
             name: surveyName,
             type: surveyType,
+            course: surveyCourse,
             instructor: surveyInstructor,
             date: surveyDate,
             questions: questionIDs
@@ -282,6 +283,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     $("#showSurveyForm").show();
                     $('#take-survey').hide();
                     $('#takeSurvey').hide();
+                    $('#status').text('Class');
                     populateSurveyForm(uid);
                     loadInstructorSurveys(uid);
                 } else if (accountType == 'student') {
@@ -289,6 +291,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     $("#takeSurvey").show();
                     $('#take-survey').show();
                     $('#submitRow').hide();
+                    $('#status').text('Status');
                     if (studentSurvey == null) {
                         $('#fillerText').show();
                     }
@@ -482,7 +485,7 @@ function loadInstructorSurveys(uid) {
         var surveyType = row.insertCell(1);
         var instructorName = row.insertCell(2);
         var expirationDate = row.insertCell(3);
-        var statusCell = row.insertCell(4);
+        var courseCell = row.insertCell(4);
         var linkCell = row.insertCell(5);
 
         // get data from survey
@@ -492,7 +495,6 @@ function loadInstructorSurveys(uid) {
             var type = document.createTextNode(snap.val().type);
             surveyType.appendChild(type);
             var instructorID = snap.val().instructor;
-
             var instructorRef = firebase.database().ref('users/' + instructorID);
             instructorRef.on('value', function (snapshot) {
                 var instructor = document.createTextNode(snapshot.val().firstName + ' ' + snapshot.val().lastName);
@@ -500,10 +502,14 @@ function loadInstructorSurveys(uid) {
             });
             var date = document.createTextNode(snap.val().date);
             expirationDate.appendChild(date);
+            var courseRef = firebase.database().ref('classes/' + snap.val().course);
+            courseRef.on('value', function(courseSnapshot) {
+                var course = document.createTextNode(courseSnapshot.val().className);
+                courseCell.appendChild(course);
+            });
         });
 
-        var status = document.createTextNode('status');
-        statusCell.appendChild(status);
+        
         var link = document.createTextNode('Edit Survey');
         linkCell.appendChild(link);
     });
