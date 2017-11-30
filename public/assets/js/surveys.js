@@ -103,7 +103,7 @@ function hideQuestionTypes() {
 
 $('#submitSurvey').click(function () {
     var uid = firebase.auth().currentUser.uid;
-    if (selectedSurvey === null || uid === null) {
+    if (selectedSurvey === null || uid === null || uid == 'undefined') {
         alert('You cannot submit a survey before first choosing a survey.');
         console.log('Student attempted to submit invalid/missing survey.');
     } else {
@@ -111,11 +111,15 @@ $('#submitSurvey').click(function () {
         var surveyForm = document.getElementById('takeQuestions');
         var questionsRef = firebase.database().ref('surveys/' + selectedSurvey + '/questions');
         var response = {};
+        var numQuestions = 0;
+        var answers = $('input:radio:checked');
         questionsRef.orderByKey().on('child_added', function (question) {
             var questionID = question.key;
-            var question = document.getElementById(questionID);
-            var answer = question.value;
+            var questionRef = firebase.database().ref('questions/' + questionID);
+            var answer = $('input[type="radio"][name="' + questionID + '"]:checked').val();
+            console.log(answer);
             response[questionID] = answer;
+            numQuestions++;
         });
 
         // save survey response to database
@@ -126,7 +130,7 @@ $('#submitSurvey').click(function () {
         var surveys = {};
         surveys[selectedSurvey] = 'true';
         var userSurveyRef = firebase.database().ref('users/' + uid + '/surveys').update(surveys);
-        document.reload();
+        location.reload();
     }
 });
 
@@ -365,11 +369,11 @@ function loadStudentSurveys(uid) {
 
             var linkCell = row.insertCell(-1);
             var link = document.createElement('a');
-            if (survey.val() == 'true') {
+            if (survey.val() == 'true' || survey.val() == true) {
                 var text = 'View';
                 var linkClass = 'viewResponse';
 
-            } else if (survey.val() == 'false') {
+            } else if (survey.val() == 'false' || survey.val() == false) {
                 var text = 'Select';
                 var linkClass = 'surveySelect';
             }
@@ -430,11 +434,11 @@ function updateTakeSurvey(surveyID) {
                     answerRef.orderByKey().on('child_added', function (answer) {
                         var answerRadio = document.createElement('input');
                         answerRadio.setAttribute('type', 'radio');
-                        answerRadio.setAttribute('id', questionID);
                         var answerLabel = document.createElement('label');
                         answerLabel.setAttribute('for', questionID);
                         answerLabel.innerHTML = answer.val() + '&nbsp;&nbsp;';
                         answerRadio.setAttribute('name', questionID);
+                        answerRadio.setAttribute('class', questionID);
                         answerRadio.setAttribute('value', answer.val());
                         questionDiv.appendChild(answerRadio);
                         questionDiv.appendChild(answerLabel);
@@ -443,8 +447,8 @@ function updateTakeSurvey(surveyID) {
                     for (i = 1; i <= numAnswers; i++) {
                         var answerRadio = document.createElement('input');
                         answerRadio.setAttribute('type', 'radio');
-                        answerRadio.setAttribute('id', questionID);
                         answerRadio.setAttribute('name', questionID);
+                        answerRadio.setAttribute('class', questionID);
                         var answerLabel = document.createElement('label');
                         answerLabel.setAttribute('for', i);
                         answerLabel.innerHTML = i + '&nbsp;&nbsp;';
