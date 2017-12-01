@@ -84,6 +84,21 @@
                         How many groups?: <input id="numGroupsTextBox" type="text">
                         <input id="numGroups" name="numGroups" type="submit" value="Submit" disabled>
                     </form>
+                    <br />
+                    <h3>
+                        Survey Sorting
+                    </h3>
+                    <form action="" id="numGroupsForm">
+                        Select a survey: <select id="surveysSelect">
+                            <option value="Initial">Choose a survey to sort.</option>
+                        </select>
+                        <br />
+                        <div class="form group" id="questions">
+
+                        </div>
+                        <br />
+                        <a href="javascript:void(0)" class="btn btn-theme" id="surveySort">Sort By Survey</a>
+                    </form>
                 </div>
             </div>
             <div class="row">
@@ -171,6 +186,7 @@
     <script src="assets/js/jquery.hoverex.min.js"></script>
     <script src="assets/js/jquery.prettyPhoto.js"></script>
     <script src="assets/js/jquery.isotope.min.js"></script>
+    <script src="assets/js/sorting.js"></script>
     <script src="assets/js/custom.js"></script>
     <script src="assets/js/static.js"></script>
 </html>

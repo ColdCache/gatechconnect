@@ -282,7 +282,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // load user data based on user's session data
         if (user) {
             uid = user.uid;
-            loadSurveys(uid);
             var accountRef = firebase.database().ref().child('users').child(uid);
             accountRef.on('value', function (snap) {
                 accountType = (snap.val().accountType || 'none');
