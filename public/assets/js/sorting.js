@@ -32,64 +32,99 @@ $('#surveySort').click(function () {
     var courseKey = $('#classes').val();
     var surveyKey = $('#surveysSelect').val();
     var groupSize = $('#groupSize').val();
-    var numStudents = 0;
+    var questionsRef = firebase.database().ref('surveys/' + surveyKey + '/questions');
+    var studentsRef = firebase.database().ref('classes/' + courseKey + '/ungrouped');
+    var studentsArray = [];
+    studentsRef.orderByKey().on('child_added', function(students) {
+        studentsArray.push(students.key);
+    });
+    var numStudents = studentsArray.length;
     if (surveyKey == 'Initial' || courseKey == 'Initial' || groupSize == 0) {
         alert('You have not selected a survey or class to sort with.');
+    } else if (numStudents%groupSize != 0) {
+        alert('Groups will be unbalanced.');
     } else {
-        var questionsRef = firebase.database().ref('surveys/' + surveyKey + '/questions');
-        var studentsRef = firebase.database().ref('classes/' + courseKey + '/ungrouped');
-        studentsRef.on('value', function(students) {
-            var numStudents = students.numChildren();
-        })
+        var studentValues = [numStudents];
+        var answers = [];
         questionsRef.orderByKey().on('child_added', function(question) {
             var questionKey = question.key;
             var choice = $('#' + question.key).val();
             var questionRef = firebase.database().ref('questions/' + questionKey);
-            var answers = [];
-            questionRef.on('value', function(questionData) {
-                var questionType = questionData.val().type;
-                var numAnswers = questionData.val().num;
-                var studentsRef = firebase.database().ref('classes/' + courseKey + '/ungrouped');
-                var qAnswers = [numAnswers];
-                if (questionType == 'Rating Scale') {
-                    for (i = 1; i <= numAnswers; i++) {
-                        qAnswers[i] = [];
-                    }
-                } else if (questionType == 'Multiple Choice') {
-                    var answersRef = firebase.database().ref('questions/' + questionKey + '/answers');
-                    answersRef.orderByKey().on('child_added', function(answers) {
+            if (choice != 'none') {
+                questionRef.on('value', function(questionData) {
+                    var questionType = questionData.val().type;
+                    var numAnswers = questionData.val().num;
+                    var studentsRef = firebase.database().ref('classes/' + courseKey + '/ungrouped');
+                    var qAnswers = [numAnswers];
+                    if (questionType == 'Rating Scale') {
                         for (i = 1; i <= numAnswers; i++) {
-                            qAnswers[answers.val()] = [];
+                            qAnswers[i] = [];
                         }
+                    } else if (questionType == 'Multiple Choice') {
+                        var answersRef = firebase.database().ref('questions/' + questionKey + '/answers');
+                        answersRef.orderByKey().on('child_added', function(answers) {
+                            for (i = 1; i <= numAnswers; i++) {
+                                qAnswers[answers.val()] = [];
+                            }
+                        });
+                    }
+                    studentsRef.orderByKey().on('child_added', function(student) {
+                        var responseRef = firebase.database().ref('responses/' + student.key + '/' + questionKey);
+                        responseRef.on('value', function(answer) {
+                            qAnswers[answer.val()].push(student.key);
+                        });
                     });
-                }
-                studentsRef.orderByKey().on('child_added', function(student) {
-                    var responseRef = firebase.database().ref('responses/' + student.key + '/' + questionKey);
-                    responseRef.on('value', function(answer) {
-                        qAnswers[answer.val()].push(student.key);
-                    });
+                    answers.push(qAnswers);
                 });
-                answers.push(qAnswers);
-            });
-            console.log(answers);
-            if (choice == 'similar') {
-                
-            } else if (choice == 'different') {
-                            
-            } else if (choice == 'same') {
-                
-            } else if (choice == 'varied') {
-                
             }
         });
-        
-        
+        studentsArray.sort(function(a,b) {return 0.5 - Math.random()});
+        for (i = 1; i <= numStudents/groupSize; i++) {
+            var groupKey = firebase.database().ref('groups').push().key;
+            var groupName = 'Generated Group ' + i;
+            var groupData = {};
+            groupData['class'] = courseKey;
+            groupData['name'] = groupName;
+            for (j = 0; j < groupSize; j++) {
+                var student = studentsArray[0];
+                groupData['members/' + student] = true;
+                var studentRef = firebase.database().ref('users/' + student);
+                var studentData = {};
+                studentData['groups/' + groupKey] = true;
+                studentsArray.shift();
+            }
+            var courseRef = firebase.database().ref('classes/' + courseKey);
+            var newGroup = {};
+            newGroup['groups/' + groupKey] = true;
+            courseRef.update(newGroup);
+            var groupRef = firebase.database().ref('groups/' + groupKey);
+            groupRef.update(groupData);
+            var ungroupedRef = firebase.database().ref('classes/' + courseKey + '/ungrouped');
+            ungroupedRef.remove();
+        }
+        location.reload();
     }
-    
 });
+
+function findValidStudent(array, location) {
+    if (location == 'top') {
+        for (i = 1; i < array.length; i++) {
+            var arr = array[i];
+            return arr.pop();
+        }
+    } else if (location == 'bottom') {
+        for (i = array.length; i > 1; i--) {
+            var arr = array[i];
+            return arr.shift();
+        }
+    } else {
+        console.log('Invalid location to grab student from array.');
+    }
+}
 
 $('#surveysSelect').on('change', function() {
     var questionsDiv = document.getElementById('questions');
+    $('#questions').empty();
     var surveySelected = $(this).val();
     var questionsRef = firebase.database().ref('surveys/' + surveySelected + '/questions');
     questionsRef.on('child_added', function(question) {
@@ -135,5 +170,7 @@ $('#surveysSelect').on('change', function() {
             questionsDiv.appendChild(questionDiv);
         });
     });
+
+    //var studentsTable = document.getElementById('ungroupedStudents');
   });
 
