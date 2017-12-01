@@ -214,7 +214,7 @@ $('#createSurvey').click(function () {
         // update each class member's surveys list with new survey
         var classMembers = firebase.database().ref('classes/' + surveyCourse + '/classMembers');
         classMembers.orderByKey().on('child_added', function (student) {
-            var studentID = student.val().key;
+            var studentID = student.key;
             var responseRef = firebase.database().ref('users/' + studentID + '/surveys');
             var responses = {};
             responses[surveyID] = 'false';
