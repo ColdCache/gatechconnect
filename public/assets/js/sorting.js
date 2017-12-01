@@ -102,7 +102,9 @@ $('#surveySort').click(function () {
             var ungroupedRef = firebase.database().ref('classes/' + courseKey + '/ungrouped');
             ungroupedRef.remove();
         }
-        location.reload();
+        $('#questions').empty();
+        $('.surveySelect option:eq(1)').prop('selected', true);
+        $('.classes option:eq(2)').prop('selected', true);
     }
 });
 
