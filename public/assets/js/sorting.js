@@ -31,26 +31,59 @@ function populateSelectForms(uid) {
 $('#surveySort').click(function () {
     var courseKey = $('#classes').val();
     var surveyKey = $('#surveysSelect').val();
-    if (surveyKey == 'Initial') {
-        alert('You have not selected a survey to sort with.');
+    var groupSize = $('#groupSize').val();
+    var numStudents = 0;
+    if (surveyKey == 'Initial' || courseKey == 'Initial' || groupSize == 0) {
+        alert('You have not selected a survey or class to sort with.');
     } else {
         var questionsRef = firebase.database().ref('surveys/' + surveyKey + '/questions');
+        var studentsRef = firebase.database().ref('classes/' + courseKey + '/ungrouped');
+        studentsRef.on('value', function(students) {
+            var numStudents = students.numChildren();
+        })
         questionsRef.orderByKey().on('child_added', function(question) {
             var questionKey = question.key;
+            var choice = $('#' + question.key).val();
             var questionRef = firebase.database().ref('questions/' + questionKey);
+            var answers = [];
             questionRef.on('value', function(questionData) {
                 var questionType = questionData.val().type;
+                var numAnswers = questionData.val().num;
                 var studentsRef = firebase.database().ref('classes/' + courseKey + '/ungrouped');
-                var answers = [];
+                var qAnswers = [numAnswers];
+                if (questionType == 'Rating Scale') {
+                    for (i = 1; i <= numAnswers; i++) {
+                        qAnswers[i] = [];
+                    }
+                } else if (questionType == 'Multiple Choice') {
+                    var answersRef = firebase.database().ref('questions/' + questionKey + '/answers');
+                    answersRef.orderByKey().on('child_added', function(answers) {
+                        for (i = 1; i <= numAnswers; i++) {
+                            qAnswers[answers.val()] = [];
+                        }
+                    });
+                }
                 studentsRef.orderByKey().on('child_added', function(student) {
                     var responseRef = firebase.database().ref('responses/' + student.key + '/' + questionKey);
                     responseRef.on('value', function(answer) {
-                        answers.push(answer.val());
+                        qAnswers[answer.val()].push(student.key);
                     });
                 });
-                console.log(answers);
+                answers.push(qAnswers);
             });
+            console.log(answers);
+            if (choice == 'similar') {
+                
+            } else if (choice == 'different') {
+                            
+            } else if (choice == 'same') {
+                
+            } else if (choice == 'varied') {
+                
+            }
         });
+        
+        
     }
     
 });
@@ -77,23 +110,23 @@ $('#surveysSelect').on('change', function() {
             if (type == 'Rating Scale') {
                 var similarOption = document.createElement('option');
                 var similarText = document.createTextNode('Similar Value');
-                defaultOption.setAttribute('value', 'similar');
+                similarOption.setAttribute('value', 'similar');
                 similarOption.appendChild(similarText);
                 select.appendChild(similarOption);
                 var diffOption = document.createElement('option');
                 var diffText = document.createTextNode('As Different As Possible');
-                defaultOption.setAttribute('value', 'different');
+                diffOption.setAttribute('value', 'different');
                 diffOption.appendChild(diffText);
                 select.appendChild(diffOption);
             } else if (type == 'Multiple Choice') {
                 var sameOption = document.createElement('option');
                 var sameText = document.createTextNode('Same Choice');
-                defaultOption.setAttribute('value', 'same');
+                sameOption.setAttribute('value', 'same');
                 sameOption.appendChild(sameText);
                 select.appendChild(sameOption);
                 var variedOption = document.createElement('option');
                 var variedText = document.createTextNode('Varied Choice');
-                defaultOption.setAttribute('value', 'varied');
+                variedOption.setAttribute('value', 'varied');
                 variedOption.appendChild(variedText);
                 select.appendChild(variedOption);
             }
