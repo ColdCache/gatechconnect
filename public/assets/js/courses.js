@@ -1,29 +1,37 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var groupsTable = document.getElementById('groups');
-    var groupsNum = 1;
-    var groupsRef = firebase.database() + '/users/' + uid + '/groups';
+    auth.onAuthStateChanged(function(user) {
+        var uid = user.uid;
+        var groupsTable = document.getElementById('groups');
+        var groupsNum = 1;
+        var studentClassRef = firebase.database().ref().child('users').child(uid).child('classes');
+        
+        // iterate through user's classes
+        studentClassRef.orderByKey().on('child_added', function(snapshot) {
+            var row = groupsTable.insertRow(groupsNum);
+            var classID = snapshot.key;
+            var classRef = firebase.database().ref().child('classes').child(classID);
+            // iterate through class table in firebase
+            classRef.on('value', function(classSnap) {
+                var teacherID = classSnap.val().teacher;
+                console.log("");
+                var teacherRef = firebase.database().ref().child('users').child(teacherID);
+                teacherRef.on('value', function(snap) {
+                    var course = row.insertCell(0);
+                    var teacher = row.insertCell(1);
+                    var email = row.insertCell(2);
 
-    // iterate through user's groups
-    groupsRef.orderByKey().on('child_added').then(function(snapshot) {
-        var row = groupsTable.insertRow(groupsNum);
-        var groupID = snapshot.key;
+                    // get course name
+                    course.innerHTML = (classSnap.val().className || 'none');
+                    
+                    // get teacher name
+                    teacher.innerHTML = ((snap.val().firstName + " " + snap.val().lastName) || 'none');
 
-        // iterate through each of the user's groups
-        var groupRef = firebase.database() + '/groups/' + groupID;
-        groupRef.orderByKey.on('child_added', function(snapshot) {
-            var groupName = row.insertCell(0);
-            var course = row.insertCell(1);
-            var teacher = row.insertCell(2);
-            var members = row.insertCell(3);
-
-            // iterate through the group's data entries
-            studentRef.on('value', function(snap) {
-                groupName = (snap.val().name || 'none');
-                course = (snap.val().course || 'none');
-                teacher = (snap.val().teacher || 'none');
+                    // get teacher email
+                    email.innerHTML = (snap.val().email || 'none');
+                    
+                    groupsNum++;
+                });
             });
         });
-
-        groupsNum++;
     });
 });
