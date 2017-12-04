@@ -16,7 +16,7 @@ https://nodejs.org/en/download/
   ```
 #### RUNNING ON LOCALHOST
 >No build necessary for this app.
->Run app on the localhost. open terminal and run
+>Run app on the localhost, open terminal and run
   ```shell
     firebase serve
   ```
