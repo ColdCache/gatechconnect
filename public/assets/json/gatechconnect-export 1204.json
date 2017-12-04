@@ -1,0 +1,1096 @@
+{
+  "classes" : {
+    "-KyXw5aaZSOMAWusaQ8Z" : {
+      "classMembers" : {
+        "aFakeStudentId1" : true
+      },
+      "className" : "CS2200",
+      "groups" : {
+        "groupID" : true
+      },
+      "surveys" : {
+        "-KyY-pFXPeXBeYObjuqN" : true
+      },
+      "teacher" : "FJWvpOyZULefFUhcL791Jxn6ilk1"
+    },
+    "-KyYAnryi0N_U8wTcD-s" : {
+      "classMembers" : {
+        "1lS4XL5Je7ZfBnLbkB4M36ww33K2" : true,
+        "HDJio9T48ZRMlKvEDcyz91VZa262" : true
+      },
+      "className" : "CS4400",
+      "groups" : {
+        "groupID" : true
+      },
+      "surveys" : {
+        "-KyYAnryi0N_U8wTcD-s" : "true"
+      },
+      "teacher" : "ksOYOlOg8xfvjOFFwRMWWVdsfNG3"
+    },
+    "-KyZIcdV-EryW1vvfDMV" : {
+      "classMembers" : {
+        "aFakeStudentId10" : true,
+        "aFakeStudentId4" : true,
+        "aFakeStudentId5" : true,
+        "aFakeStudentId6" : true,
+        "mZbc4KWDd8fP3Tcn5xdqu6zMvI72" : true
+      },
+      "className" : "CS4261",
+      "groups" : {
+        "-KymI2NkfrMEmaKEMtQr" : true,
+        "-KymI2NrMVmLjJC5CqMN" : true
+      },
+      "surveys" : {
+        "-KyZIcdV-EryW1vvfDMV" : "true"
+      },
+      "teacher" : "gEIIm4jigdPLMtOcHbz6st14V492"
+    },
+    "-KyhOdb1VMVrnX0o0VR_" : {
+      "classMembers" : {
+        "1lS4XL5Je7ZfBnLbkB4M36ww33K2" : true,
+        "HDJio9T48ZRMlKvEDcyz91VZa262" : true,
+        "U2OUTyejRjdSstrtuM3c10EGdTq1" : true,
+        "aFakeStudentId1" : true,
+        "aFakeStudentId2" : true,
+        "aFakeStudentId3" : true,
+        "mZbc4KWDd8fP3Tcn5xdqu6zMvI72" : true,
+        "uniqueUserID2" : true
+      },
+      "className" : "CS1100",
+      "groups" : {
+        "-L-F39mVVQ30o2fzg1MT" : true,
+        "-L-F39mZKCaqvVWITRrk" : true,
+        "fakeGroup0" : true,
+        "fakeGroup1" : true,
+        "fakeGroup2" : true
+      },
+      "teacher" : "gEIIm4jigdPLMtOcHbz6st14V492"
+    },
+    "-Kyhk0nsyft1GmifJkwt" : {
+      "classMembers" : {
+        "1lS4XL5Je7ZfBnLbkB4M36ww33K2" : true,
+        "HDJio9T48ZRMlKvEDcyz91VZa262" : true,
+        "studentID" : true
+      },
+      "className" : "CS6666",
+      "groups" : {
+        "groupID" : true
+      },
+      "teacher" : "HKReMlriEQUGsSdQSmVkAvBPuF82"
+    },
+    "-KyiGHoN70lHI4cMEUNj" : {
+      "classMembers" : {
+        "1lS4XL5Je7ZfBnLbkB4M36ww33K2" : true,
+        "HDJio9T48ZRMlKvEDcyz91VZa262" : true,
+        "studentID" : true
+      },
+      "className" : "LMC2000",
+      "groups" : {
+        "groupID" : true
+      },
+      "teacher" : "HKReMlriEQUGsSdQSmVkAvBPuF82"
+    },
+    "-Kylp2xtav8AnEWftkHK" : {
+      "classMembers" : {
+        "aFakeStudentId7" : true,
+        "aFakeStudentId8" : true,
+        "aFakeStudentId9" : true,
+        "mZbc4KWDd8fP3Tcn5xdqu6zMvI72" : true
+      },
+      "className" : "CS4400",
+      "groups" : {
+        "-L-F4IPAHt7XcElbcwiM" : true,
+        "-L-F4IPFXWfrLa5gBaYQ" : true,
+        "-L-F4IPIBKppSvOcKHGN" : true,
+        "uniqueGroupID" : true
+      },
+      "surveys" : {
+        "-Kylp2xtav8AnEWftkHK" : "true"
+      },
+      "teacher" : "gEIIm4jigdPLMtOcHbz6st14V492"
+    },
+    "-L-DkM20-DE6DVvFa3i8" : {
+      "classMembers" : {
+        "1lS4XL5Je7ZfBnLbkB4M36ww33K2" : true,
+        "5eFPTBflS5aES3HRokkN5uMUSzR2" : true,
+        "aFakeStudentId11" : true,
+        "studentID" : true
+      },
+      "className" : "CS9001",
+      "groups" : {
+        "-L-F60egoS7w0Z3-JkLJ" : true,
+        "-L-F60eouR4ObfKaCXug" : true,
+        "groupID" : true
+      },
+      "surveys" : {
+        "-L-DkM20-DE6DVvFa3i8" : "true"
+      },
+      "teacher" : "HKReMlriEQUGsSdQSmVkAvBPuF82",
+      "ungrouped" : {
+        "1lS4XL5Je7ZfBnLbkB4M36ww33K2" : true,
+        "5eFPTBflS5aES3HRokkN5uMUSzR2" : true,
+        "aFakeStudentId11" : true
+      }
+    },
+    "-L-E_VtCyXPK3ANxVAy6" : {
+      "classMembers" : {
+        "1lS4XL5Je7ZfBnLbkB4M36ww33K2" : true,
+        "aFakeStudentId11" : true,
+        "studentID" : true
+      },
+      "className" : "CS3312",
+      "groups" : {
+        "groupID" : true
+      },
+      "surveys" : {
+        "-L-E_VtCyXPK3ANxVAy6" : "true"
+      },
+      "teacher" : "HKReMlriEQUGsSdQSmVkAvBPuF82",
+      "ungrouped" : {
+        "1lS4XL5Je7ZfBnLbkB4M36ww33K2" : true,
+        "aFakeStudentId11" : true
+      }
+    },
+    "-L-EuaZus6qmXeitzdkG" : {
+      "classMembers" : {
+        "AFvU1zQ5L6b9SN0OOKHMVTgJ1CC2" : true,
+        "MTE1LYJbbTd1rpbXB7M6bE48zi73" : true,
+        "cboTCZ7d9gSPbOkv5cFw8ZgDSBq2" : true,
+        "giBv9ct1EmaqoK3dM5OV7jvTPTq1" : true
+      },
+      "className" : "CS 4990",
+      "groups" : {
+        "-L-GCetEQ88SlrxzVUxb" : true,
+        "-L-GCetJ9Tddli0fVkDm" : true,
+        "groupID" : true
+      },
+      "surveys" : {
+        "-L-EuaZus6qmXeitzdkG" : "true"
+      },
+      "teacher" : "ahJvtKjWq3Wy4Fi0N3OkHPSUUZ73"
+    },
+    "-L-F8Zw4jZdxRjd-qTPL" : {
+      "classMembers" : {
+        "AFvU1zQ5L6b9SN0OOKHMVTgJ1CC2" : true,
+        "GBPchIuAhaatPTyiWIaMXogujzD3" : true,
+        "MTE1LYJbbTd1rpbXB7M6bE48zi73" : true,
+        "cboTCZ7d9gSPbOkv5cFw8ZgDSBq2" : true,
+        "giBv9ct1EmaqoK3dM5OV7jvTPTq1" : true,
+        "studentID" : true,
+        "xfFI2TWxAhNSC5lERGQgBhIWp7V2" : true
+      },
+      "className" : "CS 1000",
+      "groups" : {
+        "-L-FN920euP6Gl8-BjJK" : true,
+        "-L-GCxJsitnPHg9OIhT9" : true,
+        "-L-GCxJw7eMz1C6QHlbS" : true
+      },
+      "surveys" : {
+        "-L-F8Zw4jZdxRjd-qTPL" : "true"
+      },
+      "teacher" : "ahJvtKjWq3Wy4Fi0N3OkHPSUUZ73"
+    },
+    "-L-IIV-Z34EpPLQWGcaZ" : {
+      "classMembers" : {
+        "studentID" : true
+      },
+      "className" : "",
+      "groups" : {
+        "groupID" : true
+      },
+      "teacher" : "HKReMlriEQUGsSdQSmVkAvBPuF82"
+    },
+    "uniqueClassID" : {
+      "classMembers" : {
+        "studentID" : true,
+        "studentID2" : true
+      },
+      "className" : "CS1332",
+      "groups" : {
+        "groupID" : true,
+        "groupID2" : true
+      }
+    }
+  },
+  "groups" : {
+    "-KymI2NkfrMEmaKEMtQr" : {
+      "class" : "-KyhOdb1VMVrnX0o0VR_",
+      "members" : {
+        "aFakeStudentId1" : true,
+        "aFakeStudentId4" : true,
+        "aFakeStudentId5" : true
+      },
+      "name" : "Generated Group 1",
+      "teacher" : "gEIIm4jigdPLMtOcHbz6st14V492"
+    },
+    "-KymI2NrMVmLjJC5CqMN" : {
+      "class" : "-KyhOdb1VMVrnX0o0VR_",
+      "members" : {
+        "aFakeStudentId10" : true
+      },
+      "name" : "Generated Group 2",
+      "teacher" : "gEIIm4jigdPLMtOcHbz6st14V492"
+    },
+    "-L-F39mVVQ30o2fzg1MT" : {
+      "class" : "-KyhOdb1VMVrnX0o0VR_",
+      "members" : {
+        "aFakeStudentId10" : true,
+        "aFakeStudentId4" : true
+      },
+      "name" : "Generated Group 1"
+    },
+    "-L-F39mZKCaqvVWITRrk" : {
+      "class" : "-KyhOdb1VMVrnX0o0VR_",
+      "members" : {
+        "aFakeStudentId6" : true,
+        "mZbc4KWDd8fP3Tcn5xdqu6zMvI72" : true
+      },
+      "name" : "Generated Group 2"
+    },
+    "-L-F4IPAHt7XcElbcwiM" : {
+      "class" : "-Kylp2xtav8AnEWftkHK",
+      "members" : {
+        "aFakeStudentId8" : true
+      },
+      "name" : "Generated Group 1"
+    },
+    "-L-F4IPFXWfrLa5gBaYQ" : {
+      "class" : "-Kylp2xtav8AnEWftkHK",
+      "members" : {
+        "aFakeStudentId7" : true
+      },
+      "name" : "Generated Group 2"
+    },
+    "-L-F4IPIBKppSvOcKHGN" : {
+      "class" : "-Kylp2xtav8AnEWftkHK",
+      "members" : {
+        "mZbc4KWDd8fP3Tcn5xdqu6zMvI72" : true
+      },
+      "name" : "Generated Group 3"
+    },
+    "-L-F60egoS7w0Z3-JkLJ" : {
+      "class" : "-L-DkM20-DE6DVvFa3i8",
+      "members" : {
+        "1lS4XL5Je7ZfBnLbkB4M36ww33K2" : true,
+        "aFakeStudentId11" : true
+      },
+      "name" : "Generated Group 1",
+      "teacher" : "HKReMlriEQUGsSdQSmVkAvBPuF82"
+    },
+    "-L-F60eouR4ObfKaCXug" : {
+      "class" : "-L-DkM20-DE6DVvFa3i8",
+      "members" : {
+        "5eFPTBflS5aES3HRokkN5uMUSzR2" : true,
+        "studentID" : true
+      },
+      "name" : "Generated Group 2",
+      "teacher" : "HKReMlriEQUGsSdQSmVkAvBPuF82"
+    },
+    "-L-FL8dqciyI3wk0lT-D" : {
+      "class" : "-L-F8Zw4jZdxRjd-qTPL",
+      "name" : "Generated Group 1"
+    },
+    "-L-FL8dued5RkcamW-uX" : {
+      "class" : "-L-F8Zw4jZdxRjd-qTPL",
+      "name" : "Generated Group 2"
+    },
+    "-L-FL8dvjhaWd7QH0HV2" : {
+      "class" : "-L-F8Zw4jZdxRjd-qTPL",
+      "name" : "Generated Group 3"
+    },
+    "-L-FL8dwUh44YrMc_LSy" : {
+      "class" : "-L-F8Zw4jZdxRjd-qTPL",
+      "name" : "Generated Group 4"
+    },
+    "-L-FL8dykI0qjztqrRbk" : {
+      "class" : "-L-F8Zw4jZdxRjd-qTPL",
+      "name" : "Generated Group 5"
+    },
+    "-L-FLJER58Vzk3E2Vdue" : {
+      "class" : "-L-F8Zw4jZdxRjd-qTPL",
+      "name" : "Generated Group 1"
+    },
+    "-L-FN920euP6Gl8-BjJK" : {
+      "class" : "-L-F8Zw4jZdxRjd-qTPL",
+      "name" : "Empty Group"
+    },
+    "-L-GCetEQ88SlrxzVUxb" : {
+      "class" : "-L-EuaZus6qmXeitzdkG",
+      "members" : {
+        "MTE1LYJbbTd1rpbXB7M6bE48zi73" : true,
+        "giBv9ct1EmaqoK3dM5OV7jvTPTq1" : true
+      },
+      "name" : "Generated Group 1"
+    },
+    "-L-GCetJ9Tddli0fVkDm" : {
+      "class" : "-L-EuaZus6qmXeitzdkG",
+      "members" : {
+        "AFvU1zQ5L6b9SN0OOKHMVTgJ1CC2" : true,
+        "cboTCZ7d9gSPbOkv5cFw8ZgDSBq2" : true
+      },
+      "name" : "Generated Group 2"
+    },
+    "-L-GCxJsitnPHg9OIhT9" : {
+      "class" : "-L-F8Zw4jZdxRjd-qTPL",
+      "members" : {
+        "AFvU1zQ5L6b9SN0OOKHMVTgJ1CC2" : true,
+        "MTE1LYJbbTd1rpbXB7M6bE48zi73" : true,
+        "cboTCZ7d9gSPbOkv5cFw8ZgDSBq2" : true,
+        "xfFI2TWxAhNSC5lERGQgBhIWp7V2" : true
+      },
+      "name" : "Generated Group 1"
+    },
+    "-L-GCxJw7eMz1C6QHlbS" : {
+      "class" : "-L-F8Zw4jZdxRjd-qTPL",
+      "members" : {
+        "GBPchIuAhaatPTyiWIaMXogujzD3" : true,
+        "giBv9ct1EmaqoK3dM5OV7jvTPTq1" : true
+      },
+      "name" : "Generated Group 2"
+    },
+    "fakeGroup0" : {
+      "class" : "-KyhOdb1VMVrnX0o0VR_",
+      "members" : {
+        "mZbc4KWDd8fP3Tcn5xdqu6zMvI72" : true
+      },
+      "name" : "unordered",
+      "teacher" : "gEIIm4jigdPLMtOcHbz6st14V492"
+    },
+    "fakeGroup1" : {
+      "class" : "-KyhOdb1VMVrnX0o0VR_",
+      "name" : "fake group 1",
+      "teacher" : "gEIIm4jigdPLMtOcHbz6st14V492"
+    },
+    "fakeGroup123" : {
+      "class" : "-KyhOdb1VMVrnX0o0VR_",
+      "members" : {
+        "mZbc4KWDd8fP3Tcn5xdqu6zMvI72" : true
+      },
+      "name" : "Another Fake Group",
+      "teacher" : "gEIIm4jigdPLMtOcHbz6st14V492"
+    },
+    "fakeGroup2" : {
+      "class" : "-KyhOdb1VMVrnX0o0VR_",
+      "name" : "fake group 2",
+      "teacher" : "gEIIm4jigdPLMtOcHbz6st14V492"
+    },
+    "uniqueGroupID" : {
+      "class" : "uniqueClassID",
+      "members" : {
+        "aFakeStudentId9" : true
+      },
+      "name" : "unique group",
+      "teacher" : "gEIIm4jigdPLMtOcHbz6st14V492"
+    }
+  },
+  "questions" : {
+    "-L-DflxtLONYksV5LzmU" : {
+      "num" : "5",
+      "questionText" : "On a scale of 1-5, how likely are you to lead a team (with 5 being most likely)?",
+      "type" : "Rating Scale"
+    },
+    "-L-Dflxw9Av8seO8SZM_" : {
+      "num" : "5",
+      "questionText" : "On a scale of 1-5, how likely are you to want to meet in person (with 5 being most likely)?",
+      "type" : "Rating Scale"
+    },
+    "-L-Dflxw9Av8seO8SZMa" : {
+      "answers" : {
+        "answer1" : " Situation Analyzer",
+        "answer2" : "Task Manager",
+        "answer3" : "Action Implementer",
+        "answer4" : "Result Evaluator"
+      },
+      "num" : "4",
+      "questionText" : "Select the role that best fits you:",
+      "type" : "Multiple Choice"
+    },
+    "-L-E4nc2wMH6Jq27h6M6" : {
+      "answers" : {
+        "answer1" : "Freshmen",
+        "answer2" : "Sophomore",
+        "answer3" : "Junior",
+        "answer4" : "Senior"
+      },
+      "num" : "4",
+      "questionText" : "What is your class level",
+      "type" : "Multiple Choice"
+    },
+    "-L-E5Bc8noZyHRJ61PsW" : {
+      "num" : "5",
+      "questionText" : "How proficient are you with Javascript?",
+      "type" : "Rating Scale"
+    },
+    "-L-E5Bc96-njCsqB9RNX" : {
+      "num" : "5",
+      "questionText" : "How proficient are you with Nodejs?",
+      "type" : "Rating Scale"
+    },
+    "-L-FHWTRK-H7rYyaU8SE" : {
+      "num" : "3",
+      "questionText" : "Out of 3, 3 being High, How confident are you about trigonometry?",
+      "type" : "Rating Scale"
+    },
+    "-L-FHWTTVgxaOvLseRp-" : {
+      "answers" : {
+        "answer1" : "Male",
+        "answer2" : "Female"
+      },
+      "num" : "2",
+      "questionText" : "Are you male or female?",
+      "type" : "Multiple Choice"
+    },
+    "-L-FK1HoKA4YqrO054DK" : {
+      "num" : "5",
+      "questionText" : "How Happy are you with your grade?",
+      "type" : "Rating Scale"
+    },
+    "-L-FKu8-rCZ1ZTMBQy9o" : {
+      "num" : "2",
+      "questionText" : "Are you online or offline?",
+      "type" : "Rating Scale"
+    },
+    "-L-FLNKiEu-evMQtMdoM" : {
+      "answers" : {
+        "answer1" : "Maker Studios",
+        "answer2" : "Bob the Builder"
+      },
+      "num" : "2",
+      "questionText" : "Who is your maker?",
+      "type" : "Multiple Choice"
+    },
+    "-L-FNJIs31h99r-hOpgh" : {
+      "answers" : {
+        "answer1" : "African American",
+        "answer2" : "Caucasian",
+        "answer3" : "Asian",
+        "answer4" : "Hispanics"
+      },
+      "num" : "4",
+      "questionText" : "Ethnic",
+      "type" : "Multiple Choice"
+    },
+    "-L-FNJIwkSLhp8IcXnxy" : {
+      "num" : "5",
+      "questionText" : "On a scale of 1-5, how likely are you to want to meet in person for working on team project (with 5 being most likely)?",
+      "type" : "Rating Scale"
+    },
+    "-L-G8Q_sgkXN6mlylUCS" : {
+      "num" : "5",
+      "questionText" : "Rate your leadership",
+      "type" : "Rating Scale"
+    },
+    "-L-G8Q_u-NG3BuYCX10L" : {
+      "answers" : {
+        "answer1" : "Male ",
+        "answer2" : "Female"
+      },
+      "num" : "2",
+      "questionText" : "Gender",
+      "type" : "Multiple Choice"
+    },
+    "-L-G9ikJ8eXkYx93R53s" : {
+      "answers" : {
+        "answer1" : "Blue",
+        "answer2" : "Red",
+        "answer3" : "Black"
+      },
+      "num" : "3",
+      "questionText" : "Favorite Color?",
+      "type" : "Multiple Choice"
+    },
+    "-L-G9ikLNQWNJkLL4unj" : {
+      "num" : "5",
+      "questionText" : "How well do you get along with others?",
+      "type" : "Rating Scale"
+    },
+    "-L-HgNl4IlecrQzL1VRd" : {
+      "answers" : {
+        "answer1" : "Yes",
+        "answer2" : "NO"
+      },
+      "num" : "2",
+      "questionText" : "Are you over 21?",
+      "type" : "Multiple Choice"
+    },
+    "-L-HgNl7nG-OS5jBwADs" : {
+      "num" : "5",
+      "questionText" : "\"On a scale of 1-5, how likely are you to lead a team (with 5 being most likely)?\"",
+      "type" : "Rating Scale"
+    },
+    "questionID" : {
+      "questionText" : "string",
+      "surveyID" : true
+    },
+    "questionID2" : {
+      "questionText" : "string",
+      "surveyID" : true
+    }
+  },
+  "responses" : {
+    "5eFPTBflS5aES3HRokkN5uMUSzR2" : {
+      "-L-HgNl4IlecrQzL1VRd" : "Yes",
+      "-L-HgNl7nG-OS5jBwADs" : "3"
+    },
+    "aFakeStudentId1" : {
+      "-L-DflxtLONYksV5LzmU" : "3",
+      "-L-Dflxw9Av8seO8SZM_" : "4",
+      "-L-Dflxw9Av8seO8SZMa" : "Result Evaluator"
+    },
+    "aFakeStudentId10" : {
+      "-L-DflxtLONYksV5LzmU" : "5",
+      "-L-Dflxw9Av8seO8SZM_" : "4",
+      "-L-Dflxw9Av8seO8SZMa" : "Task Manager"
+    },
+    "aFakeStudentId4" : {
+      "-L-DflxtLONYksV5LzmU" : "1",
+      "-L-Dflxw9Av8seO8SZM_" : "4",
+      "-L-Dflxw9Av8seO8SZMa" : "Task Manager"
+    },
+    "aFakeStudentId5" : {
+      "-L-DflxtLONYksV5LzmU" : "1",
+      "-L-Dflxw9Av8seO8SZM_" : "2",
+      "-L-Dflxw9Av8seO8SZMa" : "Situation Analyzer"
+    },
+    "aFakeStudentId6" : {
+      "-L-DflxtLONYksV5LzmU" : "3",
+      "-L-Dflxw9Av8seO8SZM_" : "2",
+      "-L-Dflxw9Av8seO8SZMa" : "Action Implementer"
+    },
+    "mZbc4KWDd8fP3Tcn5xdqu6zMvI72" : {
+      "-L-DflxtLONYksV5LzmU" : "4",
+      "-L-Dflxw9Av8seO8SZM_" : "2",
+      "-L-Dflxw9Av8seO8SZMa" : "Action Implementer"
+    },
+    "uniqueUserID" : {
+      "questionID" : {
+        "answers" : "string or boolean"
+      }
+    }
+  },
+  "surveys" : {
+    "-L-DflxxubM8cwVBD8gM" : {
+      "course" : "-KyZIcdV-EryW1vvfDMV",
+      "date" : "12/06/2017",
+      "instructor" : "gEIIm4jigdPLMtOcHbz6st14V492",
+      "name" : "Teamwork Survey",
+      "questions" : {
+        "-L-DflxtLONYksV5LzmU" : "true",
+        "-L-Dflxw9Av8seO8SZM_" : "true",
+        "-L-Dflxw9Av8seO8SZMa" : "true"
+      },
+      "type" : "teamwork"
+    },
+    "-L-E6LdAM25s_vRiKz69" : {
+      "date" : "12/01/2017",
+      "instructor" : "surveyInstructor",
+      "name" : "DB project",
+      "questions" : {
+        "-L-E6Ld871LUrMx8bEcY" : "true",
+        "-L-E6Ld918JEDYOWbH-h" : "true"
+      },
+      "type" : "academic"
+    },
+    "-L-FHWTUzTQcKmC73a_4" : {
+      "course" : "-L-EuaZus6qmXeitzdkG",
+      "date" : "12/15/2017",
+      "instructor" : "ahJvtKjWq3Wy4Fi0N3OkHPSUUZ73",
+      "name" : "Midterm Project Group Questionaire",
+      "questions" : {
+        "-L-FHWTRK-H7rYyaU8SE" : "true",
+        "-L-FHWTTVgxaOvLseRp-" : "true"
+      },
+      "type" : "none"
+    },
+    "-L-FK1HqKI2vFFl1l6LV" : {
+      "course" : "-L-F8Zw4jZdxRjd-qTPL",
+      "date" : "12/15/2017",
+      "instructor" : "ahJvtKjWq3Wy4Fi0N3OkHPSUUZ73",
+      "name" : "Study Groups",
+      "questions" : {
+        "-L-FK1HoKA4YqrO054DK" : "true"
+      },
+      "type" : "academic"
+    },
+    "-L-FKu81ytFd5FcVQKT5" : {
+      "course" : "-Kylp2xtav8AnEWftkHK",
+      "date" : "11/22/2017",
+      "instructor" : "gEIIm4jigdPLMtOcHbz6st14V492",
+      "name" : "Does this work?",
+      "questions" : {
+        "-L-FKu8-rCZ1ZTMBQy9o" : "true"
+      },
+      "type" : "other"
+    },
+    "-L-FLNKl1kxpB-LGaUGD" : {
+      "course" : "-KyZIcdV-EryW1vvfDMV",
+      "date" : "11/21/2017",
+      "instructor" : "gEIIm4jigdPLMtOcHbz6st14V492",
+      "name" : "Maker Survey",
+      "questions" : {
+        "-L-FLNKiEu-evMQtMdoM" : "true"
+      },
+      "type" : "personal"
+    },
+    "-L-FNJIxE1JA9G1ylLxG" : {
+      "course" : "-L-E_VtCyXPK3ANxVAy6",
+      "date" : "12/02/2017",
+      "instructor" : "HKReMlriEQUGsSdQSmVkAvBPuF82",
+      "name" : "TEST SURVEY",
+      "questions" : {
+        "-L-FNJIs31h99r-hOpgh" : "true",
+        "-L-FNJIwkSLhp8IcXnxy" : "true"
+      },
+      "type" : "academic"
+    },
+    "-L-G8Q_vs7f41qvbQd-M" : {
+      "course" : "-L-EuaZus6qmXeitzdkG",
+      "date" : "12/16/2017",
+      "instructor" : "ahJvtKjWq3Wy4Fi0N3OkHPSUUZ73",
+      "name" : "Intro Survey",
+      "questions" : {
+        "-L-G8Q_sgkXN6mlylUCS" : "true",
+        "-L-G8Q_u-NG3BuYCX10L" : "true"
+      },
+      "type" : "personal"
+    },
+    "-L-G9ikLNQWNJkLL4unk" : {
+      "course" : "-L-F8Zw4jZdxRjd-qTPL",
+      "date" : "12/16/2017",
+      "instructor" : "ahJvtKjWq3Wy4Fi0N3OkHPSUUZ73",
+      "name" : "Welcome Survey",
+      "questions" : {
+        "-L-G9ikJ8eXkYx93R53s" : "true",
+        "-L-G9ikLNQWNJkLL4unj" : "true"
+      },
+      "type" : "teamwork"
+    },
+    "-L-HgNl859vPWkoq9DX9" : {
+      "course" : "-L-DkM20-DE6DVvFa3i8",
+      "date" : "12/02/2017",
+      "instructor" : "HKReMlriEQUGsSdQSmVkAvBPuF82",
+      "name" : "9001",
+      "questions" : {
+        "-L-HgNl4IlecrQzL1VRd" : "true",
+        "-L-HgNl7nG-OS5jBwADs" : "true"
+      },
+      "type" : "academic"
+    },
+    "surveyID" : {
+      "isFinished" : false,
+      "questions" : {
+        "questionID" : true,
+        "questionID2" : true
+      },
+      "surveyName" : "string",
+      "teacher" : "teacherID"
+    }
+  },
+  "users" : {
+    "1lS4XL5Je7ZfBnLbkB4M36ww33K2" : {
+      "surveys" : {
+        "-L-HgNl859vPWkoq9DX9" : "false"
+      }
+    },
+    "5eFPTBflS5aES3HRokkN5uMUSzR2" : {
+      "accountType" : "student",
+      "classes" : {
+        "-L-DkM20-DE6DVvFa3i8" : true
+      },
+      "displayName" : "amekaji",
+      "email" : "amekaji2012@gmail.com",
+      "firstName" : "Shawn",
+      "groups" : {
+        "-L-F60eouR4ObfKaCXug" : true
+      },
+      "lastName" : "Yue",
+      "surveys" : {
+        "-L-HgNl859vPWkoq9DX9" : "true"
+      }
+    },
+    "AFvU1zQ5L6b9SN0OOKHMVTgJ1CC2" : {
+      "accountType" : "student",
+      "classes" : {
+        "-L-EuaZus6qmXeitzdkG" : true,
+        "-L-F8Zw4jZdxRjd-qTPL" : true
+      },
+      "displayName" : "Student 4",
+      "email" : "student4@balanc3r.com",
+      "firstName" : "Lucy",
+      "groups" : {
+        "-L-GCxJsitnPHg9OIhT9" : true
+      },
+      "lastName" : "Lu",
+      "surveys" : {
+        "-L-G8Q_vs7f41qvbQd-M" : "false",
+        "-L-G9ikLNQWNJkLL4unk" : "false"
+      }
+    },
+    "FJWvpOyZULefFUhcL791Jxn6ilk1" : {
+      "accountType" : "instructor",
+      "classes" : {
+        "-KyXw5aaZSOMAWusaQ8Z" : "true"
+      },
+      "displayName" : "sseukang",
+      "email" : "sseunkang@gmail.com",
+      "firstName" : "Kang",
+      "lastName" : "Vo"
+    },
+    "GBPchIuAhaatPTyiWIaMXogujzD3" : {
+      "accountType" : "student",
+      "classes" : {
+        "-L-F8Zw4jZdxRjd-qTPL" : true
+      },
+      "displayName" : "Student 6",
+      "email" : "student6@balanc3r.com",
+      "firstName" : "Anna",
+      "groups" : {
+        "-L-GCxJw7eMz1C6QHlbS" : true
+      },
+      "lastName" : "Belle",
+      "surveys" : {
+        "-L-G9ikLNQWNJkLL4unk" : "false"
+      }
+    },
+    "HKReMlriEQUGsSdQSmVkAvBPuF82" : {
+      "accountType" : "instructor",
+      "classes" : {
+        "-KyYAnryi0N_U8wTcD-s" : "true",
+        "-KyZIcdV-EryW1vvfDMV" : "true",
+        "-Kyhk0nsyft1GmifJkwt" : "true",
+        "-KyiGHoN70lHI4cMEUNj" : "true",
+        "-L-DkM20-DE6DVvFa3i8" : "true",
+        "-L-E_VtCyXPK3ANxVAy6" : "true",
+        "-L-EiZgvYSNZ930Csozo" : "true",
+        "-L-IIV-Z34EpPLQWGcaZ" : "true"
+      },
+      "displayName" : "sli471",
+      "email" : "lisheng0316@gmail.com",
+      "firstName" : "Sheng",
+      "groups" : {
+        "-L-F60egoS7w0Z3-JkLJ" : true,
+        "-L-F60eouR4ObfKaCXug" : true
+      },
+      "lastName" : "Li",
+      "surveys" : {
+        "-L-FNJIxE1JA9G1ylLxG" : "true",
+        "-L-HgNl859vPWkoq9DX9" : "true"
+      }
+    },
+    "MTE1LYJbbTd1rpbXB7M6bE48zi73" : {
+      "accountType" : "student",
+      "classes" : {
+        "-L-EuaZus6qmXeitzdkG" : true,
+        "-L-F8Zw4jZdxRjd-qTPL" : true
+      },
+      "displayName" : "Test Student",
+      "email" : "student1@c1oramn.com",
+      "firstName" : "Ricky",
+      "groups" : {
+        "-L-GCxJsitnPHg9OIhT9" : true
+      },
+      "lastName" : "June",
+      "surveys" : {
+        "-L-G8Q_vs7f41qvbQd-M" : "false",
+        "-L-G9ikLNQWNJkLL4unk" : "false"
+      }
+    },
+    "aFakeStudentId1" : {
+      "accountType  " : "student",
+      "classes" : {
+        "-KyhOdb1VMVrnX0o0VR_" : true
+      },
+      "displayName" : "faker",
+      "email" : "fakeemail@gmail.com",
+      "firstName" : "Robert",
+      "groups" : {
+        "-KymI2NkfrMEmaKEMtQr" : true
+      },
+      "lastName" : "Smith"
+    },
+    "aFakeStudentId10" : {
+      "accountType" : "student",
+      "classes" : {
+        "-KyZIcdV-EryW1vvfDMV" : true
+      },
+      "displayName" : "faker10",
+      "email" : "yoyomama@gmail.com",
+      "firstName" : "yoyo",
+      "groups" : {
+        "-KymI2NrMVmLjJC5CqMN" : true
+      },
+      "lastName" : "mama"
+    },
+    "aFakeStudentId11" : {
+      "accountType" : "student",
+      "classes" : {
+        "-L-DkM20-DE6DVvFa3i8" : true,
+        "-L-E_VtCyXPK3ANxVAy6" : true
+      },
+      "displayName" : "fakeGuy",
+      "email" : "fakeGuy@fake.com",
+      "firstName" : "Fake",
+      "lastName" : "Guy",
+      "surveys" : {
+        "-L-HgNl859vPWkoq9DX9" : "false"
+      }
+    },
+    "aFakeStudentId2" : {
+      "accountType" : "student",
+      "classes" : {
+        "-KyhOdb1VMVrnX0o0VR_" : true
+      },
+      "displayName" : "faker2",
+      "email" : "fakeemail2@gmail.com",
+      "firstName" : "Annie",
+      "groups" : {
+        "fakeGroup1" : true
+      },
+      "lastName " : "Williams"
+    },
+    "aFakeStudentId3" : {
+      "accountType  " : "student",
+      "classes" : {
+        "-KyhOdb1VMVrnX0o0VR_" : true
+      },
+      "displayName" : "faker3",
+      "email" : "fakeemail3@gmail.com",
+      "firstName" : "Clarissa",
+      "lastName" : "Cook"
+    },
+    "aFakeStudentId4" : {
+      "accountType" : "student",
+      "classes" : {
+        "-KyZIcdV-EryW1vvfDMV" : true
+      },
+      "displayName" : "faker4",
+      "email" : "bob@barker.com",
+      "firstName" : "Bob",
+      "groups" : {
+        "-KymI2NkfrMEmaKEMtQr" : true
+      },
+      "lastName" : "Barker"
+    },
+    "aFakeStudentId5" : {
+      "accountType" : "student",
+      "classes" : {
+        "-KyZIcdV-EryW1vvfDMV" : true
+      },
+      "displayName" : "faker5",
+      "email" : "AZ@gmail.com",
+      "firstName" : "A",
+      "groups" : {
+        "-KymI2NkfrMEmaKEMtQr" : true
+      },
+      "lastName" : "Z"
+    },
+    "aFakeStudentId6" : {
+      "accountType" : "student",
+      "classes" : {
+        "-KyZIcdV-EryW1vvfDMV" : true
+      },
+      "displayName" : "faker6",
+      "email" : "Cool@Dude.com",
+      "firstName" : "Cool",
+      "groups" : {
+        "-KymI2NkfrMEmaKEMtQr" : true,
+        "-KymI2NrMVmLjJC5CqMN" : true
+      },
+      "lastName" : "Dude"
+    },
+    "aFakeStudentId7" : {
+      "accountType" : "student",
+      "classes" : {
+        "-Kylp2xtav8AnEWftkHK" : true
+      },
+      "displayName" : "faker7",
+      "email" : "fake@student.com",
+      "firstName" : "Fake",
+      "lastName" : "Student"
+    },
+    "aFakeStudentId8" : {
+      "accountType" : "student",
+      "classes" : {
+        "-Kylp2xtav8AnEWftkHK" : true
+      },
+      "displayName" : "faker8",
+      "email" : "another@fake.com",
+      "firstName" : "Another",
+      "lastName" : "Fake"
+    },
+    "aFakeStudentId9" : {
+      "accountType" : "student",
+      "classes" : {
+        "-Kylp2xtav8AnEWftkHK" : true
+      },
+      "displayName" : "faker9",
+      "email" : "yet@another.com",
+      "firstName" : "Yet",
+      "groups" : {
+        "uniqueGroupID" : true
+      },
+      "lastName" : "Another"
+    },
+    "ahJvtKjWq3Wy4Fi0N3OkHPSUUZ73" : {
+      "accountType" : "instructor",
+      "classes" : {
+        "-L-EuaZus6qmXeitzdkG" : "true",
+        "-L-F8Zw4jZdxRjd-qTPL" : "true"
+      },
+      "displayName" : "Teacher Demo",
+      "email" : "biwuxet@letsmail9.com",
+      "firstName" : "John",
+      "lastName" : "Schmidt",
+      "surveys" : {
+        "-L-FHWTUzTQcKmC73a_4" : "true",
+        "-L-FK1HqKI2vFFl1l6LV" : "true",
+        "-L-G8Q_vs7f41qvbQd-M" : "true",
+        "-L-G9ikLNQWNJkLL4unk" : "true"
+      }
+    },
+    "cboTCZ7d9gSPbOkv5cFw8ZgDSBq2" : {
+      "accountType" : "student",
+      "classes" : {
+        "-L-EuaZus6qmXeitzdkG" : true,
+        "-L-F8Zw4jZdxRjd-qTPL" : true
+      },
+      "displayName" : "Student 3",
+      "email" : "student3@balanc3r.com",
+      "firstName" : "Poppy",
+      "groups" : {
+        "-L-GCxJsitnPHg9OIhT9" : true
+      },
+      "lastName" : "Jones",
+      "surveys" : {
+        "-L-G8Q_vs7f41qvbQd-M" : "false",
+        "-L-G9ikLNQWNJkLL4unk" : "false"
+      }
+    },
+    "gEIIm4jigdPLMtOcHbz6st14V492" : {
+      "accountType" : "instructor",
+      "classes" : {
+        "-KyZIcdV-EryW1vvfDMV" : true,
+        "-KyhOdb1VMVrnX0o0VR_" : "true",
+        "-Kylp2xtav8AnEWftkHK" : "true"
+      },
+      "displayName" : "Teacher",
+      "email" : "gatechconnectteacher@gmail.com",
+      "firstName" : "Bob",
+      "groups" : {
+        "-KymI2NrMVmLjJC5CqMN" : true,
+        "fakeGroup0" : true,
+        "fakeGroup1" : true,
+        "fakeGroup123" : true,
+        "fakeGroup2" : true
+      },
+      "lastName" : "Smith",
+      "surveys" : {
+        "-L-DflxxubM8cwVBD8gM" : "true",
+        "-L-FKu81ytFd5FcVQKT5" : "true",
+        "-L-FLNKl1kxpB-LGaUGD" : "true"
+      }
+    },
+    "giBv9ct1EmaqoK3dM5OV7jvTPTq1" : {
+      "accountType" : "student",
+      "classes" : {
+        "-L-EuaZus6qmXeitzdkG" : true,
+        "-L-F8Zw4jZdxRjd-qTPL" : true
+      },
+      "displayName" : "Stud 2",
+      "email" : "student2@balanc3r.com",
+      "firstName" : "kyle",
+      "groups" : {
+        "-L-GCxJw7eMz1C6QHlbS" : true
+      },
+      "lastName" : "jiang",
+      "surveys" : {
+        "-L-G8Q_vs7f41qvbQd-M" : "false",
+        "-L-G9ikLNQWNJkLL4unk" : "false"
+      }
+    },
+    "ksOYOlOg8xfvjOFFwRMWWVdsfNG3" : {
+      "accountType" : "instructor",
+      "classes" : {
+        "-KyXw5aaZSOMAWusaQ8Z" : true,
+        "-KyYAnryi0N_U8wTcD-s" : true,
+        "-KyZIcdV-EryW1vvfDMV" : true
+      },
+      "email" : "williamchasehamrick@gmail.com",
+      "firstName" : "Chase",
+      "lastName" : "Hamrick"
+    },
+    "mZbc4KWDd8fP3Tcn5xdqu6zMvI72" : {
+      "accountType" : "student",
+      "classes" : {
+        "-KyZIcdV-EryW1vvfDMV" : true,
+        "-KyhOdb1VMVrnX0o0VR_" : true,
+        "-Kylp2xtav8AnEWftkHK" : true
+      },
+      "displayName" : "Student",
+      "email" : "gatechconnectstudent@gmail.com",
+      "firstName" : "Harry",
+      "groups" : {
+        "-KymI2NrMVmLjJC5CqMN" : true,
+        "fakeGroup0" : true,
+        "fakeGroup123" : true
+      },
+      "lastName" : "Potter",
+      "surveys" : {
+        "-L-DflxxubM8cwVBD8gM" : "true"
+      }
+    },
+    "studentID" : {
+      "surveys" : {
+        "-L-G9ikLNQWNJkLL4unk" : "false",
+        "-L-HgNl859vPWkoq9DX9" : "false"
+      }
+    },
+    "undefined" : {
+      "surveys" : {
+        "-L-FK1HqKI2vFFl1l6LV" : "false",
+        "-L-FKu81ytFd5FcVQKT5" : "false",
+        "-L-FLNKl1kxpB-LGaUGD" : "false",
+        "-L-FNJIxE1JA9G1ylLxG" : "false"
+      }
+    },
+    "uniqueUserID" : {
+      "accountType" : "instructor",
+      "classes" : {
+        "uniqueClassID" : true,
+        "uniqueClassID2" : true
+      },
+      "department" : "COC",
+      "displayName" : "Paul",
+      "email" : "pa@gmail.com",
+      "firstName" : "Paul",
+      "lastName" : "Allen"
+    },
+    "uniqueUserID2" : {
+      "accountType" : "student",
+      "classLevel" : "senior",
+      "classes" : {
+        "-KyhOdb1VMVrnX0o0VR_" : true
+      },
+      "displayName" : "yolo",
+      "email" : "yolohead@gmail.com",
+      "firstName" : "First",
+      "lastName" : "Last"
+    },
+    "xfFI2TWxAhNSC5lERGQgBhIWp7V2" : {
+      "accountType" : "student",
+      "classes" : {
+        "-L-F8Zw4jZdxRjd-qTPL" : true
+      },
+      "displayName" : "Student 5",
+      "email" : "student5@balanc3r.com",
+      "firstName" : "George",
+      "groups" : {
+        "-L-GCxJsitnPHg9OIhT9" : true
+      },
+      "lastName" : "Virron",
+      "surveys" : {
+        "-L-G9ikLNQWNJkLL4unk" : "false"
+      }
+    }
+  }
+}

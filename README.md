@@ -3,8 +3,8 @@ A web application that helps teachers with group project classes by offering a s
 ## Deployed Website Address https://gatechconnect.firebaseapp.com/
 ## Install Guide Gatech Connect v0.1
 #### PRE-REQUISITES
->You must have nodejs installed and configured before proceeding. see
-https://nodejs.org/en/download/
+>You must have nodejs installed and configured before proceeding. (see
+https://nodejs.org/en/download/)
 >User must have access to the firebase project. If you don't have access, contact the current administrator to receive permissions.
 #### DEPENDENCIES
   >Download and install FIREBASE via npm (see https://www.npmjs.com/package/firebase)
