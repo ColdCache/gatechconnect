@@ -40,13 +40,6 @@ $('#addQuestion').click(function () {
     $('#addQuestion').hide();
 });
 
-// remove question
-$('#removeQuestion').click(function () {
-    $('#questionHelp').hide();
-    $('#multipleChoice').hide();
-    $('#ratingScale').hide();
-    $('#addQuestion').show();
-});
 // add multiple choice question type
 $('#addMultChoice').click(function () {
     hideQuestionTypes();
